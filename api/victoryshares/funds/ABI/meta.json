@@ -54,7 +54,7 @@
  "yields": {
   "dividendYield": 6.12,
   "dividendYieldText": "6.12%",
-  "dividendYieldKind": "Indicated from the latest reported distribution per share x inferred payments per year / market price",
+  "dividendYieldKind": "VCM published dividend yield as of Aug 31 2026",
   "distributionRate": null,
   "secYield": 6.11,
   "secYieldText": "6.11%",

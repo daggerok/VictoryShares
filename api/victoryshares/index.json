@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-28T06:27:18.412Z",
+ "generatedAt": "2026-09-28T06:27:34.287Z",
  "source": {
   "provider": "VictoryShares ETFs (Victory Capital Management)",
   "market": "us",
@@ -75,7 +75,7 @@
     "cagr10y": null,
     "siAnn": 4.77,
     "dividendYield": 6.12,
-    "dividendYieldText": null,
+    "dividendYieldText": "6.12%",
     "secYield": 6.11,
     "secYieldText": "6.11%"
    },
@@ -140,7 +140,7 @@
     "cagr10y": 10.26,
     "siAnn": 10.07,
     "dividendYield": 3.53,
-    "dividendYieldText": null,
+    "dividendYieldText": "3.53%",
     "secYield": 3.12,
     "secYieldText": "3.12%"
    },
@@ -205,7 +205,7 @@
     "cagr10y": 11.07,
     "siAnn": 11.2,
     "dividendYield": 3.53,
-    "dividendYieldText": null,
+    "dividendYieldText": "3.53%",
     "secYield": 3.12,
     "secYieldText": "3.12%"
    },
@@ -270,7 +270,7 @@
     "cagr10y": 11.5,
     "siAnn": 10.57,
     "dividendYield": 1.57,
-    "dividendYieldText": null,
+    "dividendYieldText": "1.57%",
     "secYield": 1.2,
     "secYieldText": "1.20%"
    },
@@ -335,7 +335,7 @@
     "cagr10y": 9.46,
     "siAnn": 8.88,
     "dividendYield": 1.57,
-    "dividendYieldText": null,
+    "dividendYieldText": "1.57%",
     "secYield": 1.2,
     "secYieldText": "1.20%"
    },
@@ -400,7 +400,7 @@
     "cagr10y": 9.75,
     "siAnn": 9.59,
     "dividendYield": 3.69,
-    "dividendYieldText": null,
+    "dividendYieldText": "3.69%",
     "secYield": 3.33,
     "secYieldText": "3.33%"
    },
@@ -465,7 +465,7 @@
     "cagr10y": null,
     "siAnn": 19.29,
     "dividendYield": 0.35,
-    "dividendYieldText": null,
+    "dividendYieldText": "0.35%",
     "secYield": 0,
     "secYieldText": "0.00%"
    },
@@ -530,7 +530,7 @@
     "cagr10y": null,
     "siAnn": 18.44,
     "dividendYield": 1.55,
-    "dividendYieldText": null,
+    "dividendYieldText": "1.55%",
     "secYield": 0.99,
     "secYieldText": "0.99%"
    },
@@ -595,7 +595,7 @@
     "cagr10y": null,
     "siAnn": 29.1,
     "dividendYield": 1.14,
-    "dividendYieldText": null,
+    "dividendYieldText": "1.14%",
     "secYield": 0.75,
     "secYieldText": "0.75%"
    },
@@ -660,7 +660,7 @@
     "cagr10y": null,
     "siAnn": 41.9,
     "dividendYield": 2.66,
-    "dividendYieldText": null,
+    "dividendYieldText": "2.66%",
     "secYield": 2.06,
     "secYieldText": "2.06%"
    },
@@ -725,7 +725,7 @@
     "cagr10y": null,
     "siAnn": 22.3,
     "dividendYield": 1.08,
-    "dividendYieldText": null,
+    "dividendYieldText": "1.08%",
     "secYield": 0.62,
     "secYieldText": "0.62%"
    },
@@ -790,7 +790,7 @@
     "cagr10y": null,
     "siAnn": 20.52,
     "dividendYield": 1.09,
-    "dividendYieldText": null,
+    "dividendYieldText": "1.09%",
     "secYield": 0.56,
     "secYieldText": "0.56%"
    },
@@ -855,7 +855,7 @@
     "cagr10y": null,
     "siAnn": 0.87,
     "dividendYield": 4.95,
-    "dividendYieldText": null,
+    "dividendYieldText": "4.95%",
     "secYield": 4.98,
     "secYieldText": "4.98%"
    },
@@ -920,7 +920,7 @@
     "cagr10y": null,
     "siAnn": 0.11,
     "dividendYield": 3.35,
-    "dividendYieldText": null,
+    "dividendYieldText": "3.35%",
     "secYield": 5.17,
     "secYieldText": "5.17%"
    },
@@ -1050,7 +1050,7 @@
     "cagr10y": null,
     "siAnn": 2.19,
     "dividendYield": 4.42,
-    "dividendYieldText": null,
+    "dividendYieldText": "4.42%",
     "secYield": 4.81,
     "secYieldText": "4.81%"
    },
@@ -1115,7 +1115,7 @@
     "cagr10y": null,
     "siAnn": 8.68,
     "dividendYield": 3.15,
-    "dividendYieldText": null,
+    "dividendYieldText": "3.15%",
     "secYield": 2.53,
     "secYieldText": "2.53%"
    },
@@ -1180,7 +1180,7 @@
     "cagr10y": null,
     "siAnn": 10.93,
     "dividendYield": 2.2,
-    "dividendYieldText": null,
+    "dividendYieldText": "2.20%",
     "secYield": 1.99,
     "secYieldText": "1.99%"
    },
@@ -1310,7 +1310,7 @@
     "cagr10y": null,
     "siAnn": 10.79,
     "dividendYield": 2.15,
-    "dividendYieldText": null,
+    "dividendYieldText": "2.15%",
     "secYield": 1.96,
     "secYieldText": "1.96%"
    },
@@ -1570,7 +1570,7 @@
     "cagr10y": null,
     "siAnn": 11.7,
     "dividendYield": 2.66,
-    "dividendYieldText": null,
+    "dividendYieldText": "2.66%",
     "secYield": 2.34,
     "secYieldText": "2.34%"
    },
@@ -1635,7 +1635,7 @@
     "cagr10y": null,
     "siAnn": 12.28,
     "dividendYield": 1.64,
-    "dividendYieldText": null,
+    "dividendYieldText": "1.64%",
     "secYield": 1.29,
     "secYieldText": "1.29%"
    },
