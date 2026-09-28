@@ -1,0 +1,130 @@
+{
+ "ticker": "VMHY",
+ "name": "VictoryShares Municipal High Yield ETF",
+ "category": "Fixed Income",
+ "source": {
+  "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-municipal-high-yield-etf",
+  "catalog": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list",
+  "issuerOverview": "https://www.vcm.com/products-fa/victoryshares-etfs",
+  "catalogApi": "https://investorapi.vcm.com/search/products/ETF",
+  "productApi": "https://investorapi.vcm.com/search/product/{TICKER}/{AllHoldings|Overview|Yields|Distributions|PremiumDiscount}",
+  "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/VMHY",
+  "holdingsSource": "VCM AllHoldings JSON",
+  "historySource": "Yahoo Finance adjusted market-price chart + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)",
+  "distributionSource": "VCM Distributions JSON (declared, record, payable dates and reported amount fields)",
+  "provider": "Victory Capital Management / VictoryShares public JSON + Yahoo Finance chart + SEC EDGAR N-PORT-P (holdings fallback only)"
+ },
+ "identifiers": {
+  "cusip": null,
+  "isin": "US92647N3787",
+  "iopv": "VMHY.IV"
+ },
+ "inception": {
+  "fundInceptionDate": "2026-09-22",
+  "shareClassInceptionDate": "2026-09-22",
+  "exchange": "NASDAQ"
+ },
+ "expenseRatio": {
+  "display": "0.77%",
+  "value": 0.77,
+  "gross": 0.77,
+  "net": 0.34
+ },
+ "nav": {
+  "display": "$24.96",
+  "value": 24.96,
+  "asOfDate": "Sep 25 2026",
+  "change": -0.08
+ },
+ "marketPrice": {
+  "display": "$25.04",
+  "value": 25.0352,
+  "asOfDate": "Sep 25 2026"
+ },
+ "premiumDiscount": {
+  "display": "0.27%",
+  "value": 0.2693
+ },
+ "aum": {
+  "display": "$22.46M",
+  "value": 22462004.06,
+  "asOfDate": "Sep 25 2026",
+  "source": "VCM ETF catalog / Overview JSON"
+ },
+ "yields": {
+  "dividendYield": null,
+  "dividendYieldText": null,
+  "dividendYieldKind": null,
+  "distributionRate": null,
+  "secYield": null,
+  "secYieldText": null,
+  "secYieldKind": null,
+  "unsubsidizedSecYield": null
+ },
+ "returns": {
+  "derivedFrom": "VCM published NAV performance series",
+  "monthEnd": {
+   "asOfDate": "",
+   "mo1": null,
+   "qtd": null,
+   "ytd": null,
+   "yr1": null,
+   "yr3": null,
+   "yr5": null,
+   "yr10": null,
+   "sinceInception": null
+  },
+  "quarterEnd": {
+   "asOfDate": "",
+   "mo1": null,
+   "qtd": null,
+   "ytd": null,
+   "yr1": null,
+   "yr3": null,
+   "yr5": null,
+   "yr10": null,
+   "sinceInception": null
+  }
+ },
+ "distributions": {
+  "frequency": null,
+  "latestAmount": null,
+  "asOfDate": "",
+  "headers": [
+   "Declared Date",
+   "Record Date",
+   "Payable Date",
+   "Income Amount",
+   "Long-Term Capital Gains",
+   "Short-Term Capital Gains",
+   "Total Distribution",
+   "Return of Capital"
+  ],
+  "rows": [],
+  "source": "VCM Distributions API; API provides declared/record/payable dates, not an ex-date field"
+ },
+ "holdings": {
+  "pages": [
+   "holdings/001.json"
+  ],
+  "pageSize": 250,
+  "totalRows": 21,
+  "asOfDate": "2026-09-28",
+  "source": "VCM AllHoldings JSON"
+ },
+ "history": {
+  "pages": [
+   "history/001.json"
+  ],
+  "pageSize": 1000,
+  "totalRows": 5,
+  "asOfDate": "2026-09-25",
+  "source": "Yahoo Finance adjusted market-price chart + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
+ },
+ "holdingsCount": 21,
+ "historyCount": 5,
+ "distributionCount": 0,
+ "netAssets": 22462004.06,
+ "dividendYield": null,
+ "secYield": null
+}
