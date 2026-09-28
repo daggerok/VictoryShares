@@ -10,7 +10,7 @@ bunx serve . -p 1234
 open http://0:1234
 ```
 
-GitHub Pages deployment has not been verified. The configured project URL is <https://daggerok.github.io/VictoryShares/>.
+The published application is available at <https://daggerok.github.io/VictoryShares/>.
 
 ## Updating the static VictoryShares data
 
@@ -33,8 +33,6 @@ Run `bun scripts/update-data.ts --help` to print every configuration variable wi
 | Fund details, yields, distributions and premium/discount | `https://investorapi.vcm.com/search/product/{TICKER}/{Overview|Yields|Distributions|PremiumDiscount}`. NAV, expense, assets, performance and distribution values are published by VCM. |
 | Daily history | [Yahoo Finance chart API](https://query1.finance.yahoo.com/v8/finance/chart/{TICKER}) provides market-price and adjusted-close history; VCM's `PremiumDiscount` endpoint adds dated premium/discount observations. This tested feed does not supply official daily NAV history, so the NAV column is intentionally blank rather than inferred from market price. Yahoo adjusted-close history can be revised by the provider. |
 | Holdings fallback | SEC EDGAR Form N-PORT-P for Victory Portfolios II (CIK `0001547580`, file no. `811-22696`), only when VCM does not provide holdings. Configure `SEC_UA` with an organizational contact before using SEC requests. An N-PORT snapshot may be less current than the issuer's daily holdings. |
-
-The initial checked-in seed has per-fund holdings, history and distribution pages for VFLO, USTB and UEVM only; the other catalog ETFs are listed but have not been live-updated yet. The scheduled/manual updater is configured to populate the catalog when it runs.
 
 The updater uses issuer-published NAV performance values for month-end and quarter-end. The catalog's cumulative 3-, 5- and 10-year Total Return columns are derived from the corresponding published annualized NAV returns using `(1 + annualized return)^years - 1`; 1-year and YTD use the published period return. Missing tenors stay unavailable. Yahoo data is a separate market-price history series, not an official NAV series.
 

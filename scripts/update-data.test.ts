@@ -176,7 +176,7 @@ describe('UI parity regression guards', () => {
 });
 
 describe('README and automation documentation guards', () => {
-  test('keeps the pinned sibling README structure and distinguishes the pending deployment', async () => {
+  test('keeps the pinned sibling README structure and reports the verified published site', async () => {
     const readme = await readFile(new URL('../README.md', import.meta.url), 'utf8');
     const headings = [...readme.matchAll(/^#{2,3} .+$/gm)].map(match => match[0]);
     expect(headings).toEqual([
@@ -185,10 +185,9 @@ describe('README and automation documentation guards', () => {
     ]);
     expect(readme).toContain('bunx degit daggerok/VictoryShares#main ./12345 && cd $_');
     expect(readme).toContain('bun test scripts/update-data.test.ts');
-    expect(readme).toContain('GitHub Pages deployment has not been verified.');
-    expect(readme).toContain('initial checked-in seed has per-fund holdings, history and distribution pages for VFLO, USTB and UEVM only');
-    expect(readme).toContain('have not been live-updated yet');
-    expect(readme).not.toContain('The published application is available');
+    expect(readme).toContain('The published application is available at <https://daggerok.github.io/VictoryShares/>.');
+    expect(readme).not.toContain('deployment has not been verified');
+    expect(readme).not.toContain('initial checked-in seed');
     const brandRows = [...readme.matchAll(/^\| \*\*(.+?)\*\* \|/gm)].map(match => match[1]);
     expect(brandRows.indexOf('VictoryShares')).toBe(brandRows.indexOf('Vanguard') + 1);
     expect(brandRows.indexOf('WisdomTree')).toBe(brandRows.indexOf('VictoryShares') + 1);
