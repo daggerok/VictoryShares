@@ -7,11 +7,11 @@
 - Authorization: implement this target repository and checkpoint commits/pushes to a feature branch as prescribed by the user-supplied plan. PR creation/merge is not authorized. Cross-repository README PRs are not authorized. GitHub metadata changes have not been performed; treat as requiring further confirmation unless the plan grants authority and the repository access is verifiable.
 - Repository: `https://github.com/daggerok/VictoryShares`; local branch `init-victoryshares`; PR: none observed (GitHub CLI unavailable, so PR state is unverified).
 - Completed: cloned public repository; initial remote state is clean, only `main` at `5ace06496d6e9f93936bab49a5484845c400708a` (`Initial commit`, placeholder README + LICENSE); feature branch created.
-- Active: implementation planning. Official catalog and per-ticker JSON APIs, trust name/CIK and distinct live endpoints are verified. No application implementation has started.
-- Remaining: updater + fixtures/tests; validate; isolated live acceptance; UI parity; workflows; README; authorized publication; metadata/PR authorization resolution.
+- Active: implementing the VCM-specific updater and parity UI from the pinned reference. Source discovery and reference baseline are complete.
+- Remaining: updater + fixtures/tests; validate; isolated live acceptance; parity app; workflows; README; final publication (blocked by authentication); repository metadata authorization/status.
 - Blockers/risks: a GitHub PAT was included in the user's message and is intentionally not recorded or used; treat it as compromised and revoke/rotate it immediately. `gh` is not installed; HTTPS push requires authentication and failed. Official list API uses a public client key in its page markup; updater must acquire it dynamically without logging/persisting the key. VCM history endpoint tested returned 404; use Yahoo price/NAV history unless valid official history is found.
 - Last confirmed pushed SHA: `5ace06496d6e9f93936bab49a5484845c400708a` (initial remote commit; no feature commits yet).
-- Exact next action: continue with the implementation against the confirmed issuer JSON API, once the local research checkpoint is updated; before any push, obtain safe Git authentication or report the local-only branch for user publication.
+- Exact next action: copy the pinned JPMorgan `app.tsx` / `index.html`, perform only enumerated VictoryShares substitutions, and then add bounded updater logic/tests. No push until safe Git authentication becomes available.
 
 ## User-provided scope and precedence (sanitized)
 - Brand: VictoryShares.
@@ -1559,3 +1559,10 @@ was encountered.
 - GitHub PR cross-check: unauthenticated public API returned 0 pull requests in all states at time of check. No PR exists/was identified. `gh` CLI is absent.
 - Publication: pushing local research commit failed with `fatal: could not read Username for 'https://github.com': No such device or address`; no access token was used. The research commit exists locally as `f5d0fa0` and is not pushed. Last confirmed remote SHA remains `5ace06496d6e9f93936bab49a5484845c400708a`. Do not use the token from chat; it is exposed and should be revoked. Safe continuation requires the user to authenticate Git in the workspace using a rotated credential through an appropriate secure mechanism, or to push the branch themselves. No PR has been opened.
 - Exact next implementation action (after checkpoint/auth resolution): locate the closest permitted data-source/updater reference (JPMorgan for patterns, Franklin or Schwab only if proven necessary), then implement a bounded updater starting with the three verified tickers; tests must not depend on live services.
+
+### 2026-09-28 — Reference baseline and toolchain (verified)
+- Pinned the generic plan's primary UI/updater reference: `daggerok/JPMorgan` commit `9abd1e530f393012bf6337b92e3f33ae4670d19d` (public default branch at inspection). It has the required single-file app, hidden rich header summary, SEC/Yahoo fallbacks, pagination and output helpers. Its UI supplies the approved header treatment, including the visible sorted `N selected: TICKER1, TICKER2` list even when all funds are selected.
+- Installed Bun 1.4.2 using the official installer in `/home/user/.bun/bin` (not a project dependency). An initial installer invocation passed an unsupported option as a version and got HTTP 404; corrected by using `BUN_NO_MODIFY_PATH=1`.
+- Baseline: reference `bun test scripts/update-data.test.ts` passed 116 tests / 0 failures / 437 expectations; reference `bun build --target=bun scripts/update-data.ts --outfile=/dev/null` succeeded (109.80 KB). This is a reference baseline only, not target-repository validation.
+- Environment has no `gh` CLI. Public GitHub REST confirms no existing PRs. Push authorization scope is in the plan, but no authenticated transport is available; two local research commits remain unpublished.
+- Exact next action: begin target implementation from the pinned shared app and create VCM-specific updater/parsing tests, recording deliberate UI substitutions and preserving the reference component structure.
