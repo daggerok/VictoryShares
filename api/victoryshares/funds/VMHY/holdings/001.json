@@ -1,0 +1,247 @@
+{
+ "headers": [
+  "Name",
+  "Ticker",
+  "Identifier",
+  "Weight",
+  "Market Value",
+  "Shares Held",
+  "Asset Category",
+  "Coupon",
+  "Maturity"
+ ],
+ "rows": [
+  {
+   "Name": "APPLING C VRN 09/01/41",
+   "Ticker": "-",
+   "Identifier": "US038315EV58",
+   "Weight": "4.484084730000",
+   "Market Value": "1000000.000000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "3.550000950000",
+   "Maturity": "09/01/2041"
+  },
+  {
+   "Name": "BLACK BEL VRN 05/01/56",
+   "Ticker": "-",
+   "Identifier": "US09182TEV52",
+   "Weight": "4.439654760000",
+   "Market Value": "990091.630000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "5.249998400000",
+   "Maturity": "05/01/2056"
+  },
+  {
+   "Name": "CA CMNTY 5.% 03/01/36",
+   "Ticker": "-",
+   "Identifier": "US13013JHM18",
+   "Weight": "4.426257790000",
+   "Market Value": "987103.960000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "5.000000000000",
+   "Maturity": "03/01/2036"
+  },
+  {
+   "Name": "CASH AND CASH EQUIVALENTS",
+   "Ticker": "-",
+   "Identifier": "-",
+   "Weight": "2.004667610000",
+   "Market Value": "447062.830000000000",
+   "Shares Held": "447062.830000000000",
+   "Asset Category": "-",
+   "Coupon": "-",
+   "Maturity": "-"
+  },
+  {
+   "Name": "CHICAGO-A 6.% 01/01/50",
+   "Ticker": "-",
+   "Identifier": "US167486U724",
+   "Weight": "4.523218190000",
+   "Market Value": "1008727.190000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "6.000000000000",
+   "Maturity": "01/01/2050"
+  },
+  {
+   "Name": "DIST OF C 5.% 07/01/37",
+   "Ticker": "-",
+   "Identifier": "US25483VTR59",
+   "Weight": "4.464339910000",
+   "Market Value": "995596.690000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "5.000000000000",
+   "Maturity": "07/01/2037"
+  },
+  {
+   "Name": "DT OF COL VRN 06/01/51",
+   "Ticker": "-",
+   "Identifier": "US25476FJ748",
+   "Weight": "4.484084730000",
+   "Market Value": "1000000.000000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "3.520001600000",
+   "Maturity": "06/01/2051"
+  },
+  {
+   "Name": "KENTUCKY 5.% 12/01/33",
+   "Ticker": "-",
+   "Identifier": "US74440DFQ25",
+   "Weight": "4.378159030000",
+   "Market Value": "976377.410000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "5.000000000000",
+   "Maturity": "12/01/2033"
+  },
+  {
+   "Name": "LA PUB FA 5.75% 09/01/64",
+   "Ticker": "-",
+   "Identifier": "US546399SZ00",
+   "Weight": "4.422518240000",
+   "Market Value": "986270.000000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "5.750000000000",
+   "Maturity": "09/01/2064"
+  },
+  {
+   "Name": "MA H/E-VA VRN 07/01/35",
+   "Ticker": "-",
+   "Identifier": "US57585KKV97",
+   "Weight": "4.484084730000",
+   "Market Value": "1000000.000000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "3.049998400000",
+   "Maturity": "07/01/2035"
+  },
+  {
+   "Name": "NY TRANSP 6.% 06/30/54",
+   "Ticker": "-",
+   "Identifier": "US650116GY64",
+   "Weight": "4.546873970000",
+   "Market Value": "1014002.690000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "6.000000000000",
+   "Maturity": "06/30/2054"
+  },
+  {
+   "Name": "NYC MUNI VRN 06/15/41",
+   "Ticker": "-",
+   "Identifier": "US64972GT950",
+   "Weight": "4.484084730000",
+   "Market Value": "1000000.000000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "3.599998650000",
+   "Maturity": "06/15/2041"
+  },
+  {
+   "Name": "PORT ART VRN 04/01/40",
+   "Ticker": "-",
+   "Identifier": "US735220AV73",
+   "Weight": "13.452254180000",
+   "Market Value": "3000000.000000000000",
+   "Shares Held": "3000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "3.550000950000",
+   "Maturity": "04/01/2040"
+  },
+  {
+   "Name": "PORT PORT VRN 04/01/40",
+   "Ticker": "-",
+   "Identifier": "US735220AU90",
+   "Weight": "4.484084730000",
+   "Market Value": "1000000.000000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "3.499999600000",
+   "Maturity": "04/01/2040"
+  },
+  {
+   "Name": "POUGHKEEP 5.% 04/23/27",
+   "Ticker": "-",
+   "Identifier": "US7386297T52",
+   "Weight": "4.487796250000",
+   "Market Value": "1000827.710000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "5.000000000000",
+   "Maturity": "04/23/2027"
+  },
+  {
+   "Name": "PUB FIN A 5.75% 06/30/60",
+   "Ticker": "-",
+   "Identifier": "US74448UAB44",
+   "Weight": "4.477619890000",
+   "Market Value": "998558.270000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "5.750000000000",
+   "Maturity": "06/30/2060"
+  },
+  {
+   "Name": "RI HLTH & 6.5% 09/01/57",
+   "Ticker": "-",
+   "Identifier": "US762244PL90",
+   "Weight": "4.396271950000",
+   "Market Value": "980416.790000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "6.500000000000",
+   "Maturity": "09/01/2057"
+  },
+  {
+   "Name": "UNIV CA R VRN 05/15/45",
+   "Ticker": "-",
+   "Identifier": "US913366KA73",
+   "Weight": "4.484084730000",
+   "Market Value": "1000000.000000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "3.199998800000",
+   "Maturity": "05/15/2045"
+  },
+  {
+   "Name": "UNIV CA-A VRN 05/15/48",
+   "Ticker": "-",
+   "Identifier": "US91412GSG19",
+   "Weight": "4.484084730000",
+   "Market Value": "1000000.000000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "3.250000150000",
+   "Maturity": "05/15/2048"
+  },
+  {
+   "Name": "VIRGIN 6% 04/01/53",
+   "Ticker": "-",
+   "Identifier": "US927677AA20",
+   "Weight": "4.351610740000",
+   "Market Value": "970456.850000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "6.000000000000",
+   "Maturity": "04/01/2053"
+  },
+  {
+   "Name": "WA HSG 5.50000% 07/01/59",
+   "Ticker": "-",
+   "Identifier": "US93978LHH24",
+   "Weight": "4.240164420000",
+   "Market Value": "945603.100000000000",
+   "Shares Held": "1000000.000000000000",
+   "Asset Category": "MUNICIPAL BOND",
+   "Coupon": "5.500000000000",
+   "Maturity": "07/01/2059"
+  }
+ ],
+ "asOfDate": "2026-09-28"
+}

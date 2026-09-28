@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-28T05:52:07.360Z",
+ "generatedAt": "2026-09-28T06:27:18.412Z",
  "source": {
   "provider": "VictoryShares ETFs (Victory Capital Management)",
   "market": "us",
@@ -13,8 +13,8 @@
  },
  "counts": {
   "funds": 25,
-  "holdings": 1400,
-  "history": 1103
+  "holdings": 7991,
+  "history": 6668
  },
  "funds": [
   {
@@ -37,9 +37,9 @@
    "cusip": null,
    "isin": "US92647X7315",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.125537
    },
    "returns": {
     "monthEnd": {
@@ -74,13 +74,13 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 4.77,
-    "dividendYield": null,
+    "dividendYield": 6.12,
     "dividendYieldText": null,
     "secYield": 6.11,
     "secYieldText": "6.11%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 208,
+   "history": 315
   },
   {
    "ticker": "CDC",
@@ -102,9 +102,9 @@
    "cusip": null,
    "isin": "US92647N8240",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.268974
    },
    "returns": {
     "monthEnd": {
@@ -139,13 +139,13 @@
     "cagr5y": 6.42,
     "cagr10y": 10.26,
     "siAnn": 10.07,
-    "dividendYield": null,
+    "dividendYield": 3.53,
     "dividendYieldText": null,
     "secYield": 3.12,
     "secYieldText": "3.12%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 102,
+   "history": 147
   },
   {
    "ticker": "CDL",
@@ -167,9 +167,9 @@
    "cusip": null,
    "isin": "US92647N8653",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.278552
    },
    "returns": {
     "monthEnd": {
@@ -204,13 +204,13 @@
     "cagr5y": 10.04,
     "cagr10y": 11.07,
     "siAnn": 11.2,
-    "dividendYield": null,
+    "dividendYield": 3.53,
     "dividendYieldText": null,
     "secYield": 3.12,
     "secYieldText": "3.12%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 102,
+   "history": 135
   },
   {
    "ticker": "CFA",
@@ -232,9 +232,9 @@
    "cusip": null,
    "isin": "US92647N7663",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.160634
    },
    "returns": {
     "monthEnd": {
@@ -269,13 +269,13 @@
     "cagr5y": 7.69,
     "cagr10y": 11.5,
     "siAnn": 10.57,
-    "dividendYield": null,
+    "dividendYield": 1.57,
     "dividendYieldText": null,
     "secYield": 1.2,
     "secYieldText": "1.20%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 502,
+   "history": 147
   },
   {
    "ticker": "CFO",
@@ -297,9 +297,9 @@
    "cusip": null,
    "isin": "US92647N7820",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.128522
    },
    "returns": {
     "monthEnd": {
@@ -334,13 +334,13 @@
     "cagr5y": 3.82,
     "cagr10y": 9.46,
     "siAnn": 8.88,
-    "dividendYield": null,
+    "dividendYield": 1.57,
     "dividendYieldText": null,
     "secYield": 1.2,
     "secYieldText": "1.20%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 502,
+   "history": 147
   },
   {
    "ticker": "CSB",
@@ -362,9 +362,9 @@
    "cusip": null,
    "isin": "US92647N8737",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.288194
    },
    "returns": {
     "monthEnd": {
@@ -399,13 +399,13 @@
     "cagr5y": 5.56,
     "cagr10y": 9.75,
     "siAnn": 9.59,
-    "dividendYield": null,
+    "dividendYield": 3.69,
     "dividendYieldText": null,
     "secYield": 3.33,
     "secYieldText": "3.33%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 102,
+   "history": 135
   },
   {
    "ticker": "GFLW",
@@ -427,9 +427,9 @@
    "cusip": null,
    "isin": "US92647X7646",
    "distributions": {
-    "frequency": null,
+    "frequency": "Semi-annually",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.112907
    },
    "returns": {
     "monthEnd": {
@@ -464,13 +464,13 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 19.29,
-    "dividendYield": null,
+    "dividendYield": 0.35,
     "dividendYieldText": null,
     "secYield": 0,
     "secYieldText": "0.00%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 102,
+   "history": 452
   },
   {
    "ticker": "GLOW",
@@ -492,9 +492,9 @@
    "cusip": null,
    "isin": "US92647X7984",
    "distributions": {
-    "frequency": null,
+    "frequency": "Quarterly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.141059
    },
    "returns": {
     "monthEnd": {
@@ -529,13 +529,13 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 18.44,
-    "dividendYield": null,
+    "dividendYield": 1.55,
     "dividendYieldText": null,
     "secYield": 0.99,
     "secYieldText": "0.99%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 15,
+   "history": 116
   },
   {
    "ticker": "GRIN",
@@ -557,9 +557,9 @@
    "cusip": null,
    "isin": "US92647X7497",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.008409
    },
    "returns": {
     "monthEnd": {
@@ -594,13 +594,13 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 29.1,
-    "dividendYield": null,
+    "dividendYield": 1.14,
     "dividendYieldText": null,
     "secYield": 0.75,
     "secYieldText": "0.75%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 105,
+   "history": 315
   },
   {
    "ticker": "IFLO",
@@ -622,9 +622,9 @@
    "cusip": null,
    "isin": "US92647X7562",
    "distributions": {
-    "frequency": null,
+    "frequency": "Quarterly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.079302
    },
    "returns": {
     "monthEnd": {
@@ -659,13 +659,13 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 41.9,
-    "dividendYield": null,
+    "dividendYield": 2.66,
     "dividendYieldText": null,
     "secYield": 2.06,
     "secYieldText": "2.06%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 104,
+   "history": 315
   },
   {
    "ticker": "MODL",
@@ -687,9 +687,9 @@
    "cusip": null,
    "isin": "US92647P1268",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.047543
    },
    "returns": {
     "monthEnd": {
@@ -724,13 +724,13 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 22.3,
-    "dividendYield": null,
+    "dividendYield": 1.08,
     "dividendYieldText": null,
     "secYield": 0.62,
     "secYieldText": "0.62%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 363,
+   "history": 207
   },
   {
    "ticker": "SFLO",
@@ -752,9 +752,9 @@
    "cusip": null,
    "isin": "US92647X8222",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.049758
    },
    "returns": {
     "monthEnd": {
@@ -789,13 +789,13 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 20.52,
-    "dividendYield": null,
+    "dividendYield": 1.09,
     "dividendYieldText": null,
     "secYield": 0.56,
     "secYieldText": "0.56%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 202,
+   "history": 145
   },
   {
    "ticker": "UBND",
@@ -817,9 +817,9 @@
    "cusip": null,
    "isin": "US92647X8636",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.085876
    },
    "returns": {
     "monthEnd": {
@@ -854,13 +854,13 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 0.87,
-    "dividendYield": null,
+    "dividendYield": 4.95,
     "dividendYieldText": null,
     "secYield": 4.98,
     "secYieldText": "4.98%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 1626,
+   "history": 260
   },
   {
    "ticker": "UCRD",
@@ -882,9 +882,9 @@
    "cusip": null,
    "isin": "US92647X8552",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.057596
    },
    "returns": {
     "monthEnd": {
@@ -919,13 +919,13 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 0.11,
-    "dividendYield": null,
+    "dividendYield": 3.35,
     "dividendYieldText": null,
     "secYield": 5.17,
     "secYieldText": "5.17%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 512,
+   "history": 260
   },
   {
    "ticker": "UEVM",
@@ -1012,9 +1012,9 @@
    "cusip": null,
    "isin": "US90291F6007",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.165726
    },
    "returns": {
     "monthEnd": {
@@ -1049,13 +1049,13 @@
     "cagr5y": 0.17,
     "cagr10y": null,
     "siAnn": 2.19,
-    "dividendYield": null,
+    "dividendYield": 4.42,
     "dividendYieldText": null,
     "secYield": 4.81,
     "secYieldText": "4.81%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 1237,
+   "history": 466
   },
   {
    "ticker": "UIVM",
@@ -1077,9 +1077,9 @@
    "cusip": null,
    "isin": "US90291F6046",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 1.207934
    },
    "returns": {
     "monthEnd": {
@@ -1114,13 +1114,13 @@
     "cagr5y": 13.4,
     "cagr10y": null,
     "siAnn": 8.68,
-    "dividendYield": null,
+    "dividendYield": 3.15,
     "dividendYieldText": null,
     "secYield": 2.53,
     "secYieldText": "2.53%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 202,
+   "history": 466
   },
   {
    "ticker": "ULVM",
@@ -1142,9 +1142,9 @@
    "cusip": null,
    "isin": "US90291F1057",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.260176
    },
    "returns": {
     "monthEnd": {
@@ -1179,13 +1179,13 @@
     "cagr5y": 11.71,
     "cagr10y": null,
     "siAnn": 10.93,
-    "dividendYield": null,
+    "dividendYield": 2.2,
     "dividendYieldText": null,
     "secYield": 1.99,
     "secYieldText": "1.99%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 127,
+   "history": 466
   },
   {
    "ticker": "USTB",
@@ -1272,9 +1272,9 @@
    "cusip": null,
    "isin": "US90291F5076",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.188242
    },
    "returns": {
     "monthEnd": {
@@ -1309,13 +1309,13 @@
     "cagr5y": 10.19,
     "cagr10y": null,
     "siAnn": 10.79,
-    "dividendYield": null,
+    "dividendYield": 2.15,
     "dividendYieldText": null,
     "secYield": 1.96,
     "secYieldText": "1.96%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 294,
+   "history": 466
   },
   {
    "ticker": "VFLO",
@@ -1444,8 +1444,8 @@
     "secYield": null,
     "secYieldText": null
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 21,
+   "history": 5
   },
   {
    "ticker": "VMSD",
@@ -1509,8 +1509,8 @@
     "secYield": null,
     "secYieldText": null
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 23,
+   "history": 3
   },
   {
    "ticker": "VSDA",
@@ -1532,9 +1532,9 @@
    "cusip": null,
    "isin": "US92647N6673",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.184593
    },
    "returns": {
     "monthEnd": {
@@ -1569,13 +1569,13 @@
     "cagr5y": 7.75,
     "cagr10y": null,
     "siAnn": 11.7,
-    "dividendYield": null,
+    "dividendYield": 2.66,
     "dividendYieldText": null,
     "secYield": 2.34,
     "secYieldText": "2.34%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 77,
+   "history": 114
   },
   {
    "ticker": "VSMV",
@@ -1597,9 +1597,9 @@
    "cusip": null,
    "isin": "US92647N6913",
    "distributions": {
-    "frequency": null,
+    "frequency": "Monthly",
     "exDate": "",
-    "dividend": ""
+    "dividend": 0.104033
    },
    "returns": {
     "monthEnd": {
@@ -1634,13 +1634,13 @@
     "cagr5y": 10.62,
     "cagr10y": null,
     "siAnn": 12.28,
-    "dividendYield": null,
+    "dividendYield": 1.64,
     "dividendYieldText": null,
     "secYield": 1.29,
     "secYieldText": "1.29%"
    },
-   "holdings": 0,
-   "history": 0
+   "holdings": 63,
+   "history": 483
   }
  ]
 }

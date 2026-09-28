@@ -1,0 +1,231 @@
+{
+ "ticker": "IFLO",
+ "name": "VictoryShares International Free Cash Flow ETF",
+ "category": "Intl/Global Equity",
+ "source": {
+  "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-international-free-cash-flow-etf",
+  "catalog": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list",
+  "issuerOverview": "https://www.vcm.com/products-fa/victoryshares-etfs",
+  "catalogApi": "https://investorapi.vcm.com/search/products/ETF",
+  "productApi": "https://investorapi.vcm.com/search/product/{TICKER}/{AllHoldings|Overview|Yields|Distributions|PremiumDiscount}",
+  "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/IFLO",
+  "holdingsSource": "VCM AllHoldings JSON",
+  "historySource": "Yahoo Finance adjusted market-price chart + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)",
+  "distributionSource": "VCM Distributions JSON (declared, record, payable dates and reported amount fields)",
+  "provider": "Victory Capital Management / VictoryShares public JSON + Yahoo Finance chart + SEC EDGAR N-PORT-P (holdings fallback only)"
+ },
+ "identifiers": {
+  "cusip": null,
+  "isin": "US92647X7562",
+  "iopv": "IFLO.IV"
+ },
+ "inception": {
+  "fundInceptionDate": "2025-06-25",
+  "shareClassInceptionDate": "2025-06-25",
+  "exchange": "NASDAQ"
+ },
+ "expenseRatio": {
+  "display": "1.05%",
+  "value": 1.05,
+  "gross": 1.05,
+  "net": 0.56
+ },
+ "nav": {
+  "display": "$35.85",
+  "value": 35.85,
+  "asOfDate": "Sep 25 2026",
+  "change": 0.18
+ },
+ "marketPrice": {
+  "display": "$36.05",
+  "value": 36.045,
+  "asOfDate": "Sep 25 2026"
+ },
+ "premiumDiscount": {
+  "display": "0.56%",
+  "value": 0.5574
+ },
+ "aum": {
+  "display": "$284.97M",
+  "value": 284969651.6,
+  "asOfDate": "Sep 25 2026",
+  "source": "VCM ETF catalog / Overview JSON"
+ },
+ "yields": {
+  "dividendYield": 2.66,
+  "dividendYieldText": "2.66%",
+  "dividendYieldKind": "VCM published dividend yield as of Aug 31 2026",
+  "distributionRate": null,
+  "secYield": 2.06,
+  "secYieldText": "2.06%",
+  "secYieldKind": "VCM 30-day SEC yield as of Aug 31 2026",
+  "unsubsidizedSecYield": 2.03
+ },
+ "returns": {
+  "derivedFrom": "VCM published NAV performance series",
+  "monthEnd": {
+   "asOfDate": "Aug 31 2026",
+   "mo1": 7.67,
+   "qtd": 10.85,
+   "ytd": 32.12,
+   "yr1": 39.21,
+   "yr3": null,
+   "yr5": null,
+   "yr10": null,
+   "sinceInception": 41.9
+  },
+  "quarterEnd": {
+   "asOfDate": "Jun 30 2026",
+   "mo1": -1.95,
+   "qtd": 8.05,
+   "ytd": 16.87,
+   "yr1": 30.56,
+   "yr3": null,
+   "yr5": null,
+   "yr10": null,
+   "sinceInception": 33.32
+  }
+ },
+ "distributions": {
+  "frequency": "Quarterly",
+  "latestAmount": 0.079302,
+  "asOfDate": "Jul 10 2025",
+  "headers": [
+   "Declared Date",
+   "Record Date",
+   "Payable Date",
+   "Income Amount",
+   "Long-Term Capital Gains",
+   "Short-Term Capital Gains",
+   "Total Distribution",
+   "Return of Capital"
+  ],
+  "rows": [
+   [
+    "07/10/2025",
+    "07/09/2025",
+    "07/11/2025",
+    "0.025971000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "25.80"
+   ],
+   [
+    "09/08/2025",
+    "09/05/2025",
+    "09/09/2025",
+    "0.027408000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "27.49"
+   ],
+   [
+    "10/09/2025",
+    "10/08/2025",
+    "10/10/2025",
+    "0.087194000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "27.24"
+   ],
+   [
+    "12/11/2025",
+    "12/10/2025",
+    "12/12/2025",
+    "0.067197000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "28.27"
+   ],
+   [
+    "03/10/2026",
+    "03/09/2026",
+    "03/11/2026",
+    "0.026464000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "30.49"
+   ],
+   [
+    "04/09/2026",
+    "04/08/2026",
+    "04/10/2026",
+    "0.044005000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "32.01"
+   ],
+   [
+    "05/08/2026",
+    "05/07/2026",
+    "05/11/2026",
+    "0.069058000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "32.80"
+   ],
+   [
+    "06/09/2026",
+    "06/08/2026",
+    "06/10/2026",
+    "0.149792000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "32.97"
+   ],
+   [
+    "07/09/2026",
+    "07/08/2026",
+    "07/10/2026",
+    "0.053542000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "33.39"
+   ],
+   [
+    "09/09/2026",
+    "09/08/2026",
+    "09/10/2026",
+    "0.079302000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "36.73"
+   ]
+  ],
+  "source": "VCM Distributions API; API provides declared/record/payable dates, not an ex-date field"
+ },
+ "holdings": {
+  "pages": [
+   "holdings/001.json"
+  ],
+  "pageSize": 250,
+  "totalRows": 104,
+  "asOfDate": "2026-09-28",
+  "source": "VCM AllHoldings JSON"
+ },
+ "history": {
+  "pages": [
+   "history/001.json"
+  ],
+  "pageSize": 1000,
+  "totalRows": 315,
+  "asOfDate": "2026-09-25",
+  "source": "Yahoo Finance adjusted market-price chart + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
+ },
+ "holdingsCount": 104,
+ "historyCount": 315,
+ "distributionCount": 10,
+ "netAssets": 284969651.6,
+ "dividendYield": 2.66,
+ "secYield": 2.06
+}
