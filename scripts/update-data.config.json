@@ -21,8 +21,8 @@
   "TOTAL_RETURN_3Y": ":",
   "TOTAL_RETURN_5Y": ":",
   "TOTAL_RETURN_10Y": ":",
-  "EDGAR_FALLBACK": "1",
-  "SKIP_YAHOO": "",
-  "VERBOSE": "",
+  "EDGAR_FALLBACK": "true",
+  "SKIP_YAHOO": "false",
+  "VERBOSE": "false",
   "SEC_UA": ""
 }
