@@ -1,3 +1,4 @@
+import './load-update-data-config'; // JSON defaults; explicit process.env overrides.
 #!/usr/bin/env bun
 /// <reference types="bun" />
 import { createHash } from 'node:crypto';
