@@ -193,7 +193,7 @@ describe('README and automation documentation guards', () => {
     expect(brandRows.indexOf('WisdomTree')).toBe(brandRows.indexOf('VictoryShares') + 1);
   });
 
-  test('documents every updater environment variable and exposes a matching manual workflow input', async () => {
+  test('documents every updater environment variable and exposes a matching manual input or repository variable', async () => {
     const readme = await readFile(new URL('../README.md', import.meta.url), 'utf8');
     const workflow = await readFile(new URL('../.github/workflows/update-data.yml', import.meta.url), 'utf8');
     const envVars = [
@@ -205,8 +205,13 @@ describe('README and automation documentation guards', () => {
     for (const variable of envVars) expect(readme).toContain(`\`${variable}\``);
     const inputs = [...workflow.matchAll(/^      ([a-z][a-z0-9_]*):$/gm)].map(match => match[1]);
     for (const variable of envVars) {
-      expect(inputs).toContain(variable.toLowerCase());
-      expect(workflow).toMatch(new RegExp(`^      ${variable}: \\$\\{\\{ inputs\\.${variable.toLowerCase()} \\|\\| `, 'm'));
+      if (variable === 'SEC_UA') {
+        expect(inputs).not.toContain('sec_ua');
+        expect(workflow).toContain('SEC_UA: ${{ vars.SEC_UA || \'\' }}');
+      } else {
+        expect(inputs).toContain(variable.toLowerCase());
+        expect(workflow).toMatch(new RegExp(`^      ${variable}: \\$\\{\\{ inputs\\.${variable.toLowerCase()} \\|\\| `, 'm'));
+      }
     }
     expect(workflow).toContain("cron: '0 0 * * 0'");
     expect(workflow).toContain('bun test scripts/update-data.test.ts');

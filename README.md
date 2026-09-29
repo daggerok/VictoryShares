@@ -61,6 +61,8 @@ The updater uses issuer-published NAV performance values for month-end and quart
 
 `TICKERS` combines with AUM, TER, yield and return filters using AND logic. Unselected funds retain their previously published entries and data files. The updater preserves the existing full catalog when a limited ticker run is requested.
 
+For GitHub Actions runs, configure the optional repository variable `SEC_UA` with a valid organizational contact under **Settings → Secrets and variables → Actions → Variables** to enable SEC EDGAR fallback requests. It is read by scheduled runs as well as manual runs; it is no longer a dispatch input.
+
 ### Examples
 
 ```bash
