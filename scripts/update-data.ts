@@ -1,4 +1,15 @@
 #!/usr/bin/env bun
+// Checked-in JSON is the runtime default; any nonblank environment value wins.
+import { readFileSync as readUpdaterConfig } from 'node:fs';
+try {
+  const updaterDefaults = JSON.parse(readUpdaterConfig(new URL('./update-data.config.json', import.meta.url), 'utf8')) as Record<string, unknown>;
+  for (const [key, value] of Object.entries(updaterDefaults)) {
+    const current = process.env[key];
+    if ((current === undefined || current.trim() === '') && value !== null && value !== undefined) process.env[key] = String(value);
+  }
+} catch (error) {
+  if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+}
 /// <reference types="bun" />
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';

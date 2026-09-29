@@ -8,37 +8,37 @@ on:
       max_fetches:
         description: "Funds per batch; resumes after the saved cursor; 0 means all eligible funds"
         required: false
-        default: "0"
+        default: ""
         type: string
       request_sleep:
         description: "Minimum seconds between request starts per worker lane"
         required: false
-        default: "1"
+        default: ""
         type: string
       concurrency:
         description: "Parallel fund workers"
         required: false
-        default: "2"
+        default: ""
         type: string
       max_retries:
         description: "Retries after an initial request"
         required: false
-        default: "2"
+        default: ""
         type: string
       holdings_page_size:
         description: "Rows in each current-holdings JSON page"
         required: false
-        default: "250"
+        default: ""
         type: string
       history_page_size:
         description: "Rows in each daily price-history JSON page"
         required: false
-        default: "1000"
+        default: ""
         type: string
       history_range:
         description: "Yahoo Finance chart range (max, 10y, 5y, 2y, 1y, 6mo, 3mo)"
         required: false
-        default: "max"
+        default: ""
         type: string
       tickers:
         description: "Only process these tickers, separated by spaces or commas"
@@ -48,77 +48,77 @@ on:
       aum:
         description: "AUM min:max with K/M/B/T suffixes, or nano/micro/small/mid/large"
         required: false
-        default: ":"
+        default: ""
         type: string
       ter:
         description: "Gross expense ratio min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       dividend_yield:
         description: "Dividend yield min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       sec_yield:
         description: "30-day SEC yield min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       performance_ytd:
         description: "YTD published NAV return min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       performance_1y:
         description: "1-year published NAV return min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       performance_3y:
         description: "3-year annualized published NAV return min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       performance_5y:
         description: "5-year annualized published NAV return min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       performance_10y:
         description: "10-year annualized published NAV return min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       total_return_ytd:
         description: "YTD total return min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       total_return_1y:
         description: "1-year total return min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       total_return_3y:
         description: "3-year cumulative total return min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       total_return_5y:
         description: "5-year cumulative total return min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       total_return_10y:
         description: "10-year cumulative total return min:max (percent)"
         required: false
-        default: ":"
+        default: ""
         type: string
       edgar_fallback:
         description: "Use SEC N-PORT-P holdings if VCM does not provide full holdings"
         required: false
-        default: "1"
+        default: ""
         type: string
       skip_yahoo:
         description: "Skip Yahoo chart history and retain existing history when available"
@@ -142,29 +142,29 @@ jobs:
   update-data:
     runs-on: ubuntu-latest
     env:
-      MAX_FETCHES: ${{ inputs.max_fetches || '0' }}
-      REQUEST_SLEEP: ${{ inputs.request_sleep || '1' }}
-      CONCURRENCY: ${{ inputs.concurrency || '2' }}
-      MAX_RETRIES: ${{ inputs.max_retries || '2' }}
-      HOLDINGS_PAGE_SIZE: ${{ inputs.holdings_page_size || '250' }}
-      HISTORY_PAGE_SIZE: ${{ inputs.history_page_size || '1000' }}
-      HISTORY_RANGE: ${{ inputs.history_range || 'max' }}
+      MAX_FETCHES: ${{ inputs.max_fetches || '' }}
+      REQUEST_SLEEP: ${{ inputs.request_sleep || '' }}
+      CONCURRENCY: ${{ inputs.concurrency || '' }}
+      MAX_RETRIES: ${{ inputs.max_retries || '' }}
+      HOLDINGS_PAGE_SIZE: ${{ inputs.holdings_page_size || '' }}
+      HISTORY_PAGE_SIZE: ${{ inputs.history_page_size || '' }}
+      HISTORY_RANGE: ${{ inputs.history_range || '' }}
       TICKERS: ${{ inputs.tickers || '' }}
-      AUM: ${{ inputs.aum || ':' }}
-      TER: ${{ inputs.ter || ':' }}
-      DIVIDEND_YIELD: ${{ inputs.dividend_yield || ':' }}
-      SEC_YIELD: ${{ inputs.sec_yield || ':' }}
-      PERFORMANCE_YTD: ${{ inputs.performance_ytd || ':' }}
-      PERFORMANCE_1Y: ${{ inputs.performance_1y || ':' }}
-      PERFORMANCE_3Y: ${{ inputs.performance_3y || ':' }}
-      PERFORMANCE_5Y: ${{ inputs.performance_5y || ':' }}
-      PERFORMANCE_10Y: ${{ inputs.performance_10y || ':' }}
-      TOTAL_RETURN_YTD: ${{ inputs.total_return_ytd || ':' }}
-      TOTAL_RETURN_1Y: ${{ inputs.total_return_1y || ':' }}
-      TOTAL_RETURN_3Y: ${{ inputs.total_return_3y || ':' }}
-      TOTAL_RETURN_5Y: ${{ inputs.total_return_5y || ':' }}
-      TOTAL_RETURN_10Y: ${{ inputs.total_return_10y || ':' }}
-      EDGAR_FALLBACK: ${{ inputs.edgar_fallback || '1' }}
+      AUM: ${{ inputs.aum || '' }}
+      TER: ${{ inputs.ter || '' }}
+      DIVIDEND_YIELD: ${{ inputs.dividend_yield || '' }}
+      SEC_YIELD: ${{ inputs.sec_yield || '' }}
+      PERFORMANCE_YTD: ${{ inputs.performance_ytd || '' }}
+      PERFORMANCE_1Y: ${{ inputs.performance_1y || '' }}
+      PERFORMANCE_3Y: ${{ inputs.performance_3y || '' }}
+      PERFORMANCE_5Y: ${{ inputs.performance_5y || '' }}
+      PERFORMANCE_10Y: ${{ inputs.performance_10y || '' }}
+      TOTAL_RETURN_YTD: ${{ inputs.total_return_ytd || '' }}
+      TOTAL_RETURN_1Y: ${{ inputs.total_return_1y || '' }}
+      TOTAL_RETURN_3Y: ${{ inputs.total_return_3y || '' }}
+      TOTAL_RETURN_5Y: ${{ inputs.total_return_5y || '' }}
+      TOTAL_RETURN_10Y: ${{ inputs.total_return_10y || '' }}
+      EDGAR_FALLBACK: ${{ inputs.edgar_fallback || '' }}
       SEC_UA: ${{ vars.SEC_UA || '' }}
       SKIP_YAHOO: ${{ inputs.skip_yahoo || '' }}
       VERBOSE: ${{ inputs.verbose || '' }}
