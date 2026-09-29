@@ -120,11 +120,6 @@ on:
         required: false
         default: "1"
         type: string
-      sec_ua:
-        description: "SEC User-Agent with a valid organizational contact; needed only if EDGAR fallback is used"
-        required: false
-        default: ""
-        type: string
       skip_yahoo:
         description: "Skip Yahoo chart history and retain existing history when available"
         required: false
@@ -170,7 +165,7 @@ jobs:
       TOTAL_RETURN_5Y: ${{ inputs.total_return_5y || ':' }}
       TOTAL_RETURN_10Y: ${{ inputs.total_return_10y || ':' }}
       EDGAR_FALLBACK: ${{ inputs.edgar_fallback || '1' }}
-      SEC_UA: ${{ inputs.sec_ua || '' }}
+      SEC_UA: ${{ vars.SEC_UA || '' }}
       SKIP_YAHOO: ${{ inputs.skip_yahoo || '' }}
       VERBOSE: ${{ inputs.verbose || '' }}
 
