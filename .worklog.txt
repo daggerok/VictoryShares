@@ -1624,3 +1624,7 @@ was encountered.
 - Final check for this follow-up: `bun test` 16 passed / 0 failed / 169 expectations; updater and app Bun builds succeeded; `git diff --check` passed. No real browser interaction automation is available; Pages and data HTTP endpoints are verified, but mouse/focus/touch/narrow-screen behavior remains unexercised in a browser.
 - The latest PAT was used at the user's repeated explicit instruction for the settings update and sibling PR/merge operations. It was not committed or written to persistent Git configuration. Because it has been exposed in chat/tool-call history, revoke/rotate it now.
 - Closeout: the README/evidence/worklog change was committed as `022077e` on `docs/family-readme-sync`, opened as documentation-only PR #2, validated cleanly and squash-merged at `bcced08849bd98193a1c45df3ebe9af9371b6078`. The merged worktree is reflected in the current-state summary above.
+
+### 2026-10-01 - Config standardization (chore/standardize-config)
+- Replaced the top-of-file env injection with exported CONTROL_NAMES, resolveControls and runtimeControls (file < advanced < nonblank inputs < env); workflow now resolves controls through the same function with the protected SEC_UA variable winning when nonblank
+- Workflow regenerated with 24 individual inputs plus advanced (HISTORY_PAGE_SIZE is reachable only through advanced); README reorganized and config-docs.test.ts added
