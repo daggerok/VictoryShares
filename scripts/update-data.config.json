@@ -24,5 +24,6 @@
   "EDGAR_FALLBACK": "true",
   "SKIP_YAHOO": "false",
   "VERBOSE": "false",
+  "USE_SYSTEM_CA": "auto",
   "SEC_UA": "daggerok ETF feed daggerok@gmail.com"
 }

@@ -1,11 +1,11 @@
 /// <reference types="bun" />
-import { describe, expect, test } from 'bun:test';
+import { afterEach, describe, expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import {
   buildPages, formatFrequencyPlaceholder, inferFrequency, parseAumRange, parseAtomFilings, parseCatalog,
   parseDistributionPayload, parseFundTickerRefs, parseHoldings, parseIssuerClientConfig, parseNportHoldings,
   pageBasenames, parsePremiumDiscount, parseRange, parseYahooChart, historyRows, returnsFromCatalog,
-  CONTROL_NAMES, readConfig, resolveControls, runtimeControls,
+  CONTROL_NAMES, installSystemCa, isCertError, readConfig, resolveControls, runtimeControls,
 } from './update-data';
 
 const catalogFixture = [{
@@ -137,7 +137,7 @@ describe('control resolver', () => {
   });
 
   test('rejects unknown keys, non-scalars, bad layers, invalid values and newline injection', () => {
-    const bad: unknown[] = [{ UNKNOWN: 1 }, { SEC_UA: 'x\nEVIL=yes' }, { CONCURRENCY: 0 }, { MAX_RETRIES: 0 }, { MAX_RETRIES: -1 }, { MAX_FETCHES: 1.5 }, { HOLDINGS_PAGE_SIZE: 0 }, { HISTORY_PAGE_SIZE: 0 }, { REQUEST_SLEEP: '-1' }, { VERBOSE: 'maybe' }, { EDGAR_FALLBACK: 'x' }, { SKIP_YAHOO: 'x' }, { HISTORY_RANGE: '7y' }, { AUM: '1:2:3' }, { TER: '5' }, { TER: '5:1' }, { TICKERS: ['VFLO'] }, null, []];
+    const bad: unknown[] = [{ UNKNOWN: 1 }, { SEC_UA: 'x\nEVIL=yes' }, { CONCURRENCY: 0 }, { MAX_RETRIES: 0 }, { MAX_RETRIES: -1 }, { MAX_FETCHES: 1.5 }, { HOLDINGS_PAGE_SIZE: 0 }, { HISTORY_PAGE_SIZE: 0 }, { REQUEST_SLEEP: '-1' }, { VERBOSE: 'maybe' }, { USE_SYSTEM_CA: 'maybe' }, { EDGAR_FALLBACK: 'x' }, { SKIP_YAHOO: 'x' }, { HISTORY_RANGE: '7y' }, { AUM: '1:2:3' }, { TER: '5' }, { TER: '5:1' }, { TICKERS: ['VFLO'] }, null, []];
     for (const value of bad) expect(() => resolveControls(value)).toThrow();
     expect(() => resolveControls({}, { SEC_UA: 'x\rfoo' })).toThrow();
     expect(() => resolveControls({}, {}, {}, { SEC_UA: 'x\0bad' })).toThrow();
@@ -215,5 +215,52 @@ describe('config, README, --help and workflow parity', () => {
     expect(actual).not.toMatch(/OUTPUT_DIR|output_dir/i);
     expect(actual.match(/git add (\S+)/g)).toEqual(['git add api/victoryshares']);
     expect(actual.match(/api\/[\w-]+/g)!.every(p => p === 'api/victoryshares')).toBe(true);
+  });
+});
+
+describe('TLS trust store (USE_SYSTEM_CA)', () => {
+  const realFetch = globalThis.fetch;
+  afterEach(() => { globalThis.fetch = realFetch; });
+  const reexecSpy = () => { const calls: number[] = []; return { calls, reexec: (() => { calls.push(1); throw new Error('reexec'); }) as () => never }; };
+
+  test('resolver accepts auto/true/false case-insensitively, rejects maybe, defaults to auto', () => {
+    expect(resolveControls(configFile()).USE_SYSTEM_CA).toBe('auto');
+    for (const value of ['auto', 'true', 'false', 'AUTO', 'True', 'FALSE']) expect(resolveControls({}, {}, {}, { USE_SYSTEM_CA: value }).USE_SYSTEM_CA).toBe(value);
+    expect(() => resolveControls({}, {}, {}, { USE_SYSTEM_CA: 'maybe' })).toThrow();
+  });
+
+  test('isCertError detects codes, messages and nested causes only', () => {
+    expect(isCertError({ code: 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY' })).toBe(true);
+    expect(isCertError(new Error('unable to get local issuer certificate'))).toBe(true);
+    expect(isCertError(new Error('fetch failed', { cause: new Error('unable to get local issuer certificate') }))).toBe(true);
+    expect(isCertError({ code: 'ECONNRESET' })).toBe(false);
+    expect(isCertError(new Error('HTTP 403 Forbidden'))).toBe(false);
+    expect(isCertError(null)).toBe(false);
+  });
+
+  test('installSystemCa honors false/active, restarts for true, wraps fetch for auto', async () => {
+    const { calls, reexec } = reexecSpy();
+    installSystemCa('false', reexec, false);
+    expect(globalThis.fetch).toBe(realFetch);
+    installSystemCa('auto', reexec, true);
+    expect(globalThis.fetch).toBe(realFetch);
+    expect(() => installSystemCa('true', reexec, false)).toThrow('reexec');
+    expect(calls.length).toBe(1);
+
+    const ok = new Response('ok');
+    globalThis.fetch = (async () => ok) as unknown as typeof fetch;
+    installSystemCa('auto', reexec, false);
+    expect(await fetch('https://example.test')).toBe(ok);
+    expect(calls.length).toBe(1);
+
+    globalThis.fetch = (async () => { throw new Error('ECONNRESET'); }) as unknown as typeof fetch;
+    installSystemCa('auto', reexec, false);
+    await expect(fetch('https://example.test')).rejects.toThrow('ECONNRESET');
+    expect(calls.length).toBe(1);
+
+    globalThis.fetch = (async () => { throw Object.assign(new Error('x'), { code: 'SELF_SIGNED_CERT_IN_CHAIN' }); }) as unknown as typeof fetch;
+    installSystemCa('auto', reexec, false);
+    await expect(fetch('https://example.test')).rejects.toThrow('reexec');
+    expect(calls.length).toBe(2);
   });
 });

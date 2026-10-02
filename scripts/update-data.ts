@@ -4,6 +4,42 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 
 
+// --- TLS trust store (identical in every ETF repo) ---
+const SYSTEM_CA_MARKER = 'ETF_UPDATER_SYSTEM_CA';
+const CERT_ERROR = /UNABLE_TO_GET_ISSUER_CERT|UNABLE_TO_VERIFY_LEAF_SIGNATURE|SELF_SIGNED_CERT|CERT_HAS_EXPIRED|unable to get (?:local )?issuer certificate|self[- ]signed certificate|certificate has expired/i;
+
+export function isCertError(error: unknown): boolean {
+  const e = error as { code?: unknown; message?: unknown; cause?: unknown } | null;
+  return CERT_ERROR.test(`${String(e?.code ?? '')} ${String(e?.message ?? '')}`) || (e?.cause ? isCertError(e.cause) : false);
+}
+
+export function systemCaActive(env: Record<string, string | undefined> = process.env, execArgv: string[] = process.execArgv): boolean {
+  return execArgv.includes('--use-system-ca') || env.NODE_USE_SYSTEM_CA === '1' || env[SYSTEM_CA_MARKER] === '1';
+}
+
+export function reexecWithSystemCa(): never {
+  const child = Bun.spawnSync([process.execPath, '--use-system-ca', ...process.argv.slice(1)], {
+    env: { ...process.env, [SYSTEM_CA_MARKER]: '1' },
+    stdio: ['inherit', 'inherit', 'inherit'],
+  });
+  process.exit(child.exitCode ?? 1);
+}
+
+/** mode: auto (restart once on an untrusted-certificate error), true (restart now), false (never). */
+export function installSystemCa(mode: string, reexec: () => never = reexecWithSystemCa, active: boolean = systemCaActive()): void {
+  if (mode === 'false' || active) return;
+  if (mode === 'true') reexec();
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = (async (...args: Parameters<typeof fetch>) => {
+    try { return await realFetch(...args); }
+    catch (error) {
+      if (!isCertError(error)) throw error;
+      console.error('[ notice   ] TLS certificate not trusted; restarting once with --use-system-ca');
+      return reexec();
+    }
+  }) as typeof fetch;
+}
+
 /** VictoryShares static data updater. Bun only; official VCM JSON + Yahoo + optional SEC N-PORT-P. */
 
 type JsonRecord = Record<string, unknown>;
@@ -239,7 +275,7 @@ export const CONTROL_NAMES = [
   'MAX_FETCHES', 'REQUEST_SLEEP', 'CONCURRENCY', 'MAX_RETRIES', 'HOLDINGS_PAGE_SIZE', 'HISTORY_PAGE_SIZE', 'HISTORY_RANGE',
   'TICKERS', 'AUM', 'TER', 'DIVIDEND_YIELD', 'SEC_YIELD',
   ...['PERFORMANCE', 'TOTAL_RETURN'].flatMap(prefix => RETURN_PERIODS.map(period => `${prefix}_${period}`)),
-  'EDGAR_FALLBACK', 'SKIP_YAHOO', 'VERBOSE', 'SEC_UA',
+  'EDGAR_FALLBACK', 'SKIP_YAHOO', 'VERBOSE', 'USE_SYSTEM_CA', 'SEC_UA',
 ] as const;
 export type ControlName = (typeof CONTROL_NAMES)[number];
 export const CONFIG_FILE_URL = new URL('./update-data.config.json', import.meta.url);
@@ -281,6 +317,7 @@ export function resolveControls(
   for (const key of ['EDGAR_FALLBACK', 'SKIP_YAHOO', 'VERBOSE']) {
     if (result[key] && !/^(0|1|true|false|yes|no|y|n|on|off)$/i.test(result[key])) throw new Error(`${key}: expected boolean`);
   }
+  if (result.USE_SYSTEM_CA && !/^(auto|true|false)$/i.test(result.USE_SYSTEM_CA)) throw new Error('USE_SYSTEM_CA: expected auto, true or false');
   readConfig(result); // validate every min:max filter before any request or write
   return result;
 }
@@ -842,13 +879,14 @@ async function mapWithConcurrency<T>(items: T[], concurrency: number, work: (ite
   await Promise.all(workers);
 }
 function printHelp(): void {
-  console.log(`VictoryShares ETF updater\n\nUsage: bun ./scripts/update-data.ts [--help]\n\nDefaults come from scripts/update-data.config.json; any explicitly set environment variable below overrides the file value (an empty value clears the control).\n\nControls:\n  MAX_FETCHES=0             Number of funds to process (0 = all eligible; resumes after saved ticker cursor)\n  TICKERS="VFLO USTB UEVM" Only process the named tickers\n  REQUEST_SLEEP=1           Minimum seconds between request starts per worker lane\n  CONCURRENCY=2             Parallel fund workers (default conservative)\n  MAX_RETRIES=2             Retries after initial request (integer >= 1)\n  HOLDINGS_PAGE_SIZE=250    Rows per static holdings page\n  HISTORY_PAGE_SIZE=1000    Rows per static price-history page\n  HISTORY_RANGE=max         Yahoo range: max, 10y, 5y, 2y, 1y, 6mo or 3mo\n  AUM=:                     AUM min:max (K/M/B/T suffixes) or nano/micro/small/mid/large\n  TER=: DIVIDEND_YIELD=: SEC_YIELD=:  Inclusive numeric min:max percentages\n  PERFORMANCE_{YTD,1Y,3Y,5Y,10Y}=: Annualized NAV-return filters\n  TOTAL_RETURN_{YTD,1Y,3Y,5Y,10Y}=: Cumulative-return filters\n  EDGAR_FALLBACK=1          Use SEC N-PORT-P only if official holdings are unavailable\n  SEC_UA=<ua string>        SEC User-Agent with a contact for EDGAR fallback requests (redacted in logs)\n  SKIP_YAHOO=1              Do not call Yahoo; retain prior history if available\n  VERBOSE=1                 Show per-request retry/fallback details\n`);
+  console.log(`VictoryShares ETF updater\n\nUsage: bun ./scripts/update-data.ts [--help]\n\nDefaults come from scripts/update-data.config.json; any explicitly set environment variable below overrides the file value (an empty value clears the control).\n\nControls:\n  MAX_FETCHES=0             Number of funds to process (0 = all eligible; resumes after saved ticker cursor)\n  TICKERS="VFLO USTB UEVM" Only process the named tickers\n  REQUEST_SLEEP=1           Minimum seconds between request starts per worker lane\n  CONCURRENCY=2             Parallel fund workers (default conservative)\n  MAX_RETRIES=2             Retries after initial request (integer >= 1)\n  HOLDINGS_PAGE_SIZE=250    Rows per static holdings page\n  HISTORY_PAGE_SIZE=1000    Rows per static price-history page\n  HISTORY_RANGE=max         Yahoo range: max, 10y, 5y, 2y, 1y, 6mo or 3mo\n  AUM=:                     AUM min:max (K/M/B/T suffixes) or nano/micro/small/mid/large\n  TER=: DIVIDEND_YIELD=: SEC_YIELD=:  Inclusive numeric min:max percentages\n  PERFORMANCE_{YTD,1Y,3Y,5Y,10Y}=: Annualized NAV-return filters\n  TOTAL_RETURN_{YTD,1Y,3Y,5Y,10Y}=: Cumulative-return filters\n  EDGAR_FALLBACK=1          Use SEC N-PORT-P only if official holdings are unavailable\n  SEC_UA=<ua string>        SEC User-Agent with a contact for EDGAR fallback requests (redacted in logs)\n  SKIP_YAHOO=1              Do not call Yahoo; retain prior history if available\n  VERBOSE=1                 Show per-request retry/fallback details\n  USE_SYSTEM_CA=auto        TLS trust store: auto restarts once with Bun --use-system-ca on an untrusted-certificate error, true always uses it, false never restarts\n`);
 }
 
 async function main(): Promise<void> {
   if (process.argv.some(arg => arg === '-h' || arg === '--help')) { printHelp(); return; }
   const controls = await runtimeControls();
   if (controls.VERBOSE !== undefined) process.env.VERBOSE = controls.VERBOSE;
+  installSystemCa((controls.USE_SYSTEM_CA || 'auto').toLowerCase());
   const config = readConfig(controls);
   requestSleepMs = config.requestSleep * 1000;
   laneTimes = new Array(Math.max(1, config.concurrency)).fill(0);
