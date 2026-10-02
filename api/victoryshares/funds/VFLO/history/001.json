@@ -1203,7 +1203,21 @@
    "Market Price": "51.60",
    "Premium/Discount": "0.0213%",
    "Adj Close": "51.60"
+  },
+  {
+   "Date": "2026-09-28",
+   "NAV": "",
+   "Market Price": "52.11",
+   "Premium/Discount": "0.0114%",
+   "Adj Close": "52.11"
+  },
+  {
+   "Date": "2026-10-01",
+   "NAV": "",
+   "Market Price": "52.11",
+   "Premium/Discount": "",
+   "Adj Close": "52.11"
   }
  ],
- "asOfDate": "2026-09-21"
+ "asOfDate": "2026-10-01"
 }
