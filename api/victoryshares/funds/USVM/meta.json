@@ -84,7 +84,9 @@
    "yr5": 10.58,
    "yr10": null,
    "sinceInception": 11.17
-  }
+  },
+  "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+  "performanceAsOf": "2026-08-31"
  },
  "distributions": {
   "frequency": "Monthly",

@@ -77,7 +77,9 @@
     "dividendYield": 6.12,
     "dividendYieldText": "6.12%",
     "secYield": 6.11,
-    "secYieldText": "6.11%"
+    "secYieldText": "6.11%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 208,
    "history": 315
@@ -142,7 +144,9 @@
     "dividendYield": 3.53,
     "dividendYieldText": "3.53%",
     "secYield": 3.12,
-    "secYieldText": "3.12%"
+    "secYieldText": "3.12%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 102,
    "history": 147
@@ -207,7 +211,9 @@
     "dividendYield": 3.53,
     "dividendYieldText": "3.53%",
     "secYield": 3.12,
-    "secYieldText": "3.12%"
+    "secYieldText": "3.12%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 102,
    "history": 135
@@ -272,7 +278,9 @@
     "dividendYield": 1.57,
     "dividendYieldText": "1.57%",
     "secYield": 1.2,
-    "secYieldText": "1.20%"
+    "secYieldText": "1.20%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 502,
    "history": 147
@@ -337,7 +345,9 @@
     "dividendYield": 1.57,
     "dividendYieldText": "1.57%",
     "secYield": 1.2,
-    "secYieldText": "1.20%"
+    "secYieldText": "1.20%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 502,
    "history": 147
@@ -402,7 +412,9 @@
     "dividendYield": 3.69,
     "dividendYieldText": "3.69%",
     "secYield": 3.33,
-    "secYieldText": "3.33%"
+    "secYieldText": "3.33%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 102,
    "history": 135
@@ -467,7 +479,9 @@
     "dividendYield": 0.35,
     "dividendYieldText": "0.35%",
     "secYield": 0,
-    "secYieldText": "0.00%"
+    "secYieldText": "0.00%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 102,
    "history": 452
@@ -532,7 +546,9 @@
     "dividendYield": 1.55,
     "dividendYieldText": "1.55%",
     "secYield": 0.99,
-    "secYieldText": "0.99%"
+    "secYieldText": "0.99%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 15,
    "history": 116
@@ -597,7 +613,9 @@
     "dividendYield": 1.14,
     "dividendYieldText": "1.14%",
     "secYield": 0.75,
-    "secYieldText": "0.75%"
+    "secYieldText": "0.75%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 105,
    "history": 315
@@ -662,7 +680,9 @@
     "dividendYield": 2.66,
     "dividendYieldText": "2.66%",
     "secYield": 2.06,
-    "secYieldText": "2.06%"
+    "secYieldText": "2.06%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 104,
    "history": 315
@@ -727,7 +747,9 @@
     "dividendYield": 1.08,
     "dividendYieldText": "1.08%",
     "secYield": 0.62,
-    "secYieldText": "0.62%"
+    "secYieldText": "0.62%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 363,
    "history": 207
@@ -792,7 +814,9 @@
     "dividendYield": 1.09,
     "dividendYieldText": "1.09%",
     "secYield": 0.56,
-    "secYieldText": "0.56%"
+    "secYieldText": "0.56%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 202,
    "history": 145
@@ -857,7 +881,9 @@
     "dividendYield": 4.95,
     "dividendYieldText": "4.95%",
     "secYield": 4.98,
-    "secYieldText": "4.98%"
+    "secYieldText": "4.98%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 1626,
    "history": 260
@@ -922,7 +948,9 @@
     "dividendYield": 3.35,
     "dividendYieldText": "3.35%",
     "secYield": 5.17,
-    "secYieldText": "5.17%"
+    "secYieldText": "5.17%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 512,
    "history": 260
@@ -987,7 +1015,9 @@
     "dividendYield": 3.98,
     "dividendYieldText": "3.98%",
     "secYield": 5.67,
-    "secYieldText": "5.67%"
+    "secYieldText": "5.67%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 195,
    "history": 466
@@ -1052,7 +1082,9 @@
     "dividendYield": 4.42,
     "dividendYieldText": "4.42%",
     "secYield": 4.81,
-    "secYieldText": "4.81%"
+    "secYieldText": "4.81%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 1237,
    "history": 466
@@ -1117,7 +1149,9 @@
     "dividendYield": 3.15,
     "dividendYieldText": "3.15%",
     "secYield": 2.53,
-    "secYieldText": "2.53%"
+    "secYieldText": "2.53%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 202,
    "history": 466
@@ -1182,7 +1216,9 @@
     "dividendYield": 2.2,
     "dividendYieldText": "2.20%",
     "secYield": 1.99,
-    "secYieldText": "1.99%"
+    "secYieldText": "1.99%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 127,
    "history": 466
@@ -1247,7 +1283,9 @@
     "dividendYield": 4.4,
     "dividendYieldText": "4.40%",
     "secYield": 4.75,
-    "secYieldText": "4.75%"
+    "secYieldText": "4.75%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 1153,
    "history": 466
@@ -1312,7 +1350,9 @@
     "dividendYield": 2.15,
     "dividendYieldText": "2.15%",
     "secYield": 1.96,
-    "secYieldText": "1.96%"
+    "secYieldText": "1.96%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 294,
    "history": 466
@@ -1377,7 +1417,9 @@
     "dividendYield": 1.3,
     "dividendYieldText": "1.30%",
     "secYield": 0.95,
-    "secYieldText": "0.95%"
+    "secYieldText": "0.95%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 52,
    "history": 173
@@ -1442,7 +1484,9 @@
     "dividendYield": null,
     "dividendYieldText": null,
     "secYield": null,
-    "secYieldText": null
+    "secYieldText": null,
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": null
    },
    "holdings": 21,
    "history": 5
@@ -1507,7 +1551,9 @@
     "dividendYield": null,
     "dividendYieldText": null,
     "secYield": null,
-    "secYieldText": null
+    "secYieldText": null,
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": null
    },
    "holdings": 23,
    "history": 3
@@ -1572,7 +1618,9 @@
     "dividendYield": 2.66,
     "dividendYieldText": "2.66%",
     "secYield": 2.34,
-    "secYieldText": "2.34%"
+    "secYieldText": "2.34%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 77,
    "history": 114
@@ -1637,7 +1685,9 @@
     "dividendYield": 1.64,
     "dividendYieldText": "1.64%",
     "secYield": 1.29,
-    "secYieldText": "1.29%"
+    "secYieldText": "1.29%",
+    "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
+    "performanceAsOf": "2026-08-31"
    },
    "holdings": 63,
    "history": 483
