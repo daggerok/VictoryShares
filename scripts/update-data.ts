@@ -364,7 +364,19 @@ export function parseCatalog(payload: unknown): Fund[] {
   return result.sort((a, b) => a.ticker.localeCompare(b.ticker));
 }
 
-function cachedFundFromIndex(item: JsonRecord): Fund {
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+/** ISO YYYY-MM-DD from an ISO/US date or a published display date such as "Aug 31 2026"; null when unparseable. */
+export function performanceDateIso(value: unknown): string | null {
+  const iso = toIsoDate(value);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
+  const match = /^([A-Za-z]{3}) (\d{1,2}) (\d{4})$/.exec(iso);
+  const month = match ? MONTHS.indexOf(match[1]) : -1;
+  return match && month >= 0 ? `${match[3]}-${String(month + 1).padStart(2, '0')}-${match[2].padStart(2, '0')}` : null;
+}
+
+export const RETURNS_BASIS = 'official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns';
+
+export function cachedFundFromIndex(item: JsonRecord): Fund {
   const metrics = isRecord(item.metrics) ? item.metrics : {};
   const returns = isRecord(item.returns) ? item.returns : {};
   const monthEnd = isRecord(returns.monthEnd) ? returns.monthEnd : {};
@@ -380,6 +392,8 @@ function cachedFundFromIndex(item: JsonRecord): Fund {
     dividendYield: toNumber(metrics.dividendYield), secYield: toNumber(metrics.secYield),
     gross_exp_ratio: item.terValue, net_expense_ratio: item.terValue,
     performance: { monthly: toSourceReturns(monthEnd), quarterly: toSourceReturns(quarterEnd) },
+    monthly_performance_as_of_date: monthEnd.asOfDate,
+    quarterly_performance_as_of_date: quarterEnd.asOfDate,
   };
 }
 
@@ -699,6 +713,7 @@ export function returnsFromCatalog(fund: Fund): { monthEnd: JsonRecord; quarterE
       cagr3y, cagr5y, cagr10y, siAnn: toNumber(monthly.since_inception_nav),
       dividendYield: fund.dividendYield, dividendYieldText: fund.dividendYield === null ? null : formatPercent(fund.dividendYield),
       secYield: fund.secYield, secYieldText: fund.secYield === null ? null : formatPercent(fund.secYield),
+      returnsBasis: RETURNS_BASIS, performanceAsOf: performanceDateIso(valueFrom(fund, 'monthly_performance_as_of_date')),
     },
   };
 }
@@ -717,7 +732,8 @@ function catalogIndexEntry(fund: Fund, previous: JsonRecord | undefined): JsonRe
   const yieldMeta = isRecord(meta?.yields) ? meta.yields : {};
   const dividendYield = toNumber(yieldMeta.dividendYield) ?? toNumber(meta?.dividendYield) ?? fund.dividendYield;
   const secYield = toNumber(yieldMeta.secYield) ?? toNumber(meta?.secYield) ?? fund.secYield;
-  const metrics = { ...returns.metrics, dividendYield, secYield };
+  const { returnsBasis, performanceAsOf, ...baseMetrics } = returns.metrics;
+  const metrics = { ...baseMetrics, dividendYield, secYield, returnsBasis, performanceAsOf };
   const distributionMeta = isRecord(meta?.distributions) ? meta.distributions : {};
   return {
     ticker: fund.ticker, name: fund.name, category: fund.category, fundPage: fundPageUrl(fund), dataFile: `./funds/${fund.ticker}/meta.json`,
@@ -832,7 +848,7 @@ async function createMeta(fund: Fund, key: string, config: Config): Promise<Json
       secYieldKind: secYield === null ? null : `VCM 30-day SEC yield as of ${displayDate(valueFrom(yields, 'as_of_date') ?? fund.nav_as_of)}`,
       unsubsidizedSecYield: toNumber(yields.thirtyday_sec_unsubsidized_yield),
     },
-    returns: { derivedFrom: 'VCM published NAV performance series', monthEnd: returns.monthEnd, quarterEnd: returns.quarterEnd },
+    returns: { derivedFrom: 'VCM published NAV performance series', monthEnd: returns.monthEnd, quarterEnd: returns.quarterEnd, returnsBasis: returns.metrics.returnsBasis, performanceAsOf: returns.metrics.performanceAsOf },
     distributions: {
       frequency: distributions.frequency, latestAmount: distributions.latest,
       asOfDate: displayDate(isRecord(distributionPayload) ? distributionPayload.as_of_date : null),

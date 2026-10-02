@@ -5,13 +5,13 @@ import {
   buildPages, formatFrequencyPlaceholder, inferFrequency, parseAumRange, parseAtomFilings, parseCatalog,
   parseDistributionPayload, parseFundTickerRefs, parseHoldings, parseIssuerClientConfig, parseNportHoldings,
   pageBasenames, parsePremiumDiscount, parseRange, parseYahooChart, historyRows, returnsFromCatalog,
-  CONTROL_NAMES, installSystemCa, isCertError, readConfig, resolveControls, runtimeControls,
+  CONTROL_NAMES, RETURNS_BASIS, cachedFundFromIndex, performanceDateIso, installSystemCa, isCertError, readConfig, resolveControls, runtimeControls,
 } from './update-data';
 
 const catalogFixture = [{
   ticker: 'VFLO', entity_long_name: 'VictoryShares Free Cash Flow ETF', asset_class: 'US Equity',
   latest_nav: '51.59', market_close: '51.60', net_assets: '10993961469', gross_exp_ratio: '0.44', net_expense_ratio: '0.39',
-  inception_date: '06/21/2023', nav_as_of: '09/25/2026', premium_discount_percentage: '-0.0043',
+  inception_date: '06/21/2023', nav_as_of: '09/25/2026', monthly_performance_as_of_date: '08/31/2026', premium_discount_percentage: '-0.0043',
   performance: { monthly: { as_of: '08/31/2026', ytd_nav: '41.85', oneyear_nav: '51.00', threeyear_nav: '29.99', fiveyear_nav: null, tenyear_nav: null, since_inception_nav: '30.11' }, quarterly: {} },
 }];
 
@@ -46,6 +46,27 @@ describe('VictoryShares source parsers', () => {
     expect(returns.metrics.cagr3y).toBe(29.99);
     expect(returns.metrics.tr3y).toBeCloseTo(((1 + 0.2999) ** 3 - 1) * 100, 2);
     expect(returns.metrics.tr5y).toBeNull();
+  });
+
+  test('adds returnsBasis and performanceAsOf (performance table date, not the NAV date) at the end of metrics', () => {
+    const [fund] = parseCatalog(catalogFixture);
+    const { metrics } = returnsFromCatalog(fund);
+    expect(Object.keys(metrics).slice(-2)).toEqual(['returnsBasis', 'performanceAsOf']);
+    expect(metrics.returnsBasis).toBe(RETURNS_BASIS);
+    expect(String(metrics.returnsBasis)).not.toMatch(/^-?$|<TICKER>/);
+    expect(metrics.performanceAsOf).toBe('2026-08-31');
+    expect(returnsFromCatalog({ ...fund, monthly_performance_as_of_date: undefined }).metrics.performanceAsOf).toBeNull();
+    expect(returnsFromCatalog({ ...fund, monthly_performance_as_of_date: '' }).metrics.performanceAsOf).toBeNull();
+  });
+
+  test('derives performanceAsOf offline from a published index row (display date -> ISO)', () => {
+    expect(performanceDateIso('Aug 31 2026')).toBe('2026-08-31');
+    expect(performanceDateIso('08/31/2026')).toBe('2026-08-31');
+    expect(performanceDateIso('')).toBeNull();
+    const row = { ticker: 'VFLO', name: 'x', category: 'y', returns: { monthEnd: { asOfDate: 'Aug 31 2026', yr1: 5 }, quarterEnd: { asOfDate: 'Jun 30 2026' } }, metrics: {} };
+    expect(returnsFromCatalog(cachedFundFromIndex(row)).metrics.performanceAsOf).toBe('2026-08-31');
+    const none = { ...row, returns: { monthEnd: { asOfDate: '' }, quarterEnd: { asOfDate: '' } } };
+    expect(returnsFromCatalog(cachedFundFromIndex(none)).metrics.performanceAsOf).toBeNull();
   });
 
   test('paginates deterministic row sets without empty trailing pages', () => {
