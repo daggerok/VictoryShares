@@ -6,129 +6,129 @@ on:
   workflow_dispatch:
     inputs:
       max_fetches:
-        description: "Funds per batch; resumes after the saved cursor; 0 means all eligible funds"
+        description: "Funds per batch; resumes after the saved cursor; 0 means all eligible funds; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       request_sleep:
-        description: "Minimum seconds between request starts per worker lane"
+        description: "Minimum seconds between request starts per worker lane; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       concurrency:
-        description: "Parallel fund workers"
+        description: "Parallel fund workers; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       max_retries:
-        description: "Retries after an initial request"
+        description: "Retries after an initial request; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       holdings_page_size:
-        description: "Rows in each current-holdings JSON page"
+        description: "Rows in each current-holdings JSON page; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       history_page_size:
-        description: "Rows in each daily price-history JSON page"
+        description: "Rows in each daily-history JSON page; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       history_range:
-        description: "Yahoo Finance chart range (max, 10y, 5y, 2y, 1y, 6mo, 3mo)"
+        description: "Yahoo Finance chart range (max, 10y, 5y, 2y, 1y, 6mo, 3mo); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       tickers:
-        description: "Only process these tickers, separated by spaces or commas"
+        description: "Only process these tickers, separated by spaces or commas; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       aum:
-        description: "AUM min:max with K/M/B/T suffixes, or nano/micro/small/mid/large"
+        description: "AUM min:max with K/M/B/T suffixes, or nano/micro/small/mid/large; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       ter:
-        description: "Gross expense ratio min:max (percent)"
+        description: "Gross expense ratio min:max (percent); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       dividend_yield:
-        description: "Dividend yield min:max (percent)"
+        description: "Dividend yield min:max (percent); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       sec_yield:
-        description: "30-day SEC yield min:max (percent)"
+        description: "30-day SEC yield min:max (percent); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       performance_ytd:
-        description: "YTD published NAV return min:max (percent)"
+        description: "YTD published NAV return min:max (percent); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       performance_1y:
-        description: "1-year published NAV return min:max (percent)"
+        description: "1-year published NAV return min:max (percent); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       performance_3y:
-        description: "3-year annualized published NAV return min:max (percent)"
+        description: "3-year annualized published NAV return min:max (percent); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       performance_5y:
-        description: "5-year annualized published NAV return min:max (percent)"
+        description: "5-year annualized published NAV return min:max (percent); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       performance_10y:
-        description: "10-year annualized published NAV return min:max (percent)"
+        description: "10-year annualized published NAV return min:max (percent); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       total_return_ytd:
-        description: "YTD total return min:max (percent)"
+        description: "YTD total return min:max (percent); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       total_return_1y:
-        description: "1-year total return min:max (percent)"
+        description: "1-year total return min:max (percent); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       total_return_3y:
-        description: "3-year cumulative total return min:max (percent)"
+        description: "3-year cumulative total return min:max (percent); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       total_return_5y:
-        description: "5-year cumulative total return min:max (percent)"
-        required: false
-        default: ""
-        type: string
-      total_return_10y:
-        description: "10-year cumulative total return min:max (percent)"
+        description: "5-year cumulative total return min:max (percent); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       edgar_fallback:
-        description: "Use SEC N-PORT-P holdings if VCM does not provide full holdings"
+        description: "Use SEC N-PORT-P holdings if VCM does not provide full holdings; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       skip_yahoo:
-        description: "Skip Yahoo chart history and retain existing history when available"
+        description: "Skip Yahoo chart history and retain existing history when available; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       verbose:
-        description: "Show per-request retries and fallback notices"
+        description: "Show per-request retries and fallback notices; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
+        type: string
+      advanced:
+        description: 'JSON object of supported control overrides not exposed above (keys are UPPER_CASE control names, values are scalars); nonblank individual inputs win'
+        required: false
+        default: '{}'
         type: string
 
 permissions:
@@ -141,60 +141,56 @@ concurrency:
 jobs:
   update-data:
     runs-on: ubuntu-latest
-    env:
-      MAX_FETCHES: ${{ inputs.max_fetches || '' }}
-      REQUEST_SLEEP: ${{ inputs.request_sleep || '' }}
-      CONCURRENCY: ${{ inputs.concurrency || '' }}
-      MAX_RETRIES: ${{ inputs.max_retries || '' }}
-      HOLDINGS_PAGE_SIZE: ${{ inputs.holdings_page_size || '' }}
-      HISTORY_PAGE_SIZE: ${{ inputs.history_page_size || '' }}
-      HISTORY_RANGE: ${{ inputs.history_range || '' }}
-      TICKERS: ${{ inputs.tickers || '' }}
-      AUM: ${{ inputs.aum || '' }}
-      TER: ${{ inputs.ter || '' }}
-      DIVIDEND_YIELD: ${{ inputs.dividend_yield || '' }}
-      SEC_YIELD: ${{ inputs.sec_yield || '' }}
-      PERFORMANCE_YTD: ${{ inputs.performance_ytd || '' }}
-      PERFORMANCE_1Y: ${{ inputs.performance_1y || '' }}
-      PERFORMANCE_3Y: ${{ inputs.performance_3y || '' }}
-      PERFORMANCE_5Y: ${{ inputs.performance_5y || '' }}
-      PERFORMANCE_10Y: ${{ inputs.performance_10y || '' }}
-      TOTAL_RETURN_YTD: ${{ inputs.total_return_ytd || '' }}
-      TOTAL_RETURN_1Y: ${{ inputs.total_return_1y || '' }}
-      TOTAL_RETURN_3Y: ${{ inputs.total_return_3y || '' }}
-      TOTAL_RETURN_5Y: ${{ inputs.total_return_5y || '' }}
-      TOTAL_RETURN_10Y: ${{ inputs.total_return_10y || '' }}
-      EDGAR_FALLBACK: ${{ inputs.edgar_fallback || '' }}
-      SEC_UA: ${{ vars.SEC_UA || '' }}
-      SKIP_YAHOO: ${{ inputs.skip_yahoo || '' }}
-      VERBOSE: ${{ inputs.verbose || '' }}
-
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-
+        with:
+          persist-credentials: false
       - name: Setup bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-
       - name: Install dependencies
         run: bun install --frozen-lockfile
-
       - name: Run updater unit tests
-        run: bun test scripts/update-data.test.ts
-
+        run: bun test
+      - name: Resolve file defaults and manual overrides
+        env:
+          DISPATCH_INPUTS: ${{ toJSON(inputs) }}
+          PROTECTED_SEC_UA: ${{ vars.SEC_UA }}
+        run: |
+          bun --eval '
+            import { resolveControls } from "./scripts/update-data.ts";
+            import { appendFile } from "node:fs/promises";
+            // schedule runs have no dispatch inputs: file defaults apply as-is
+            const inputs = JSON.parse(process.env.DISPATCH_INPUTS || "{}");
+            const advanced = JSON.parse(inputs.advanced || "{}");
+            const individual = Object.fromEntries(Object.entries(inputs)
+              .filter(([key]) => key !== "advanced")
+              .map(([key, value]) => [key.toUpperCase(), value]));
+            const file = await Bun.file("scripts/update-data.config.json").json();
+            // Protected repository Actions variables: highest precedence, applied only when nonblank (never printed).
+            const protectedVars = {};
+            if ((process.env.PROTECTED_SEC_UA ?? "").trim()) protectedVars.SEC_UA = process.env.PROTECTED_SEC_UA.trim();
+            const controls = resolveControls(file, advanced, individual, protectedVars);
+            await appendFile(process.env.GITHUB_ENV,
+              Object.entries(controls).map(([key, value]) => `${key}=${value}\n`).join(""));
+          '
       - name: Generate api/victoryshares static data
         run: bun ./scripts/update-data.ts
-
       - name: Commit updated data
+        if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- api/victoryshares; then
+          git add api/victoryshares
+          if git diff --cached --quiet -- api/victoryshares; then
             echo "api/victoryshares is already up to date"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add api/victoryshares
-          git commit -m "Update VictoryShares ETF data"
-          git push
+          git commit -m "chore(data): update VictoryShares ETF data"
+          # Runtime-only auth; no token/header stored in URL, file or Git config.
+          git -c credential.helper= -c credential.helper='!f() { if test "$1" = get; then printf "username=x-access-token\npassword=%s\n" "$GITHUB_TOKEN"; fi; }; f' push
