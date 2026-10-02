@@ -38,6 +38,8 @@ const STATE_FILE = new URL('update-state.json', API_ROOT);
 const HOLDINGS_HEADERS = ['Name', 'Ticker', 'Identifier', 'Weight', 'Market Value', 'Shares Held', 'Asset Category', 'Coupon', 'Maturity'];
 const HISTORY_HEADERS = ['Date', 'NAV', 'Market Price', 'Premium/Discount', 'Adj Close'];
 const RETURN_PERIODS = ['YTD', '1Y', '3Y', '5Y', '10Y'];
+const DEFAULT_SEC_UA = 'daggerok ETF feed daggerok@gmail.com';
+const HISTORY_RANGES = ['max', '10y', '5y', '2y', '1y', '6mo', '3mo'];
 const DEFAULTS = { requestSleep: 1, concurrency: 2, maxRetries: 2, holdingsPageSize: 250, historyPageSize: 1000 };
 
 // Shared console contract (kept intentionally simple and stable).
@@ -218,14 +220,14 @@ export function readConfig(env: Record<string, string | undefined> = process.env
   const range = (key: string): Range => parseRange(env[key], key);
   return {
     maxFetches: parsePositiveInt(env.MAX_FETCHES, 0), requestSleep: parseDecimal(env.REQUEST_SLEEP, DEFAULTS.requestSleep),
-    concurrency: Math.max(1, parsePositiveInt(env.CONCURRENCY, DEFAULTS.concurrency)), maxRetries: parsePositiveInt(env.MAX_RETRIES, DEFAULTS.maxRetries),
+    concurrency: Math.max(1, parsePositiveInt(env.CONCURRENCY, DEFAULTS.concurrency)), maxRetries: Math.max(1, parsePositiveInt(env.MAX_RETRIES, DEFAULTS.maxRetries)),
     holdingsPageSize: Math.max(1, parsePositiveInt(env.HOLDINGS_PAGE_SIZE, DEFAULTS.holdingsPageSize)),
     historyPageSize: Math.max(1, parsePositiveInt(env.HISTORY_PAGE_SIZE, DEFAULTS.historyPageSize)),
     historyRange: env.HISTORY_RANGE?.trim() || 'max', tickers, aum: parseAumRange(env.AUM), ter: range('TER'),
     dividendYield: range('DIVIDEND_YIELD'), secYield: range('SEC_YIELD'), performance, totalReturn,
     edgarFallback: !/^(0|false|no|off)$/i.test(env.EDGAR_FALLBACK ?? '1'),
     skipYahoo: /^(1|true|yes|on)$/i.test(env.SKIP_YAHOO ?? ''),
-    secUa: env.SEC_UA?.trim() ?? '',
+    secUa: (env.SEC_UA ?? DEFAULT_SEC_UA).trim(),
   };
 }
 
@@ -271,10 +273,11 @@ export function resolveControls(
   for (const key of ['MAX_FETCHES', 'CONCURRENCY', 'MAX_RETRIES', 'HOLDINGS_PAGE_SIZE', 'HISTORY_PAGE_SIZE']) {
     const v = result[key];
     if (v === undefined || v === '') continue;
-    const min = ['MAX_FETCHES', 'MAX_RETRIES'].includes(key) ? 0 : 1;
+    const min = key === 'MAX_FETCHES' ? 0 : 1;
     if (!/^\d+$/.test(v) || !Number.isSafeInteger(Number(v)) || Number(v) < min) throw new Error(`${key}: expected integer >= ${min}`);
   }
   if (result.REQUEST_SLEEP && (!Number.isFinite(Number(result.REQUEST_SLEEP)) || Number(result.REQUEST_SLEEP) < 0)) throw new Error('REQUEST_SLEEP: expected nonnegative seconds');
+  if (result.HISTORY_RANGE && !HISTORY_RANGES.includes(result.HISTORY_RANGE)) throw new Error(`HISTORY_RANGE: expected one of ${HISTORY_RANGES.join(', ')}`);
   for (const key of ['EDGAR_FALLBACK', 'SKIP_YAHOO', 'VERBOSE']) {
     if (result[key] && !/^(0|1|true|false|yes|no|y|n|on|off)$/i.test(result[key])) throw new Error(`${key}: expected boolean`);
   }
@@ -583,8 +586,7 @@ async function fetchProduct(ticker: string, endpoint: string, key: string, confi
   return getJson(`${VCM_API}/${encodeURIComponent(ticker)}/${endpoint}`, `[product  ] ${ticker} ${endpoint}`, issuerApiHeaders(key), config);
 }
 async function fetchYahoo(ticker: string, range: string, config: Config): Promise<ChartDay[]> {
-  const allowed = new Set(['max', '10y', '5y', '2y', '1y', '6mo', '3mo']);
-  const selectedRange = allowed.has(range) ? range : 'max';
+  const selectedRange = HISTORY_RANGES.includes(range) ? range : 'max';
   const query = new URLSearchParams({ range: selectedRange, interval: '1d', events: 'div,splits' });
   return parseYahooChart(await getJson(`${YAHOO_CHART}/${encodeURIComponent(ticker)}?${query}`, `[chart    ] ${ticker}`, yahooHeaders(), config));
 }
@@ -620,7 +622,7 @@ export function parseAtomFilings(xml: string): { cik: string; accession: string 
 async function fetchEdgarHoldings(ticker: string, config: Config): Promise<{ rows: SheetRow[]; asOfDate: string | null }> {
   if (!config.edgarFallback) return { rows: [], asOfDate: null };
   if (!config.secUa) {
-    outputNote(`[ edgar    ] ${ticker}: SEC fallback not attempted; configure SEC_UA with a valid organizational contact`);
+    outputNote(`[ edgar    ] ${ticker}: SEC fallback not attempted; configure SEC_UA with a contact`);
     return { rows: [], asOfDate: null };
   }
   try {
@@ -840,7 +842,7 @@ async function mapWithConcurrency<T>(items: T[], concurrency: number, work: (ite
   await Promise.all(workers);
 }
 function printHelp(): void {
-  console.log(`VictoryShares ETF updater\n\nUsage: bun ./scripts/update-data.ts [--help]\n\nDefaults come from scripts/update-data.config.json; any environment variable below overrides the file value.\n\nControls:\n  MAX_FETCHES=0             Number of funds to process (0 = all eligible; resumes after saved ticker cursor)\n  TICKERS="VFLO USTB UEVM" Only process the named tickers\n  REQUEST_SLEEP=1           Minimum seconds between request starts per worker lane\n  CONCURRENCY=2             Parallel fund workers (default conservative)\n  MAX_RETRIES=2             Retries after initial request\n  HOLDINGS_PAGE_SIZE=250    Rows per static holdings page\n  HISTORY_PAGE_SIZE=1000    Rows per static price-history page\n  HISTORY_RANGE=max         Yahoo range: max, 10y, 5y, 2y, 1y, 6mo or 3mo\n  AUM=:                     AUM min:max (K/M/B/T suffixes) or nano/micro/small/mid/large\n  TER=: DIVIDEND_YIELD=: SEC_YIELD=:  Inclusive numeric min:max percentages\n  PERFORMANCE_{YTD,1Y,3Y,5Y,10Y}=: Annualized NAV-return filters\n  TOTAL_RETURN_{YTD,1Y,3Y,5Y,10Y}=: Cumulative-return filters\n  EDGAR_FALLBACK=1          Use SEC N-PORT-P only if official holdings are unavailable\n  SEC_UA=<contact>          Required valid SEC User-Agent/contact for EDGAR fallback requests\n  SKIP_YAHOO=1              Do not call Yahoo; retain prior history if available\n  VERBOSE=1                 Show per-request retry/fallback details\n`);
+  console.log(`VictoryShares ETF updater\n\nUsage: bun ./scripts/update-data.ts [--help]\n\nDefaults come from scripts/update-data.config.json; any explicitly set environment variable below overrides the file value (an empty value clears the control).\n\nControls:\n  MAX_FETCHES=0             Number of funds to process (0 = all eligible; resumes after saved ticker cursor)\n  TICKERS="VFLO USTB UEVM" Only process the named tickers\n  REQUEST_SLEEP=1           Minimum seconds between request starts per worker lane\n  CONCURRENCY=2             Parallel fund workers (default conservative)\n  MAX_RETRIES=2             Retries after initial request (integer >= 1)\n  HOLDINGS_PAGE_SIZE=250    Rows per static holdings page\n  HISTORY_PAGE_SIZE=1000    Rows per static price-history page\n  HISTORY_RANGE=max         Yahoo range: max, 10y, 5y, 2y, 1y, 6mo or 3mo\n  AUM=:                     AUM min:max (K/M/B/T suffixes) or nano/micro/small/mid/large\n  TER=: DIVIDEND_YIELD=: SEC_YIELD=:  Inclusive numeric min:max percentages\n  PERFORMANCE_{YTD,1Y,3Y,5Y,10Y}=: Annualized NAV-return filters\n  TOTAL_RETURN_{YTD,1Y,3Y,5Y,10Y}=: Cumulative-return filters\n  EDGAR_FALLBACK=1          Use SEC N-PORT-P only if official holdings are unavailable\n  SEC_UA=<ua string>        SEC User-Agent with a contact for EDGAR fallback requests (redacted in logs)\n  SKIP_YAHOO=1              Do not call Yahoo; retain prior history if available\n  VERBOSE=1                 Show per-request retry/fallback details\n`);
 }
 
 async function main(): Promise<void> {

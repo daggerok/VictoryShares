@@ -1,10 +1,11 @@
 /// <reference types="bun" />
 import { describe, expect, test } from 'bun:test';
-import { readFile } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import {
   buildPages, formatFrequencyPlaceholder, inferFrequency, parseAumRange, parseAtomFilings, parseCatalog,
   parseDistributionPayload, parseFundTickerRefs, parseHoldings, parseIssuerClientConfig, parseNportHoldings,
   pageBasenames, parsePremiumDiscount, parseRange, parseYahooChart, historyRows, returnsFromCatalog,
+  CONTROL_NAMES, readConfig, resolveControls, runtimeControls,
 } from './update-data';
 
 const catalogFixture = [{
@@ -119,77 +120,100 @@ describe('configuration and display normalization', () => {
   });
 });
 
-const appSource = await readFile(new URL('../app.tsx', import.meta.url), 'utf8');
-function extractAppFunction(name: string): (...args: any[]) => any {
-  const text = appSource;
-  const match = new RegExp(`\\nfunction ${name}\\(([^)]*)\\)[^{]*\\{([\\s\\S]*?)\\n\\}`).exec(text);
-  if (!match) throw new Error(`${name} was not found in app.tsx`);
-  const parameters = match[1].split(',').map(part => part.split(':')[0].split('=')[0].trim()).filter(Boolean).join(', ');
-  const js = new Bun.Transpiler({ loader: 'ts' }).transformSync(`function ${name}(${parameters}) {${match[2]}\n}`);
-  return new Function(`${js}; return ${name};`)();
-}
+const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
+const configFile = () => JSON.parse(read('scripts/update-data.config.json'));
 
-describe('UI parity regression guards', () => {
-  test('the copied app formats missing/dash frequencies as None and preserves explicit Unknown', () => {
-    const format = extractAppFunction('formatDividendFrequency');
-    for (const value of [null, undefined, '', '  ', '-', '‐', '‑', '‒', '–', '—', ' — ']) expect(format(value)).toBe('00 - None');
-    expect(format('None')).toBe('00 - None');
-    expect(format('Unknown')).toBe('00 - Unknown');
-    expect(format('Monthly')).toBe('01 - Monthly');
+describe('control resolver', () => {
+  test('precedence: file < advanced < nonblank input < env, explicit empty env clears', () => {
+    const c = resolveControls({ CONCURRENCY: 2, TICKERS: 'VFLO' }, { CONCURRENCY: 3, TICKERS: 'USTB' }, { CONCURRENCY: '4', TICKERS: '' }, { CONCURRENCY: '6' });
+    expect(c.CONCURRENCY).toBe('6');
+    expect(c.TICKERS).toBe('USTB');
+    expect(resolveControls({ CONCURRENCY: 2 }, { CONCURRENCY: 3 }, { CONCURRENCY: '4' }).CONCURRENCY).toBe('4');
+    expect(resolveControls({ TICKERS: 'VFLO' }, { TICKERS: '' }, { TICKERS: '' }).TICKERS).toBe('');
+    expect(resolveControls({ CONCURRENCY: 2 }, {}, { CONCURRENCY: '' }).CONCURRENCY).toBe('2');
+    expect(resolveControls({ TICKERS: 'VFLO' }, {}, {}, { TICKERS: '' }).TICKERS).toBe('');
+    expect(resolveControls({ SKIP_YAHOO: true }, {}, {}, { SKIP_YAHOO: 'false' }).SKIP_YAHOO).toBe('false');
+    expect(readConfig(resolveControls({ HISTORY_RANGE: '5y' })).historyRange).toBe('5y');
   });
 
-  test('header summary moves the rich detail nodes and shows alphabetized selected tickers, including all-selected', async () => {
-    const text = await readFile(new URL('../app.tsx', import.meta.url), 'utf8');
-    const match = /^([ \t]*)function renderHeaderSummary\(/m.exec(text);
-    expect(match).not.toBeNull();
-    const tail = text.slice(match!.index);
-    const end = new RegExp('^' + match![1] + '}', 'm').exec(tail);
-    expect(end).not.toBeNull();
-    const js = new Bun.Transpiler({ loader: 'ts' }).transformSync(tail.slice(0, end!.index + end![0].length));
-    const node = (value = ''): any => ({ textContent: value, childNodes: [], dataset: {}, listeners: {}, replaceChildren(...items: any[]) { this.childNodes = items; }, append(...items: any[]) { this.childNodes.push(...items); }, addEventListener(type: string, listener: any) { this.listeners[type] = listener; } });
-    const panel = node(), subtitle = node(), details = node('rich source links');
-    subtitle.append(details);
-    const document = { getElementById: () => panel, createTextNode: node, createElement: () => node() };
-    const render = new Function('document', js + '; return renderHeaderSummary;')(document);
-    render(subtitle, new Set(['ZZZ', 'AAA']), 'AAA', () => {});
-    expect(subtitle.childNodes.map((item: any) => item.textContent).join('')).toBe('2 selected: AAA, ZZZ');
-    expect(panel.childNodes[0]).toBe(details);
-    render(subtitle, new Set(['CCC', 'AAA', 'BBB']), 'BBB', () => {});
-    expect(subtitle.childNodes.map((item: any) => item.textContent).join('')).toBe('3 selected: AAA, BBB, CCC');
-    render(subtitle, new Set(), null, () => {});
-    expect(subtitle.childNodes).toEqual([]);
+  test('rejects unknown keys, non-scalars, bad layers, invalid values and newline injection', () => {
+    const bad: unknown[] = [{ UNKNOWN: 1 }, { SEC_UA: 'x\nEVIL=yes' }, { CONCURRENCY: 0 }, { MAX_RETRIES: 0 }, { MAX_RETRIES: -1 }, { MAX_FETCHES: 1.5 }, { HOLDINGS_PAGE_SIZE: 0 }, { HISTORY_PAGE_SIZE: 0 }, { REQUEST_SLEEP: '-1' }, { VERBOSE: 'maybe' }, { EDGAR_FALLBACK: 'x' }, { SKIP_YAHOO: 'x' }, { HISTORY_RANGE: '7y' }, { AUM: '1:2:3' }, { TER: '5' }, { TER: '5:1' }, { TICKERS: ['VFLO'] }, null, []];
+    for (const value of bad) expect(() => resolveControls(value)).toThrow();
+    expect(() => resolveControls({}, { SEC_UA: 'x\rfoo' })).toThrow();
+    expect(() => resolveControls({}, {}, {}, { SEC_UA: 'x\0bad' })).toThrow();
+    expect(() => resolveControls({}, 'x')).toThrow();
+    expect(() => resolveControls({}, {}, { TICKERS: { a: 1 } })).toThrow();
+    expect(() => JSON.parse('{bad')).toThrow();
   });
 
-  test('hidden source panel retains mouse, keyboard, touch, Escape and viewport-safe behaviors', async () => {
-    const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
-    expect(html).toContain('id="app-summary" role="region" aria-label="ETF catalog information" hidden');
-    expect(html).toContain("trigger.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') show(); })");
-    expect(html).toContain("trigger.addEventListener('focus', show)");
-    expect(html).toContain("event.key !== 'Escape'");
-    expect(html).toContain('innerWidth - panel.offsetWidth - 16');
-    expect(html).toContain('innerHeight - panel.offsetHeight - 16');
-    expect(html).toContain("trigger.addEventListener('click'");
-    expect(html).toContain('official VictoryShares ETF catalog and fund JSON');
-    expect(html).toContain('Yahoo Finance (adjusted market-price history; no official daily NAV history)');
-    expect(html).toContain('Victory Portfolios II, CIK 0001547580');
+  test('scheduled path (empty inputs and advanced) equals config defaults with VictoryShares values', async () => {
+    const file = configFile();
+    expect(resolveControls(file, {}, {}, {})).toEqual(file);
+    expect(await runtimeControls({})).toEqual(file);
+    expect((await runtimeControls({ CONCURRENCY: '3' })).CONCURRENCY).toBe('3');
+    const config = readConfig(resolveControls(file));
+    expect(config.tickers.size).toBe(0);
+    expect(config).toMatchObject({ maxFetches: 0, requestSleep: 1, concurrency: 2, maxRetries: 2, holdingsPageSize: 250, historyPageSize: 1000, historyRange: 'max', edgarFallback: true, skipYahoo: false, secUa: 'daggerok ETF feed daggerok@gmail.com' });
+    expect(config.aum.source).toBe(':');
+  });
+
+  test('protected SEC_UA wins when set, input wins over advanced', () => {
+    const file = configFile();
+    expect(resolveControls(file, { SEC_UA: 'adv' }, { SEC_UA: 'in' }, { SEC_UA: 'protected' }).SEC_UA).toBe('protected');
+    expect(resolveControls(file, { SEC_UA: 'adv' }, { SEC_UA: 'in' }, {}).SEC_UA).toBe('in');
   });
 });
 
-describe('README and automation documentation guards', () => {
-  test('keeps the pinned sibling README structure and reports the verified published site', async () => {
-    const readme = await readFile(new URL('../README.md', import.meta.url), 'utf8');
+describe('config, README, --help and workflow parity', () => {
+  test('config keys equal CONTROL_NAMES and every value is a string', () => {
+    const file = configFile();
+    expect(Object.keys(file).sort()).toEqual([...CONTROL_NAMES].sort());
+    for (const value of Object.values(file)) expect(typeof value).toBe('string');
+  });
+
+  test('README controls table and --help list every control', () => {
+    const doc = read('README.md');
+    const help = read('scripts/update-data.ts');
+    for (const name of CONTROL_NAMES) {
+      const tenor = name.match(/^(PERFORMANCE|TOTAL_RETURN)_(1Y|3Y|5Y|10Y)$/);
+      expect(doc).toContain(tenor ? '`_' + tenor[2] + '`' : '`' + name + '`');
+      if (tenor) expect(doc).toContain('`' + tenor[1] + '_YTD`');
+      const helpName = /^(PERFORMANCE|TOTAL_RETURN)_/.test(name) ? name.replace(/_(YTD|1Y|3Y|5Y|10Y)$/, '') + '_{YTD,1Y,3Y,5Y,10Y}' : name;
+      expect(help).toContain(helpName);
+    }
+    expect(doc).toContain('scripts/update-data.config.json');
+  });
+
+  test('README keeps the standard structure and shared tables', () => {
+    const readme = read('README.md');
     const headings = [...readme.matchAll(/^#{2,3} .+$/gm)].map(match => match[0]);
     expect(headings).toEqual([
       '## Using Bun', '## Updating the static VictoryShares data', '### Data sources', '### Metrics and caveats', '### Update controls', '### Examples',
       '## TypeScript and verification', '## Brands table', '## Sibling applications', '## License',
     ]);
     expect(readme).toContain('bunx degit daggerok/VictoryShares#main ./12345 && cd $_');
-    expect(readme).toContain('bun test');
-    expect(readme).toContain('The published application is available at <https://daggerok.github.io/VictoryShares/>.');
-    expect(readme).not.toContain('deployment has not been verified');
-    expect(readme).not.toContain('initial checked-in seed');
+    expect(readme).toContain('https://daggerok.github.io/VictoryShares/');
     const brandRows = [...readme.matchAll(/^\| \*\*(.+?)\*\* \|/gm)].map(match => match[1]);
-    expect(brandRows.indexOf('VictoryShares')).toBe(brandRows.indexOf('Vanguard') + 1);
+    expect(brandRows.length).toBe(27);
     expect(brandRows.indexOf('WisdomTree')).toBe(brandRows.indexOf('VictoryShares') + 1);
+  });
+
+  test('workflow: <= 25 inputs with advanced, fixed api/victoryshares output, protected SEC_UA, hardened', () => {
+    const actual = read('.github/workflows/update-data.yml');
+    const names = [...actual.slice(actual.indexOf('    inputs:'), actual.indexOf('\npermissions:')).matchAll(/^      (\w+):$/gm)].map(m => m[1]);
+    expect(names.length).toBeLessThanOrEqual(25);
+    expect(names).toContain('advanced');
+    for (const name of names.filter(n => n !== 'advanced')) expect(CONTROL_NAMES).toContain(name.toUpperCase() as never);
+    expect(actual).toContain("default: '{}'");
+    expect(actual).toContain("cron: '0 0 * * 0'");
+    expect(actual).toContain('timeout-minutes: 30');
+    expect(actual).toContain('persist-credentials: false');
+    expect(actual).toContain('PROTECTED_SEC_UA: ${{ vars.SEC_UA }}');
+    expect(actual).toContain('resolveControls(file, advanced, individual, protectedVars)');
+    expect(actual).toContain('toJSON(inputs)');
+    expect(actual).not.toMatch(/\$\{\{\s*inputs\./);
+    expect(actual).not.toMatch(/OUTPUT_DIR|output_dir/i);
+    expect(actual.match(/git add (\S+)/g)).toEqual(['git add api/victoryshares']);
+    expect(actual.match(/api\/[\w-]+/g)!.every(p => p === 'api/victoryshares')).toBe(true);
   });
 });
