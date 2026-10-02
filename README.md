@@ -69,6 +69,7 @@ Keys of `scripts/update-data.config.json` (all values are strings); each is also
 | `EDGAR_FALLBACK` | `true` | Use SEC N-PORT-P holdings when official VCM holdings are unavailable |
 | `SKIP_YAHOO` | `false` | Skip Yahoo history requests; retain existing history when available |
 | `VERBOSE` | `false` | Show per-request retries and fallback details |
+| `USE_SYSTEM_CA` | `auto` | TLS trust store: `auto` restarts the updater once with Bun's `--use-system-ca` when a request fails with an untrusted-certificate error; `true` always uses the system CA store; `false` never restarts. Not an individual workflow input: use `advanced`, the config file or the CLI environment. |
 | `SEC_UA` | `daggerok ETF feed daggerok@gmail.com` | SEC User-Agent string with a contact, used for EDGAR fallback requests; redacted in logs |
 
 `TICKERS` combines with AUM, TER, yield and return filters using AND logic. An explicitly set environment variable wins over every file or input value, even when empty (an empty value clears the control).
