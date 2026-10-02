@@ -40,6 +40,7 @@ The workflow exposes 24 controls as individual inputs; every other control (for 
 
 The updater uses issuer-published NAV performance values for month-end and quarter-end. The catalog's cumulative 3-, 5- and 10-year Total Return columns are derived from the corresponding published annualized NAV returns using `(1 + annualized return)^years - 1`; 1-year and YTD use the published period return. Missing tenors stay unavailable. Yahoo data is a separate market-price history series, not an official NAV series.
 
+- Every `funds[].metrics` ends with `returnsBasis` (never empty: states that returns are official VCM NAV returns, with 3-, 5- and 10-year total returns derived from the published annualized NAV returns, and that Yahoo is not used for returns) and `performanceAsOf` (ISO `YYYY-MM-DD` date of the issuer month-end performance table the returns come from, not the NAV date; `null` when the issuer publishes no performance table for the fund)
 - Net assets, expense ratios, NAV, yields, distributions and returns are issuer-published values; Yahoo adjusted-close history is a market-price series and an estimate, not official NAV
 - The Yahoo `NAV` history column is intentionally blank rather than inferred from market price
 - Missing values stay unavailable (shown as a dash) and are never treated as zero; a filter with a bound excludes funds without that value
