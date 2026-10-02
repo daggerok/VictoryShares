@@ -24,7 +24,7 @@ bun scripts/update-data.ts
 
 Every supported control has a default in `scripts/update-data.config.json`; the same file feeds local runs and the **Update VictoryShares ETF data** workflow. Run `bun scripts/update-data.ts --help` to print every control. The weekly scheduled run uses the file defaults as-is. Precedence, lowest to highest: file defaults < `advanced` JSON < nonblank manual inputs < protected Actions variable or environment (blank inputs inherit the file value). All supplied filters use **AND** logic.
 
-The workflow exposes 24 controls as individual inputs; every other control (for example `HISTORY_PAGE_SIZE`) is reachable through the `advanced` JSON input, e.g. `{"HISTORY_PAGE_SIZE": "500"}`. Output always goes to `api/victoryshares`.
+The workflow exposes 24 controls as individual inputs; every other control (for example `TOTAL_RETURN_10Y`) is reachable through the `advanced` JSON input, e.g. `{"TOTAL_RETURN_10Y": "50:"}`. Output always goes to `api/victoryshares`.
 
 ### Data sources
 
@@ -34,7 +34,7 @@ The workflow exposes 24 controls as individual inputs; every other control (for 
 | Holdings per fund | `https://investorapi.vcm.com/search/product/{TICKER}/AllHoldings` (for example, [VFLO](https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-free-cash-flow-etf)). |
 | Fund details, yields, distributions and premium/discount | `https://investorapi.vcm.com/search/product/{TICKER}/{Overview|Yields|Distributions|PremiumDiscount}`. NAV, expense, assets, performance and distribution values are published by VCM. |
 | Daily history | [Yahoo Finance chart API](https://query1.finance.yahoo.com/v8/finance/chart/{TICKER}) provides market-price and adjusted-close history; VCM's `PremiumDiscount` endpoint adds dated premium/discount observations. This tested feed does not supply official daily NAV history, so the NAV column is intentionally blank rather than inferred from market price. Yahoo adjusted-close history can be revised by the provider. |
-| Holdings fallback | SEC EDGAR Form N-PORT-P for Victory Portfolios II (CIK `0001547580`, file no. `811-22696`), only when VCM does not provide holdings. Configure `SEC_UA` with an organizational contact before using SEC requests. An N-PORT snapshot may be less current than the issuer's daily holdings. |
+| Holdings fallback | SEC EDGAR Form N-PORT-P for Victory Portfolios II (CIK `0001547580`, file no. `811-22696`), only when VCM does not provide holdings. SEC requests use the `SEC_UA` User-Agent. An N-PORT snapshot may be less current than the issuer's daily holdings. |
 
 ### Metrics and caveats
 
@@ -55,9 +55,9 @@ Keys of `scripts/update-data.config.json` (all values are strings); each is also
 | `MAX_FETCHES` | `0` (all) | Funds per batch. With a positive value, processing resumes after the saved ticker cursor; `0` processes all eligible funds |
 | `REQUEST_SLEEP` | `1` | Minimum delay in seconds between request starts per worker lane |
 | `CONCURRENCY` | `2` | Number of parallel fund workers |
-| `MAX_RETRIES` | `2` | Retries after the initial request; network errors and HTTP 408/425/429/5xx responses are retried |
+| `MAX_RETRIES` | `2` | Retries after the initial request (integer >= 1); network errors and HTTP 408/425/429/5xx responses are retried |
 | `HOLDINGS_PAGE_SIZE` | `250` | Rows in each generated current-holdings JSON page |
-| `HISTORY_PAGE_SIZE` | `1000` | Rows in each generated daily-history JSON page (`advanced` only in the workflow) |
+| `HISTORY_PAGE_SIZE` | `1000` | Rows in each generated daily-history JSON page  |
 | `HISTORY_RANGE` | `max` | Yahoo chart range: `max`, `10y`, `5y`, `2y`, `1y`, `6mo` or `3mo` |
 | `TICKERS` | all (empty) | Space-, comma- or semicolon-separated ticker allowlist, e.g. `VFLO USTB UEVM` |
 | `AUM` | `:` | Net Assets range; each bound may be a USD amount or use `K`/`M`/`B`/`T`, or one of `nano`, `micro`, `small`, `mid`, `large` |
@@ -69,11 +69,11 @@ Keys of `scripts/update-data.config.json` (all values are strings); each is also
 | `EDGAR_FALLBACK` | `true` | Use SEC N-PORT-P holdings when official VCM holdings are unavailable |
 | `SKIP_YAHOO` | `false` | Skip Yahoo history requests; retain existing history when available |
 | `VERBOSE` | `false` | Show per-request retries and fallback details |
-| `SEC_UA` | empty | SEC User-Agent with a valid organizational contact; required only if the EDGAR fallback is used |
+| `SEC_UA` | `daggerok ETF feed daggerok@gmail.com` | SEC User-Agent string with a contact, used for EDGAR fallback requests; redacted in logs |
 
-`TICKERS` combines with AUM, TER, yield and return filters using AND logic.
+`TICKERS` combines with AUM, TER, yield and return filters using AND logic. An explicitly set environment variable wins over every file or input value, even when empty (an empty value clears the control).
 
-For GitHub Actions runs, configure the optional repository variable `SEC_UA` with a valid organizational contact under **Settings -> Secrets and variables -> Actions -> Variables** to enable SEC EDGAR fallback requests. It is read by scheduled and manual runs, wins over any file, `advanced` or input value when nonblank, and is not a dispatch input.
+For GitHub Actions runs, the optional repository variable `SEC_UA` (**Settings -> Secrets and variables -> Actions -> Variables**) overrides the default User-Agent. It is read by scheduled and manual runs, wins over any file, `advanced` or input value when nonblank, and is not a dispatch input.
 
 ### Examples
 
@@ -100,7 +100,7 @@ bun build --target=bun scripts/update-data.ts --outfile=/dev/null
 git diff --check
 ```
 
-`bun test` also covers the config/README/`--help` parity and the workflow structure checks (`scripts/config-docs.test.ts`).
+`bun test` also covers the resolver, the config/README/`--help` parity and the workflow structure checks.
 
 ## Brands table
 
@@ -125,7 +125,7 @@ git diff --check
 | **ProShares** | [proshares.com](https://www.proshares.com/our-etfs/find-proshares-etfs) \| [ProShares](https://daggerok.github.io/ProShares/) |
 | **Schwab** | [schwabassetmanagement.com](https://www.schwabassetmanagement.com/products) \| [Schwab](https://daggerok.github.io/Schwab/) |
 | **SPDR** | [ssga.com](https://www.ssga.com/us/en/intermediary/etfs/fund-finder) \| [SPDR](https://daggerok.github.io/SPDR/) |
-| **Sprott ETFs** | [sprottetfs.com](https://sprottetfs.com/) \| [Sprott](https://daggerok.github.io/Sprott/) (deployment pending) |
+| **Sprott ETFs** | [sprottetfs.com](https://sprottetfs.com/) \| [Sprott](https://daggerok.github.io/Sprott/) |
 | **Tema ETFs** | [temaetfs.com](https://temaetfs.com/funds) \| [Tema](https://daggerok.github.io/Tema/) |
 | **Themes ETFs** | [themesetfs.com/etfs](https://themesetfs.com/etfs) \| [Themes](https://daggerok.github.io/Themes/) |
 | **VanEck** | [vaneck.com](https://www.vaneck.com/us/en/etf-mutual-fund-finder/) \| [VanEck](https://daggerok.github.io/VanEck/) |
