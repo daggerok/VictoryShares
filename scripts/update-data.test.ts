@@ -194,7 +194,7 @@ describe('config, README, --help and workflow parity', () => {
     expect(readme).toContain('bunx degit daggerok/VictoryShares#main ./12345 && cd $_');
     expect(readme).toContain('https://daggerok.github.io/VictoryShares/');
     const brandRows = [...readme.matchAll(/^\| \*\*(.+?)\*\* \|/gm)].map(match => match[1]);
-    expect(brandRows.length).toBe(27);
+    expect(brandRows.length).toBe(29);
     expect(brandRows.indexOf('WisdomTree')).toBe(brandRows.indexOf('VictoryShares') + 1);
   });
 
