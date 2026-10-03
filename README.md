@@ -33,8 +33,8 @@ The workflow exposes 24 controls as individual inputs; every other control (for 
 | Catalog (all listed VictoryShares ETFs) | [`https://investorapi.vcm.com/search/products/ETF`](https://investorapi.vcm.com/search/products/ETF), the JSON behind the [official VictoryShares ETF list](https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list) and [VictoryShares overview](https://www.vcm.com/products-fa/victoryshares-etfs). The updater acquires the public client configuration from the issuer page at runtime; no API key is stored in the repository. |
 | Holdings per fund | `https://investorapi.vcm.com/search/product/{TICKER}/AllHoldings` (for example, [VFLO](https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-free-cash-flow-etf)). |
 | Fund details, yields, distributions and premium/discount | `https://investorapi.vcm.com/search/product/{TICKER}/{Overview|Yields|Distributions|PremiumDiscount}`. NAV, expense, assets, performance and distribution values are published by VCM. |
-| Daily history | [Yahoo Finance chart API](https://query1.finance.yahoo.com/v8/finance/chart/{TICKER}) provides market-price and adjusted-close history; VCM's `PremiumDiscount` endpoint adds dated premium/discount observations. This tested feed does not supply official daily NAV history, so the NAV column is intentionally blank rather than inferred from market price. Yahoo adjusted-close history can be revised by the provider. |
-| Holdings fallback | SEC EDGAR Form N-PORT-P for Victory Portfolios II (CIK `0001547580`, file no. `811-22696`), only when VCM does not provide holdings. SEC requests use the `SEC_UA` User-Agent. An N-PORT snapshot may be less current than the issuer's daily holdings. |
+| Daily history | [Yahoo Finance chart API](https://query1.finance.yahoo.com/v8/finance/chart/{TICKER}) provides market-price and adjusted-close history as DAILY bars (explicit `period1`/`period2` with `interval=1d`; the `range=max` shortcut returns weekly, monthly or hourly bars depending on the fund's age, so it is never used); VCM's `PremiumDiscount` endpoint adds dated premium/discount observations. This tested feed does not supply official daily NAV history, so the NAV column is intentionally blank rather than inferred from market price. Yahoo adjusted-close history can be revised by the provider. |
+| Holdings fallback | SEC EDGAR Form N-PORT-P for Victory Portfolios II (CIK `0001547580`, file no. `811-22696`), only when VCM does not provide holdings. SEC requests use the `SEC_UA` User-Agent. The filing must carry the fund's own series id and a report date newer than the published holdings, otherwise it is ignored. |
 
 ### Metrics and caveats
 
@@ -43,7 +43,15 @@ The updater uses issuer-published NAV performance values for month-end and quart
 - Every `funds[].metrics` ends with `returnsBasis` (never empty: states that returns are official VCM NAV returns, with 3-, 5- and 10-year total returns derived from the published annualized NAV returns, and that Yahoo is not used for returns) and `performanceAsOf` (ISO `YYYY-MM-DD` date of the issuer month-end performance table the returns come from, not the NAV date; `null` when the issuer publishes no performance table for the fund)
 - Net assets, expense ratios, NAV, yields, distributions and returns are issuer-published values; Yahoo adjusted-close history is a market-price series and an estimate, not official NAV
 - The Yahoo `NAV` history column is intentionally blank rather than inferred from market price
-- Missing values stay unavailable (shown as a dash) and are never treated as zero; a filter with a bound excludes funds without that value
+- Every `funds[].metrics` has the same keys: `ytd`, `tr1y`, `tr3y`, `tr5y`, `tr10y`, `cagr3y`, `cagr5y`, `cagr10y`, `siAnn`, `dividendYield`, `dividendYieldText`, `secYield`, `secYieldText`, `returnsBasis`, `performanceAsOf`. `ytd` is the published year-to-date NAV return. Horizons longer than the fund's age and `siAnn` for funds younger than one year are `null`; `performanceAsOf` is `null` when the fund has no published returns (for example VMHY and VMSD, incepted 2026-09-22)
+- Missing values stay unavailable (shown as a dash) and are never treated as zero; a filter with a bound excludes funds without that value. A provider-published real `0.00%` (for example the GFLW 30-day SEC yield) stays `0`
+- Missing holdings `Weight` or `Market Value` stay empty instead of becoming `"0"`
+- Expense ratio: `terValue` is the NET expense ratio (after waivers; the gross value when it is the only one published) and `terGrossValue` is the GROSS ratio when published; `meta.json` `expenseRatio` carries `value`/`net` (net) and `gross`. The `TER` filter applies to the net ratio
+- `distributions.dividend` is a string (or `null`), like every other feed
+- A fund is either fully updated or fully kept: it is built completely in memory and written once (pages, then `meta.json`, then stale pages are removed, then the index row). When a required source (Overview, Yields, Distributions, AllHoldings or its EDGAR fallback, PremiumDiscount, Yahoo) fails for a fund that already has published data, none of its files or its index row change. Funds not selected in a run keep their published row verbatim. A source that answers with an honest `null` is published as `null`, never replaced by an older value
+- A rerun with identical upstream data changes nothing: files are compared without `generatedAt` and written only on change (through a temporary file and rename); `generatedAt` is ISO UTC without milliseconds
+- Tickers in the live catalog that are not in the published index are printed as `NEW FUNDS: A, B`; tickers that vanished from a successfully read, non-truncated catalog are printed as `DROPPED FUNDS: X` (also appended to `$GITHUB_STEP_SUMMARY`) and removed with their `funds/<T>/` folder. A catalog with fewer than half of the published funds is treated as truncated and drops nothing
+- Every request has a 45 s timeout that covers headers and body; the run stops starting new funds after 25 minutes and still writes the index; the exit code is non-zero when every selected fund failed
 - Fund pages carry the as-of date and source of their holdings and history; an N-PORT-P fallback snapshot may be less current than issuer holdings
 - A limited `TICKERS` run keeps the full published catalog and the data files of unselected funds
 
@@ -53,16 +61,16 @@ Keys of `scripts/update-data.config.json` (all values are strings); each is also
 
 | Control | Default | Meaning |
 | --- | --: | --- |
-| `MAX_FETCHES` | `0` (all) | Funds per batch. With a positive value, processing resumes after the saved ticker cursor; `0` processes all eligible funds |
+| `MAX_FETCHES` | `0` (all) | Funds per batch, counted among the funds that pass the filters. With a positive value, processing resumes after the saved ticker cursor and wraps around; `0` processes all eligible funds. A `TICKERS` run never touches the cursor |
 | `REQUEST_SLEEP` | `1` | Minimum delay in seconds between request starts per worker lane |
 | `CONCURRENCY` | `2` | Number of parallel fund workers |
-| `MAX_RETRIES` | `2` | Retries after the initial request (integer >= 1); network errors and HTTP 408/425/429/5xx responses are retried |
+| `MAX_RETRIES` | `2` | Retries after the initial request (integer >= 1); timeouts, network errors and HTTP 408/425/429/5xx responses are retried |
 | `HOLDINGS_PAGE_SIZE` | `250` | Rows in each generated current-holdings JSON page |
 | `HISTORY_PAGE_SIZE` | `1000` | Rows in each generated daily-history JSON page  |
-| `HISTORY_RANGE` | `max` | Yahoo chart range: `max`, `10y`, `5y`, `2y`, `1y`, `6mo` or `3mo` |
+| `HISTORY_RANGE` | `max` | Yahoo history length: `max` or a whole number of years such as `10y`, `5y`, `1y`; sent as explicit `period1`/`period2` with daily bars (anything else is an error) |
 | `TICKERS` | all (empty) | Space-, comma- or semicolon-separated ticker allowlist, e.g. `VFLO USTB UEVM` |
 | `AUM` | `:` | Net Assets range; each bound may be a USD amount or use `K`/`M`/`B`/`T`, or one of `nano`, `micro`, `small`, `mid`, `large` |
-| `TER` | `:` | Gross expense-ratio range in percent (`min:max`) |
+| `TER` | `:` | Net expense-ratio range in percent (`min:max`) |
 | `DIVIDEND_YIELD` | `:` | Published dividend-yield range in percent |
 | `SEC_YIELD` | `:` | Published 30-day SEC yield range in percent |
 | `PERFORMANCE_YTD`, `_1Y`, `_3Y`, `_5Y`, `_10Y` | `:` | Published NAV return ranges in percent (`PERFORMANCE_1Y` and so on); multi-year values are VCM annualized figures |
@@ -71,7 +79,7 @@ Keys of `scripts/update-data.config.json` (all values are strings); each is also
 | `SKIP_YAHOO` | `false` | Skip Yahoo history requests; retain existing history when available |
 | `VERBOSE` | `false` | Show per-request retries and fallback details |
 | `USE_SYSTEM_CA` | `auto` | TLS trust store: `auto` restarts the updater once with Bun's `--use-system-ca` when a request fails with an untrusted-certificate error; `true` always uses the system CA store; `false` never restarts. Not an individual workflow input: use `advanced`, the config file or the CLI environment. |
-| `SEC_UA` | `daggerok ETF feed daggerok@gmail.com` | SEC User-Agent string with a contact, used for EDGAR fallback requests; redacted in logs |
+| `SEC_UA` | `daggerok ETF feed daggerok@gmail.com` | SEC User-Agent string with a contact, used for EDGAR fallback requests; redacted in logs. A blank value uses the default contact |
 
 `TICKERS` combines with AUM, TER, yield and return filters using AND logic. An explicitly set environment variable wins over every file or input value, even when empty (an empty value clears the control).
 
