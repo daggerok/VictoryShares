@@ -10,7 +10,7 @@
   "productApi": "https://investorapi.vcm.com/search/product/{TICKER}/{AllHoldings|Overview|Yields|Distributions|PremiumDiscount}",
   "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/USTB",
   "holdingsSource": "VCM AllHoldings JSON",
-  "historySource": "Yahoo Finance adjusted market-price chart + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)",
+  "historySource": "Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)",
   "distributionSource": "VCM Distributions JSON (declared, record, payable dates and reported amount fields)",
   "provider": "Victory Capital Management / VictoryShares public JSON + Yahoo Finance chart + SEC EDGAR N-PORT-P (holdings fallback only)"
  },
@@ -27,34 +27,34 @@
  "expenseRatio": {
   "display": "0.34%",
   "value": 0.34,
-  "gross": 0.34,
-  "net": 0.34
+  "net": 0.34,
+  "gross": 0.34
  },
  "nav": {
-  "display": "$49.93",
-  "value": 49.93,
-  "asOfDate": "Sep 25 2026",
-  "change": 0.05
+  "display": "$49.95",
+  "value": 49.95,
+  "asOfDate": "Oct 01 2026",
+  "change": 0.07
  },
  "marketPrice": {
-  "display": "$49.98",
-  "value": 49.98,
-  "asOfDate": "Sep 25 2026"
+  "display": "$49.97",
+  "value": 49.97,
+  "asOfDate": "Oct 01 2026"
  },
  "premiumDiscount": {
-  "display": "0.08%",
-  "value": 0.0793
+  "display": "0.03%",
+  "value": 0.034
  },
  "aum": {
-  "display": "$2.63B",
-  "value": 2633830509.27,
-  "asOfDate": "Sep 25 2026",
+  "display": "$2.66B",
+  "value": 2657236030.44,
+  "asOfDate": "Oct 01 2026",
   "source": "VCM ETF catalog / Overview JSON"
  },
  "yields": {
   "dividendYield": 4.4,
   "dividendYieldText": "4.40%",
-  "dividendYieldKind": "VCM published dividend yield as of Aug 31 2026",
+  "dividendYieldKind": "Indicated from the latest reported distribution per share x inferred payments per year / market price",
   "distributionRate": null,
   "secYield": 4.75,
   "secYieldText": "4.75%",
@@ -1175,23 +1175,25 @@
    "holdings/005.json"
   ],
   "pageSize": 250,
-  "totalRows": 1153,
-  "asOfDate": "2026-09-28",
+  "totalRows": 1150,
+  "asOfDate": "2026-10-02",
   "source": "VCM AllHoldings JSON"
  },
  "history": {
   "pages": [
-   "history/001.json"
+   "history/001.json",
+   "history/002.json",
+   "history/003.json"
   ],
   "pageSize": 1000,
-  "totalRows": 466,
-  "asOfDate": "2026-09-21",
-  "source": "Yahoo Finance adjusted market-price chart + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
+  "totalRows": 2244,
+  "asOfDate": "2026-10-02",
+  "source": "Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
  },
- "holdingsCount": 1153,
- "historyCount": 466,
+ "holdingsCount": 1150,
+ "historyCount": 2244,
  "distributionCount": 106,
- "netAssets": 2633830509.27,
+ "netAssets": 2657236030.44,
  "dividendYield": 4.4,
  "secYield": 4.75
 }

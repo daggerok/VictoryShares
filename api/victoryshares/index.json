@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-02T03:20:21.568Z",
+ "generatedAt": "2026-10-03T05:22:26Z",
  "source": {
   "provider": "VictoryShares ETFs (Victory Capital Management)",
   "market": "us",
@@ -8,13 +8,13 @@
   "issuerOverview": "https://www.vcm.com/products-fa/victoryshares-etfs",
   "catalogApi": "https://investorapi.vcm.com/search/products/ETF",
   "productApi": "https://investorapi.vcm.com/search/product/{TICKER}/{AllHoldings|Overview|Yields|Distributions|PremiumDiscount}",
-  "history": "Yahoo Finance public chart API (adjusted market-price history; not official NAV)",
+  "history": "Yahoo Finance public chart API (daily adjusted market-price bars; not official NAV)",
   "holdings": "VCM AllHoldings JSON; SEC EDGAR Form N-PORT-P for Victory Portfolios II (CIK 0001547580) as fallback"
  },
  "counts": {
   "funds": 25,
-  "holdings": 7991,
-  "history": 6670
+  "holdings": 8033,
+  "history": 40079
  },
  "funds": [
   {
@@ -23,23 +23,25 @@
    "category": "Fixed Income",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-pioneer-asset-based-income-etf",
    "dataFile": "./funds/ABI/meta.json",
-   "ter": "0.87%",
-   "terValue": 0.87,
+   "ter": "0.65%",
+   "terValue": 0.65,
+   "terGross": "0.87%",
+   "terGrossValue": 0.87,
    "nav": "$24.50",
    "navValue": 24.5,
-   "aum": "$521.93M",
-   "aumValue": 521929148.51,
-   "asOfDate": "Sep 25 2026",
+   "aum": "$524.25M",
+   "aumValue": 524247411.51,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Jun 25 2025",
    "exchange": "NASDAQ",
-   "closePrice": "$24.60",
-   "premiumDiscount": "0.39%",
+   "closePrice": "$24.54",
+   "premiumDiscount": "0.15%",
    "cusip": null,
    "isin": "US92647X7315",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.125537
+    "exDate": null,
+    "dividend": "0.125537"
    },
    "returns": {
     "monthEnd": {
@@ -66,6 +68,7 @@
     }
    },
    "metrics": {
+    "ytd": 3.43,
     "tr1y": 4.27,
     "tr3y": null,
     "tr5y": null,
@@ -74,15 +77,15 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 4.77,
-    "dividendYield": 6.12,
-    "dividendYieldText": "6.12%",
+    "dividendYield": 6.14,
+    "dividendYieldText": "6.14%",
     "secYield": 6.11,
     "secYieldText": "6.11%",
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-08-31"
    },
-   "holdings": 208,
-   "history": 315
+   "holdings": 226,
+   "history": 320
   },
   {
    "ticker": "CDC",
@@ -90,23 +93,25 @@
    "category": "US Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-us-eq-income-enhanced-volatility-wtd-etf",
    "dataFile": "./funds/CDC/meta.json",
-   "ter": "0.38%",
-   "terValue": 0.38,
-   "nav": "$72.51",
-   "navValue": 72.51,
-   "aum": "$699.71M",
-   "aumValue": 699706087.19,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.35%",
+   "terValue": 0.35,
+   "terGross": "0.38%",
+   "terGrossValue": 0.38,
+   "nav": "$71.72",
+   "navValue": 71.72,
+   "aum": "$692.12M",
+   "aumValue": 692116667.95,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Jul 01 2014",
    "exchange": "NASDAQ",
-   "closePrice": "$72.49",
-   "premiumDiscount": "-0.03%",
+   "closePrice": "$71.68",
+   "premiumDiscount": "-0.01%",
    "cusip": null,
    "isin": "US92647N8240",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.268974
+    "exDate": null,
+    "dividend": "0.268974"
    },
    "returns": {
     "monthEnd": {
@@ -133,6 +138,7 @@
     }
    },
    "metrics": {
+    "ytd": 18.05,
     "tr1y": 19.1,
     "tr3y": 51.14,
     "tr5y": 36.49,
@@ -149,7 +155,7 @@
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 102,
-   "history": 147
+   "history": 3082
   },
   {
    "ticker": "CDL",
@@ -157,23 +163,25 @@
    "category": "US Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-us-large-cap-high-div-volatility-wtd-etf",
    "dataFile": "./funds/CDL/meta.json",
-   "ter": "0.39%",
-   "terValue": 0.39,
-   "nav": "$75.63",
-   "navValue": 75.63,
-   "aum": "$385.72M",
-   "aumValue": 385715195.64,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.35%",
+   "terValue": 0.35,
+   "terGross": "0.39%",
+   "terGrossValue": 0.39,
+   "nav": "$74.81",
+   "navValue": 74.81,
+   "aum": "$377.79M",
+   "aumValue": 377791651.57,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Jul 08 2015",
    "exchange": "NASDAQ",
-   "closePrice": "$75.65",
-   "premiumDiscount": "0.03%",
+   "closePrice": "$74.79",
+   "premiumDiscount": "0.04%",
    "cusip": null,
    "isin": "US92647N8653",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.278552
+    "exDate": null,
+    "dividend": "0.278552"
    },
    "returns": {
     "monthEnd": {
@@ -200,6 +208,7 @@
     }
    },
    "metrics": {
+    "ytd": 18.03,
     "tr1y": 19.08,
     "tr3y": 56.05,
     "tr5y": 61.34,
@@ -216,7 +225,7 @@
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 102,
-   "history": 135
+   "history": 2827
   },
   {
    "ticker": "CFA",
@@ -224,23 +233,25 @@
    "category": "US Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-us-500-volatility-wtd-etf",
    "dataFile": "./funds/CFA/meta.json",
-   "ter": "0.39%",
-   "terValue": 0.39,
-   "nav": "$96.97",
-   "navValue": 96.97,
-   "aum": "$513.96M",
-   "aumValue": 513957193.51,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.35%",
+   "terValue": 0.35,
+   "terGross": "0.39%",
+   "terGrossValue": 0.39,
+   "nav": "$96.17",
+   "navValue": 96.17,
+   "aum": "$509.72M",
+   "aumValue": 509721136.48,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Jul 01 2014",
    "exchange": "NASDAQ",
-   "closePrice": "$96.96",
-   "premiumDiscount": "-0.02%",
+   "closePrice": "$96.14",
+   "premiumDiscount": "-0.03%",
    "cusip": null,
    "isin": "US92647N7663",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.160634
+    "exDate": null,
+    "dividend": "0.160634"
    },
    "returns": {
     "monthEnd": {
@@ -267,6 +278,7 @@
     }
    },
    "metrics": {
+    "ytd": 11.57,
     "tr1y": 12.86,
     "tr3y": 46.99,
     "tr5y": 44.84,
@@ -282,8 +294,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-08-31"
    },
-   "holdings": 502,
-   "history": 147
+   "holdings": 503,
+   "history": 3082
   },
   {
    "ticker": "CFO",
@@ -291,23 +303,25 @@
    "category": "US Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-us-500-enhanced-volatility-wtd-etf",
    "dataFile": "./funds/CFO/meta.json",
-   "ter": "0.39%",
-   "terValue": 0.39,
-   "nav": "$78.61",
-   "navValue": 78.61,
-   "aum": "$400.89M",
-   "aumValue": 400893096.57,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.35%",
+   "terValue": 0.35,
+   "terGross": "0.39%",
+   "terGrossValue": 0.39,
+   "nav": "$77.96",
+   "navValue": 77.96,
+   "aum": "$397.59M",
+   "aumValue": 397589765.03,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Jul 01 2014",
    "exchange": "NASDAQ",
-   "closePrice": "$78.60",
-   "premiumDiscount": "-0.00%",
+   "closePrice": "$77.93",
+   "premiumDiscount": "0.03%",
    "cusip": null,
    "isin": "US92647N7820",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.128522
+    "exDate": null,
+    "dividend": "0.128522"
    },
    "returns": {
     "monthEnd": {
@@ -334,6 +348,7 @@
     }
    },
    "metrics": {
+    "ytd": 11.57,
     "tr1y": 12.86,
     "tr3y": 38.17,
     "tr5y": 20.62,
@@ -349,8 +364,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-08-31"
    },
-   "holdings": 502,
-   "history": 147
+   "holdings": 503,
+   "history": 3082
   },
   {
    "ticker": "CSB",
@@ -358,23 +373,25 @@
    "category": "US Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-us-small-cap-high-div-volatility-wtd-etf",
    "dataFile": "./funds/CSB/meta.json",
-   "ter": "0.40%",
-   "terValue": 0.4,
-   "nav": "$62.54",
-   "navValue": 62.54,
-   "aum": "$243.92M",
-   "aumValue": 243916847.95,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.35%",
+   "terValue": 0.35,
+   "terGross": "0.40%",
+   "terGrossValue": 0.4,
+   "nav": "$61.87",
+   "navValue": 61.87,
+   "aum": "$238.21M",
+   "aumValue": 238205952.66,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Jul 08 2015",
    "exchange": "NASDAQ",
-   "closePrice": "$62.55",
-   "premiumDiscount": "-0.05%",
+   "closePrice": "$61.85",
+   "premiumDiscount": "-0.01%",
    "cusip": null,
    "isin": "US92647N8737",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.288194
+    "exDate": null,
+    "dividend": "0.288194"
    },
    "returns": {
     "monthEnd": {
@@ -401,6 +418,7 @@
     }
    },
    "metrics": {
+    "ytd": 14.88,
     "tr1y": 14.66,
     "tr3y": 41.44,
     "tr5y": 31.07,
@@ -417,7 +435,7 @@
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 102,
-   "history": 135
+   "history": 2812
   },
   {
    "ticker": "GFLW",
@@ -425,23 +443,25 @@
    "category": "US Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-free-cash-flow-growth-etf",
    "dataFile": "./funds/GFLW/meta.json",
-   "ter": "0.50%",
-   "terValue": 0.5,
-   "nav": "$33.72",
-   "navValue": 33.72,
-   "aum": "$1.12B",
-   "aumValue": 1123552636.09,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.39%",
+   "terValue": 0.39,
+   "terGross": "0.50%",
+   "terGrossValue": 0.5,
+   "nav": "$33.75",
+   "navValue": 33.75,
+   "aum": "$1.14B",
+   "aumValue": 1143413853.14,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Dec 03 2024",
    "exchange": "NASDAQ",
-   "closePrice": "$33.73",
-   "premiumDiscount": "0.00%",
+   "closePrice": "$33.78",
+   "premiumDiscount": "0.06%",
    "cusip": null,
    "isin": "US92647X7646",
    "distributions": {
     "frequency": "Semi-annually",
-    "exDate": "",
-    "dividend": 0.112907
+    "exDate": null,
+    "dividend": "0.112907"
    },
    "returns": {
     "monthEnd": {
@@ -468,6 +488,7 @@
     }
    },
    "metrics": {
+    "ytd": 20.61,
     "tr1y": 24.58,
     "tr3y": null,
     "tr5y": null,
@@ -484,7 +505,7 @@
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 102,
-   "history": 452
+   "history": 457
   },
   {
    "ticker": "GLOW",
@@ -492,23 +513,25 @@
    "category": "Intl/Global Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-westend-global-equity-etf",
    "dataFile": "./funds/GLOW/meta.json",
-   "ter": "2.01%",
-   "terValue": 2.01,
-   "nav": "$34.90",
-   "navValue": 34.9,
-   "aum": "$76.42M",
-   "aumValue": 76421080.55,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.72%",
+   "terValue": 0.72,
+   "terGross": "2.01%",
+   "terGrossValue": 2.01,
+   "nav": "$34.32",
+   "navValue": 34.32,
+   "aum": "$76.18M",
+   "aumValue": 76180293.09,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Jun 20 2024",
    "exchange": "NASDAQ",
-   "closePrice": "$34.89",
-   "premiumDiscount": "-0.02%",
+   "closePrice": "$34.32",
+   "premiumDiscount": "0.03%",
    "cusip": null,
    "isin": "US92647X7984",
    "distributions": {
     "frequency": "Quarterly",
-    "exDate": "",
-    "dividend": 0.141059
+    "exDate": null,
+    "dividend": "0.141059"
    },
    "returns": {
     "monthEnd": {
@@ -535,6 +558,7 @@
     }
    },
    "metrics": {
+    "ytd": 14.65,
     "tr1y": 22.95,
     "tr3y": null,
     "tr5y": null,
@@ -551,7 +575,7 @@
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 15,
-   "history": 116
+   "history": 561
   },
   {
    "ticker": "GRIN",
@@ -559,23 +583,25 @@
    "category": "Intl/Global Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-international-free-cash-flow-growth-etf",
    "dataFile": "./funds/GRIN/meta.json",
-   "ter": "1.06%",
-   "terValue": 1.06,
-   "nav": "$32.70",
-   "navValue": 32.7,
-   "aum": "$356.48M",
-   "aumValue": 356478577.17,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.56%",
+   "terValue": 0.56,
+   "terGross": "1.06%",
+   "terGrossValue": 1.06,
+   "nav": "$32.53",
+   "navValue": 32.53,
+   "aum": "$354.62M",
+   "aumValue": 354624668.12,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Jun 25 2025",
    "exchange": "NASDAQ",
-   "closePrice": "$32.91",
-   "premiumDiscount": "0.64%",
+   "closePrice": "$32.58",
+   "premiumDiscount": "0.17%",
    "cusip": null,
    "isin": "US92647X7497",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.008409
+    "exDate": null,
+    "dividend": "0.008409"
    },
    "returns": {
     "monthEnd": {
@@ -602,6 +628,7 @@
     }
    },
    "metrics": {
+    "ytd": 22.12,
     "tr1y": 29.65,
     "tr3y": null,
     "tr5y": null,
@@ -617,8 +644,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-08-31"
    },
-   "holdings": 105,
-   "history": 315
+   "holdings": 103,
+   "history": 320
   },
   {
    "ticker": "IFLO",
@@ -626,23 +653,25 @@
    "category": "Intl/Global Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-international-free-cash-flow-etf",
    "dataFile": "./funds/IFLO/meta.json",
-   "ter": "1.05%",
-   "terValue": 1.05,
-   "nav": "$35.85",
-   "navValue": 35.85,
-   "aum": "$284.97M",
-   "aumValue": 284969651.6,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.56%",
+   "terValue": 0.56,
+   "terGross": "1.05%",
+   "terGrossValue": 1.05,
+   "nav": "$35.12",
+   "navValue": 35.12,
+   "aum": "$284.49M",
+   "aumValue": 284487305.36,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Jun 25 2025",
    "exchange": "NASDAQ",
-   "closePrice": "$36.05",
-   "premiumDiscount": "0.56%",
+   "closePrice": "$35.14",
+   "premiumDiscount": "0.01%",
    "cusip": null,
    "isin": "US92647X7562",
    "distributions": {
     "frequency": "Quarterly",
-    "exDate": "",
-    "dividend": 0.079302
+    "exDate": null,
+    "dividend": "0.079302"
    },
    "returns": {
     "monthEnd": {
@@ -669,6 +698,7 @@
     }
    },
    "metrics": {
+    "ytd": 32.12,
     "tr1y": 39.21,
     "tr3y": null,
     "tr5y": null,
@@ -684,8 +714,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-08-31"
    },
-   "holdings": 104,
-   "history": 315
+   "holdings": 105,
+   "history": 320
   },
   {
    "ticker": "MODL",
@@ -693,23 +723,25 @@
    "category": "US Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-westend-us-sector-etf",
    "dataFile": "./funds/MODL/meta.json",
-   "ter": "0.49%",
-   "terValue": 0.49,
-   "nav": "$52.96",
-   "navValue": 52.96,
-   "aum": "$1.07B",
-   "aumValue": 1071898507.06,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.46%",
+   "terValue": 0.46,
+   "terGross": "0.49%",
+   "terGrossValue": 0.49,
+   "nav": "$52.22",
+   "navValue": 52.22,
+   "aum": "$1.06B",
+   "aumValue": 1057968494.54,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Oct 11 2022",
    "exchange": "NASDAQ",
-   "closePrice": "$52.98",
-   "premiumDiscount": "0.00%",
+   "closePrice": "$52.24",
+   "premiumDiscount": "0.10%",
    "cusip": null,
    "isin": "US92647P1268",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.047543
+    "exDate": null,
+    "dividend": "0.047543"
    },
    "returns": {
     "monthEnd": {
@@ -736,6 +768,7 @@
     }
    },
    "metrics": {
+    "ytd": 11.61,
     "tr1y": 19.27,
     "tr3y": 73.71,
     "tr5y": null,
@@ -752,7 +785,7 @@
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 363,
-   "history": 207
+   "history": 997
   },
   {
    "ticker": "SFLO",
@@ -760,23 +793,25 @@
    "category": "US Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-small-cap-free-cash-flow-etf",
    "dataFile": "./funds/SFLO/meta.json",
-   "ter": "0.56%",
-   "terValue": 0.56,
-   "nav": "$37.43",
-   "navValue": 37.43,
-   "aum": "$800.63M",
-   "aumValue": 800633256.47,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.49%",
+   "terValue": 0.49,
+   "terGross": "0.56%",
+   "terGrossValue": 0.56,
+   "nav": "$37.65",
+   "navValue": 37.65,
+   "aum": "$803.18M",
+   "aumValue": 803175852.39,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Dec 20 2023",
    "exchange": "NASDAQ",
-   "closePrice": "$37.46",
-   "premiumDiscount": "0.01%",
+   "closePrice": "$37.66",
+   "premiumDiscount": "0.04%",
    "cusip": null,
    "isin": "US92647X8222",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.049758
+    "exDate": null,
+    "dividend": "0.049758"
    },
    "returns": {
     "monthEnd": {
@@ -803,6 +838,7 @@
     }
    },
    "metrics": {
+    "ytd": 37,
     "tr1y": 39.51,
     "tr3y": null,
     "tr5y": null,
@@ -819,7 +855,7 @@
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 202,
-   "history": 145
+   "history": 697
   },
   {
    "ticker": "UBND",
@@ -827,23 +863,25 @@
    "category": "Fixed Income",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-core-plus-bond-etf",
    "dataFile": "./funds/UBND/meta.json",
-   "ter": "0.45%",
-   "terValue": 0.45,
-   "nav": "$20.81",
-   "navValue": 20.81,
-   "aum": "$2.01B",
-   "aumValue": 2006513212.22,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.40%",
+   "terValue": 0.4,
+   "terGross": "0.45%",
+   "terGrossValue": 0.45,
+   "nav": "$20.69",
+   "navValue": 20.69,
+   "aum": "$1.95B",
+   "aumValue": 1946126216.82,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Oct 04 2021",
    "exchange": "NASDAQ",
-   "closePrice": "$20.81",
-   "premiumDiscount": "0.00%",
+   "closePrice": "$20.70",
+   "premiumDiscount": "0.06%",
    "cusip": null,
    "isin": "US92647X8636",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.085876
+    "exDate": null,
+    "dividend": "0.085876"
    },
    "returns": {
     "monthEnd": {
@@ -870,6 +908,7 @@
     }
    },
    "metrics": {
+    "ytd": 0.18,
     "tr1y": 2.39,
     "tr3y": 15.7,
     "tr5y": null,
@@ -878,15 +917,15 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 0.87,
-    "dividendYield": 4.95,
-    "dividendYieldText": "4.95%",
+    "dividendYield": 4.98,
+    "dividendYieldText": "4.98%",
     "secYield": 4.98,
     "secYieldText": "4.98%",
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-08-31"
    },
-   "holdings": 1626,
-   "history": 260
+   "holdings": 1638,
+   "history": 1254
   },
   {
    "ticker": "UCRD",
@@ -894,23 +933,25 @@
    "category": "Fixed Income",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-corporate-bond-etf",
    "dataFile": "./funds/UCRD/meta.json",
-   "ter": "0.47%",
-   "terValue": 0.47,
-   "nav": "$20.60",
-   "navValue": 20.6,
-   "aum": "$144.70M",
-   "aumValue": 144700802.47,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.40%",
+   "terValue": 0.4,
+   "terGross": "0.47%",
+   "terGrossValue": 0.47,
+   "nav": "$20.47",
+   "navValue": 20.47,
+   "aum": "$143.84M",
+   "aumValue": 143835201.42,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Oct 04 2021",
    "exchange": "NASDAQ",
-   "closePrice": "$20.66",
-   "premiumDiscount": "0.28%",
+   "closePrice": "$20.48",
+   "premiumDiscount": "0.12%",
    "cusip": null,
    "isin": "US92647X8552",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.057596
+    "exDate": null,
+    "dividend": "0.057596"
    },
    "returns": {
     "monthEnd": {
@@ -937,6 +978,7 @@
     }
    },
    "metrics": {
+    "ytd": -0.19,
     "tr1y": 2.15,
     "tr3y": 16.86,
     "tr5y": null,
@@ -945,15 +987,15 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 0.11,
-    "dividendYield": 3.35,
-    "dividendYieldText": "3.35%",
+    "dividendYield": 3.37,
+    "dividendYieldText": "3.37%",
     "secYield": 5.17,
     "secYieldText": "5.17%",
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 512,
-   "history": 260
+   "history": 1254
   },
   {
    "ticker": "UEVM",
@@ -961,23 +1003,25 @@
    "category": "Intl/Global Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-emerging-markets-value-momentum-etf",
    "dataFile": "./funds/UEVM/meta.json",
-   "ter": "0.53%",
-   "terValue": 0.53,
-   "nav": "$58.88",
-   "navValue": 58.88,
-   "aum": "$244.37M",
-   "aumValue": 244368748.9,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.45%",
+   "terValue": 0.45,
+   "terGross": "0.53%",
+   "terGrossValue": 0.53,
+   "nav": "$58.11",
+   "navValue": 58.11,
+   "aum": "$241.17M",
+   "aumValue": 241165621.12,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$58.89",
-   "premiumDiscount": "0.02%",
+   "closePrice": "$57.90",
+   "premiumDiscount": "-0.35%",
    "cusip": null,
    "isin": "US92647N5436",
    "distributions": {
     "frequency": "Quarterly",
-    "exDate": "",
-    "dividend": 0.282121
+    "exDate": null,
+    "dividend": "0.282121"
    },
    "returns": {
     "monthEnd": {
@@ -1004,6 +1048,7 @@
     }
    },
    "metrics": {
+    "ytd": 10.23,
     "tr1y": 14.83,
     "tr3y": 62.68,
     "tr5y": 48.71,
@@ -1019,8 +1064,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-08-31"
    },
-   "holdings": 195,
-   "history": 466
+   "holdings": 193,
+   "history": 2244
   },
   {
    "ticker": "UITB",
@@ -1028,23 +1073,25 @@
    "category": "Fixed Income",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-core-intermediate-bond-etf",
    "dataFile": "./funds/UITB/meta.json",
-   "ter": "0.38%",
-   "terValue": 0.38,
-   "nav": "$44.96",
-   "navValue": 44.96,
-   "aum": "$2.62B",
-   "aumValue": 2618888214.28,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.25%",
+   "terValue": 0.25,
+   "terGross": "0.38%",
+   "terGrossValue": 0.38,
+   "nav": "$44.76",
+   "navValue": 44.76,
+   "aum": "$2.58B",
+   "aumValue": 2580337923.22,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$44.95",
-   "premiumDiscount": "-0.03%",
+   "closePrice": "$44.77",
+   "premiumDiscount": "0.01%",
    "cusip": null,
    "isin": "US90291F6007",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.165726
+    "exDate": null,
+    "dividend": "0.165726"
    },
    "returns": {
     "monthEnd": {
@@ -1071,6 +1118,7 @@
     }
    },
    "metrics": {
+    "ytd": -0.2,
     "tr1y": 1.77,
     "tr3y": 13.82,
     "tr5y": 0.85,
@@ -1079,15 +1127,15 @@
     "cagr5y": 0.17,
     "cagr10y": null,
     "siAnn": 2.19,
-    "dividendYield": 4.42,
-    "dividendYieldText": "4.42%",
+    "dividendYield": 4.44,
+    "dividendYieldText": "4.44%",
     "secYield": 4.81,
     "secYieldText": "4.81%",
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-08-31"
    },
-   "holdings": 1237,
-   "history": 466
+   "holdings": 1241,
+   "history": 2244
   },
   {
    "ticker": "UIVM",
@@ -1095,23 +1143,25 @@
    "category": "Intl/Global Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-international-value-momentum-etf",
    "dataFile": "./funds/UIVM/meta.json",
-   "ter": "0.39%",
-   "terValue": 0.39,
-   "nav": "$75.21",
-   "navValue": 75.21,
-   "aum": "$338.43M",
-   "aumValue": 338430506,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.35%",
+   "terValue": 0.35,
+   "terGross": "0.39%",
+   "terGrossValue": 0.39,
+   "nav": "$73.20",
+   "navValue": 73.2,
+   "aum": "$329.41M",
+   "aumValue": 329407497.93,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$75.80",
-   "premiumDiscount": "0.76%",
+   "closePrice": "$73.40",
+   "premiumDiscount": "0.29%",
    "cusip": null,
    "isin": "US90291F6046",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 1.207934
+    "exDate": null,
+    "dividend": "1.207934"
    },
    "returns": {
     "monthEnd": {
@@ -1138,6 +1188,7 @@
     }
    },
    "metrics": {
+    "ytd": 22.57,
     "tr1y": 32.26,
     "tr3y": 101.09,
     "tr5y": 87.53,
@@ -1153,8 +1204,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-08-31"
    },
-   "holdings": 202,
-   "history": 466
+   "holdings": 203,
+   "history": 2244
   },
   {
    "ticker": "ULVM",
@@ -1162,23 +1213,25 @@
    "category": "US Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-us-value-momentum-etf",
    "dataFile": "./funds/ULVM/meta.json",
-   "ter": "0.25%",
-   "terValue": 0.25,
-   "nav": "$104.09",
-   "navValue": 104.09,
-   "aum": "$260.23M",
-   "aumValue": 260232062.34,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.20%",
+   "terValue": 0.2,
+   "terGross": "0.25%",
+   "terGrossValue": 0.25,
+   "nav": "$102.94",
+   "navValue": 102.94,
+   "aum": "$257.34M",
+   "aumValue": 257341044.8,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$104.06",
-   "premiumDiscount": "-0.03%",
+   "closePrice": "$102.90",
+   "premiumDiscount": "-0.01%",
    "cusip": null,
    "isin": "US90291F1057",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.260176
+    "exDate": null,
+    "dividend": "0.260176"
    },
    "returns": {
     "monthEnd": {
@@ -1205,6 +1258,7 @@
     }
    },
    "metrics": {
+    "ytd": 18.94,
     "tr1y": 24.2,
     "tr3y": 77.82,
     "tr5y": 73.96,
@@ -1221,7 +1275,7 @@
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 127,
-   "history": 466
+   "history": 2244
   },
   {
    "ticker": "USTB",
@@ -1231,21 +1285,23 @@
    "dataFile": "./funds/USTB/meta.json",
    "ter": "0.34%",
    "terValue": 0.34,
-   "nav": "$49.93",
-   "navValue": 49.93,
-   "aum": "$2.63B",
-   "aumValue": 2633830509.27,
-   "asOfDate": "Sep 25 2026",
+   "terGross": "0.34%",
+   "terGrossValue": 0.34,
+   "nav": "$49.95",
+   "navValue": 49.95,
+   "aum": "$2.66B",
+   "aumValue": 2657236030.44,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$49.98",
-   "premiumDiscount": "0.08%",
+   "closePrice": "$49.97",
+   "premiumDiscount": "0.03%",
    "cusip": null,
    "isin": "US90291F5017",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.183374
+    "exDate": null,
+    "dividend": "0.183374"
    },
    "returns": {
     "monthEnd": {
@@ -1272,6 +1328,7 @@
     }
    },
    "metrics": {
+    "ytd": 1.95,
     "tr1y": 3.62,
     "tr3y": 18.63,
     "tr5y": 19.11,
@@ -1287,8 +1344,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-08-31"
    },
-   "holdings": 1153,
-   "history": 466
+   "holdings": 1150,
+   "history": 2244
   },
   {
    "ticker": "USVM",
@@ -1298,21 +1355,23 @@
    "dataFile": "./funds/USVM/meta.json",
    "ter": "0.29%",
    "terValue": 0.29,
-   "nav": "$104.57",
-   "navValue": 104.57,
+   "terGross": "0.29%",
+   "terGrossValue": 0.29,
+   "nav": "$103.93",
+   "navValue": 103.93,
    "aum": "$1.73B",
-   "aumValue": 1730582385.15,
-   "asOfDate": "Sep 25 2026",
+   "aumValue": 1730406662.35,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$104.63",
-   "premiumDiscount": "0.02%",
+   "closePrice": "$103.95",
+   "premiumDiscount": "0.04%",
    "cusip": null,
    "isin": "US90291F5076",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.188242
+    "exDate": null,
+    "dividend": "0.188242"
    },
    "returns": {
     "monthEnd": {
@@ -1339,6 +1398,7 @@
     }
    },
    "metrics": {
+    "ytd": 19.95,
     "tr1y": 23.65,
     "tr3y": 67.33,
     "tr5y": 62.45,
@@ -1355,7 +1415,7 @@
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 294,
-   "history": 466
+   "history": 2244
   },
   {
    "ticker": "VFLO",
@@ -1363,23 +1423,25 @@
    "category": "US Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-free-cash-flow-etf",
    "dataFile": "./funds/VFLO/meta.json",
-   "ter": "0.44%",
-   "terValue": 0.44,
-   "nav": "$51.18",
-   "navValue": 51.18,
-   "aum": "$10.95B",
-   "aumValue": 10953042968.56,
-   "asOfDate": "Sep 30 2026",
+   "ter": "0.39%",
+   "terValue": 0.39,
+   "terGross": "0.44%",
+   "terGrossValue": 0.44,
+   "nav": "$52.10",
+   "navValue": 52.1,
+   "aum": "$11.16B",
+   "aumValue": 11164469629.53,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Jun 21 2023",
    "exchange": "NASDAQ",
-   "closePrice": "$51.19",
-   "premiumDiscount": "-0.00%",
+   "closePrice": "$52.11",
+   "premiumDiscount": "0.01%",
    "cusip": null,
    "isin": "US92647X8305",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.105761
+    "exDate": null,
+    "dividend": "0.105761"
    },
    "returns": {
     "monthEnd": {
@@ -1406,6 +1468,7 @@
     }
    },
    "metrics": {
+    "ytd": 41.85,
     "tr1y": 51,
     "tr3y": 119.65,
     "tr5y": null,
@@ -1422,7 +1485,7 @@
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 52,
-   "history": 173
+   "history": 824
   },
   {
    "ticker": "VMHY",
@@ -1430,27 +1493,29 @@
    "category": "Fixed Income",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-municipal-high-yield-etf",
    "dataFile": "./funds/VMHY/meta.json",
-   "ter": "0.77%",
-   "terValue": 0.77,
-   "nav": "$24.96",
-   "navValue": 24.96,
-   "aum": "$22.46M",
-   "aumValue": 22462004.06,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.34%",
+   "terValue": 0.34,
+   "terGross": "0.77%",
+   "terGrossValue": 0.77,
+   "nav": "$24.90",
+   "navValue": 24.9,
+   "aum": "$22.41M",
+   "aumValue": 22407610.44,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Sep 22 2026",
    "exchange": "NASDAQ",
-   "closePrice": "$25.04",
-   "premiumDiscount": "0.27%",
+   "closePrice": "$25.02",
+   "premiumDiscount": "0.47%",
    "cusip": null,
    "isin": "US92647N3787",
    "distributions": {
     "frequency": null,
-    "exDate": "",
-    "dividend": ""
+    "exDate": null,
+    "dividend": null
    },
    "returns": {
     "monthEnd": {
-     "asOfDate": "",
+     "asOfDate": null,
      "mo1": null,
      "qtd": null,
      "ytd": null,
@@ -1461,7 +1526,7 @@
      "sinceInception": null
     },
     "quarterEnd": {
-     "asOfDate": "",
+     "asOfDate": null,
      "mo1": null,
      "qtd": null,
      "ytd": null,
@@ -1473,6 +1538,7 @@
     }
    },
    "metrics": {
+    "ytd": null,
     "tr1y": null,
     "tr3y": null,
     "tr5y": null,
@@ -1488,8 +1554,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": null
    },
-   "holdings": 21,
-   "history": 5
+   "holdings": 27,
+   "history": 8
   },
   {
    "ticker": "VMSD",
@@ -1497,27 +1563,29 @@
    "category": "Fixed Income",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-short-duration-municipal-etf",
    "dataFile": "./funds/VMSD/meta.json",
-   "ter": "0.62%",
-   "terValue": 0.62,
-   "nav": "$24.97",
-   "navValue": 24.97,
-   "aum": "$22.47M",
-   "aumValue": 22473291.4,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.18%",
+   "terValue": 0.18,
+   "terGross": "0.62%",
+   "terGrossValue": 0.62,
+   "nav": "$25.01",
+   "navValue": 25.01,
+   "aum": "$22.51M",
+   "aumValue": 22509995.19,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Sep 22 2026",
    "exchange": "NASDAQ",
-   "closePrice": "$25.02",
-   "premiumDiscount": "0.18%",
+   "closePrice": "$25.05",
+   "premiumDiscount": "0.16%",
    "cusip": null,
    "isin": "US92647N3605",
    "distributions": {
     "frequency": null,
-    "exDate": "",
-    "dividend": ""
+    "exDate": null,
+    "dividend": null
    },
    "returns": {
     "monthEnd": {
-     "asOfDate": "",
+     "asOfDate": null,
      "mo1": null,
      "qtd": null,
      "ytd": null,
@@ -1528,7 +1596,7 @@
      "sinceInception": null
     },
     "quarterEnd": {
-     "asOfDate": "",
+     "asOfDate": null,
      "mo1": null,
      "qtd": null,
      "ytd": null,
@@ -1540,6 +1608,7 @@
     }
    },
    "metrics": {
+    "ytd": null,
     "tr1y": null,
     "tr3y": null,
     "tr5y": null,
@@ -1555,8 +1624,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": null
    },
-   "holdings": 23,
-   "history": 3
+   "holdings": 28,
+   "history": 8
   },
   {
    "ticker": "VSDA",
@@ -1564,23 +1633,25 @@
    "category": "US Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-dividend-accelerator-etf",
    "dataFile": "./funds/VSDA/meta.json",
-   "ter": "0.40%",
-   "terValue": 0.4,
-   "nav": "$56.96",
-   "navValue": 56.96,
-   "aum": "$210.77M",
-   "aumValue": 210767772.15,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.35%",
+   "terValue": 0.35,
+   "terGross": "0.40%",
+   "terGrossValue": 0.4,
+   "nav": "$56.11",
+   "navValue": 56.11,
+   "aum": "$207.62M",
+   "aumValue": 207620668.76,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Apr 18 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$56.97",
-   "premiumDiscount": "0.02%",
+   "closePrice": "$56.10",
+   "premiumDiscount": "0.03%",
    "cusip": null,
    "isin": "US92647N6673",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.184593
+    "exDate": null,
+    "dividend": "0.184593"
    },
    "returns": {
     "monthEnd": {
@@ -1607,6 +1678,7 @@
     }
    },
    "metrics": {
+    "ytd": 14.5,
     "tr1y": 13.19,
     "tr3y": 40.27,
     "tr5y": 45.24,
@@ -1623,7 +1695,7 @@
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 77,
-   "history": 114
+   "history": 2379
   },
   {
    "ticker": "VSMV",
@@ -1631,23 +1703,25 @@
    "category": "US Equity",
    "fundPage": "https://www.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-us-multi-factor-minimum-volatility-etf",
    "dataFile": "./funds/VSMV/meta.json",
-   "ter": "0.42%",
-   "terValue": 0.42,
-   "nav": "$60.24",
-   "navValue": 60.24,
-   "aum": "$156.62M",
-   "aumValue": 156617676.03,
-   "asOfDate": "Sep 25 2026",
+   "ter": "0.35%",
+   "terValue": 0.35,
+   "terGross": "0.42%",
+   "terGrossValue": 0.42,
+   "nav": "$59.76",
+   "navValue": 59.76,
+   "aum": "$155.38M",
+   "aumValue": 155380895.28,
+   "asOfDate": "Oct 01 2026",
    "inceptionDate": "Jun 22 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$60.24",
-   "premiumDiscount": "-0.02%",
+   "closePrice": "$59.75",
+   "premiumDiscount": "-0.00%",
    "cusip": null,
    "isin": "US92647N6913",
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "",
-    "dividend": 0.104033
+    "exDate": null,
+    "dividend": "0.104033"
    },
    "returns": {
     "monthEnd": {
@@ -1674,6 +1748,7 @@
     }
    },
    "metrics": {
+    "ytd": 11.71,
     "tr1y": 19.71,
     "tr3y": 58.08,
     "tr5y": 65.64,
@@ -1690,7 +1765,7 @@
     "performanceAsOf": "2026-08-31"
    },
    "holdings": 63,
-   "history": 483
+   "history": 2331
   }
  ]
 }
