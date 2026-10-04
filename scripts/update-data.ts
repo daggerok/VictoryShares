@@ -376,6 +376,7 @@ export function parseCatalog(payload: unknown): Fund[] {
       category: cleanText(raw.asset_class) || 'Uncategorized',
       navValue, aumValue, terValue, terGrossValue,
       dividendYield: toNumber(raw.dividend_yield_percentage),
+      dividendYieldBasis: yieldBasisOf(toNumber(raw.dividend_yield_percentage), null),
       secYield: yieldValue,
     });
   }
@@ -394,6 +395,21 @@ export function performanceDateIso(value: unknown): string | null {
 
 export const RETURNS_BASIS = 'official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns';
 
+/** Which definition stands behind dividendYield: null exactly when the yield is null. */
+export const YIELD_BASES = ['official-trailing-12m', 'official-distribution-rate', 'official-other', 'computed-trailing-12m', 'indicated'] as const;
+export type YieldBasis = typeof YIELD_BASES[number];
+/**
+ * Maps a stored code (or, for older meta.json files, the dividendYieldKind text) to a code.
+ * VCM publishes dividend_yield_percentage without a definition -> official-other; the updater's own
+ * latest distribution x payments per year / price estimate -> indicated.
+ */
+export function yieldBasisOf(value: number | null, basis: unknown, kind?: unknown): YieldBasis | null {
+  if (value === null) return null;
+  const known = YIELD_BASES.find(code => code === basis);
+  if (known) return known;
+  return /^indicated/i.test(String(kind ?? '')) ? 'indicated' : 'official-other';
+}
+
 export function cachedFundFromIndex(item: JsonRecord): Fund {
   const metrics = isRecord(item.metrics) ? item.metrics : {};
   const returns = isRecord(item.returns) ? item.returns : {};
@@ -407,7 +423,7 @@ export function cachedFundFromIndex(item: JsonRecord): Fund {
   return {
     ...item, ticker: String(item.ticker ?? ''), name: String(item.name ?? ''), category: String(item.category ?? ''),
     navValue: toNumber(item.navValue), aumValue: toNumber(item.aumValue), terValue: toNumber(item.terValue),
-    dividendYield: toNumber(metrics.dividendYield), secYield: toNumber(metrics.secYield),
+    dividendYield: toNumber(metrics.dividendYield), dividendYieldBasis: yieldBasisOf(toNumber(metrics.dividendYield), metrics.dividendYieldBasis), secYield: toNumber(metrics.secYield),
     terGrossValue: toNumber(item.terGrossValue),
     gross_exp_ratio: item.terGrossValue ?? item.terValue, net_expense_ratio: item.terValue,
     inception_date: isoFromDisplay(item.inceptionDate),
@@ -798,6 +814,7 @@ export function returnsFromCatalog(fund: Fund): { monthEnd: JsonRecord; quarterE
     metrics: {
       ...values,
       dividendYield: fund.dividendYield, dividendYieldText: fund.dividendYield === null ? null : formatPercent(fund.dividendYield),
+      dividendYieldBasis: yieldBasisOf(fund.dividendYield, fund.dividendYieldBasis),
       secYield: fund.secYield, secYieldText: fund.secYield === null ? null : formatPercent(fund.secYield),
       // performanceAsOf describes the returns above: no returns, no date.
       returnsBasis: RETURNS_BASIS, performanceAsOf: hasReturns ? performanceDateIso(valueFrom(fund, 'monthly_performance_as_of_date')) : null,
@@ -841,7 +858,7 @@ export function indexRow(fund: Fund, meta: JsonRecord | null): JsonRecord {
     cusip: cleanText(fund.cusip) || null, isin: cleanText(fund.isin) || null,
     distributions: { frequency: typeof distributionMeta.frequency === 'string' ? distributionMeta.frequency : null, exDate: null, dividend: latestAmount === null ? null : String(latestAmount) },
     returns: { monthEnd: returns.monthEnd, quarterEnd: returns.quarterEnd },
-    metrics: { ...returns.metrics, dividendYield, dividendYieldText: textPercent(dividendYield), secYield, secYieldText: textPercent(secYield) },
+    metrics: { ...returns.metrics, dividendYield, dividendYieldText: textPercent(dividendYield), dividendYieldBasis: yieldBasisOf(dividendYield, meta ? yieldsMeta.dividendYieldBasis : fund.dividendYieldBasis, yieldsMeta.dividendYieldKind), secYield, secYieldText: textPercent(secYield) },
     holdings: meta ? toNumber(sub('holdings').totalRows) ?? 0 : 0,
     history: meta ? toNumber(sub('history').totalRows) ?? 0 : 0,
   };
@@ -936,10 +953,13 @@ async function buildFund(fund: Fund, key: string, config: Config, prior: JsonRec
   const market = toNumber(valueFrom(fund, 'market_close'));
   const aum = toNumber(valueFrom(overview, 'net_assets')) ?? fund.aumValue;
   const secYield = toNumber(valueFrom(yields, 'thirtyday_sec_yield')) ?? fund.secYield;
-  const declaredYield = toNumber(valueFrom(yields, 'dividend_yield_percentage')) ?? fund.dividendYield;
+  const payloadYield = toNumber(valueFrom(yields, 'dividend_yield_percentage'));
+  const declaredYield = payloadYield ?? fund.dividendYield;
+  const declaredBasis = payloadYield !== null ? 'official-other' : yieldBasisOf(fund.dividendYield, fund.dividendYieldBasis);
   const payments = distributions.frequency ? ANNUAL_PAYMENTS[distributions.frequency] : undefined;
   const indicatedYield = distributions.latest !== null && payments && market !== null && market > 0 ? round((distributions.latest * payments / market) * 100, 2) : null;
   const dividendYield = declaredYield ?? indicatedYield;
+  const dividendYieldBasis = declaredYield !== null ? declaredBasis : yieldBasisOf(indicatedYield, 'indicated');
   const yieldDate = displayDate(valueFrom(yields, 'dividend_yield_percentage_as_of_date', 'as_of_date'));
   const meta: JsonRecord = {
     ticker: fund.ticker, name: fund.name, category: fund.category,
@@ -960,9 +980,10 @@ async function buildFund(fund: Fund, key: string, config: Config, prior: JsonRec
     aum: { display: formatMoney(aum), value: aum, asOfDate: displayDate(valueFrom(overview, 'as_of') ?? fund.nav_as_of), source: 'VCM ETF catalog / Overview JSON' },
     yields: {
       dividendYield, dividendYieldText: textPercent(dividendYield),
-      dividendYieldKind: declaredYield !== null
+      dividendYieldBasis,
+      dividendYieldKind: declaredYield !== null && dividendYieldBasis !== 'indicated'
         ? `VCM published dividend yield${yieldDate ? ` as of ${yieldDate}` : ''}`
-        : indicatedYield !== null ? 'Indicated from the latest reported distribution per share x inferred payments per year / market price' : null,
+        : dividendYield !== null ? 'Indicated from the latest reported distribution per share x inferred payments per year / market price' : null,
       distributionRate: toNumber(yields.twelve_month_distribution_rate), secYield, secYieldText: textPercent(secYield),
       secYieldKind: secYield === null ? null : `VCM 30-day SEC yield as of ${displayDate(valueFrom(yields, 'as_of_date') ?? fund.nav_as_of)}`,
       unsubsidizedSecYield: toNumber(yields.thirtyday_sec_unsubsidized_yield),
@@ -1085,7 +1106,9 @@ export async function runUpdate(controls: Record<string, string>, options: { dea
         const parsed = parseDistributionPayload(distPayload);
         const payments = parsed.frequency ? ANNUAL_PAYMENTS[parsed.frequency] : undefined;
         const marketPrice = toNumber(fund.market_close);
-        fund.dividendYield = toNumber(yields.dividend_yield_percentage) ?? (parsed.latest !== null && payments && marketPrice !== null && marketPrice > 0 ? round(parsed.latest * payments / marketPrice * 100, 2) : null);
+        const published = toNumber(yields.dividend_yield_percentage);
+        fund.dividendYieldBasis = published !== null ? 'official-other' : 'indicated';
+        fund.dividendYield = published ?? (parsed.latest !== null && payments && marketPrice !== null && marketPrice > 0 ? round(parsed.latest * payments / marketPrice * 100, 2) : null);
       }
     });
   }

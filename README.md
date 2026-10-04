@@ -60,7 +60,15 @@ The updater uses issuer-published NAV performance values for month-end and quart
 - Every `funds[].metrics` ends with `returnsBasis` (never empty: states that returns are official VCM NAV returns, with 3-, 5- and 10-year total returns derived from the published annualized NAV returns, and that Yahoo is not used for returns) and `performanceAsOf` (ISO `YYYY-MM-DD` date of the issuer month-end performance table the returns come from, not the NAV date; `null` when the issuer publishes no performance table for the fund)
 - Net assets, expense ratios, NAV, yields, distributions and returns are issuer-published values; Yahoo adjusted-close history is a market-price series and an estimate, not official NAV
 - The Yahoo `NAV` history column is intentionally blank rather than inferred from market price
-- Every `funds[].metrics` has the same keys: `ytd`, `tr1y`, `tr3y`, `tr5y`, `tr10y`, `cagr3y`, `cagr5y`, `cagr10y`, `siAnn`, `dividendYield`, `dividendYieldText`, `secYield`, `secYieldText`, `returnsBasis`, `performanceAsOf`. `ytd` is the published year-to-date NAV return. Horizons longer than the fund's age and `siAnn` for funds younger than one year are `null`; `performanceAsOf` is `null` when the fund has no published returns (for example VMHY and VMSD, incepted 2026-09-22)
+- Every `funds[].metrics` has the same keys: `ytd`, `tr1y`, `tr3y`, `tr5y`, `tr10y`, `cagr3y`, `cagr5y`, `cagr10y`, `siAnn`, `dividendYield`, `dividendYieldText`, `dividendYieldBasis`, `secYield`, `secYieldText`, `returnsBasis`, `performanceAsOf`. `ytd` is the published year-to-date NAV return. Horizons longer than the fund's age and `siAnn` for funds younger than one year are `null`; `performanceAsOf` is `null` when the fund has no published returns (for example VMHY and VMSD, incepted 2026-09-22)
+- `dividendYieldBasis` names the definition behind `dividendYield` and is `null` exactly when `dividendYield` is `null`. It is stored with the yield in `meta.json` (`yields.dividendYieldBasis`), so a retained fund keeps the code together with its yield:
+
+  | Code | Meaning for VictoryShares |
+  | --- | --- |
+  | `official-other` | VCM `dividend_yield_percentage` (catalog or Yields API); VCM does not state the definition |
+  | `indicated` | updater estimate: latest distribution x payments per year (from the frequency) / market price, used when VCM publishes no yield |
+  | `official-trailing-12m`, `official-distribution-rate`, `computed-trailing-12m` | part of the standard code set, not used by this brand |
+
 - Missing values stay unavailable (shown as a dash) and are never treated as zero; a filter with a bound excludes funds without that value. A provider-published real `0.00%` (for example the GFLW 30-day SEC yield) stays `0`
 - Missing holdings `Weight` or `Market Value` stay empty instead of becoming `"0"`
 - Expense ratio: `terValue` is the NET expense ratio (after waivers; the gross value when it is the only one published) and `terGrossValue` is the GROSS ratio when published; `meta.json` `expenseRatio` carries `value`/`net` (net) and `gross`. The `TER` filter applies to the net ratio

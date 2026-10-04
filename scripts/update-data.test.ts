@@ -9,7 +9,7 @@ import {
   pageBasenames, paceRequest, parseAtomFilings, parseAumRange, parseCatalog, parseDistributionPayload, parseFundTickerRefs,
   parseHistoryRange, parseHoldings, parseIssuerClientConfig, parseNportHoldings, parseNportIdentity, parsePremiumDiscount, parseRange,
   parseYahooChart, performanceDateIso, readConfig, resolveControls, returnsFromCatalog, rotateSelection, runUpdate, runtimeControls,
-  useApiRoot, yahooChartUrl,
+  useApiRoot, yahooChartUrl, yieldBasisOf,
 } from './update-data';
 
 // ---------------------------------------------------------------------------
@@ -274,7 +274,7 @@ describe('metrics', () => {
 
   test('returnsBasis and performanceAsOf end the metrics with one fixed key set; performanceAsOf is the table date, never the NAV date', () => {
     const { metrics } = returnsFromCatalog(vflo);
-    expect(Object.keys(metrics)).toEqual(['ytd', 'tr1y', 'tr3y', 'tr5y', 'tr10y', 'cagr3y', 'cagr5y', 'cagr10y', 'siAnn', 'dividendYield', 'dividendYieldText', 'secYield', 'secYieldText', 'returnsBasis', 'performanceAsOf']);
+    expect(Object.keys(metrics)).toEqual(['ytd', 'tr1y', 'tr3y', 'tr5y', 'tr10y', 'cagr3y', 'cagr5y', 'cagr10y', 'siAnn', 'dividendYield', 'dividendYieldText', 'dividendYieldBasis', 'secYield', 'secYieldText', 'returnsBasis', 'performanceAsOf']);
     expect([metrics.returnsBasis, metrics.performanceAsOf]).toEqual([RETURNS_BASIS, '2026-08-31']);
     expect(String(metrics.returnsBasis)).not.toMatch(/^-?$|<TICKER>/);
     expect([undefined, ''].map((value) => returnsFromCatalog({ ...vflo, monthly_performance_as_of_date: value }).metrics.performanceAsOf)).toEqual([null, null]);
@@ -303,6 +303,27 @@ describe('metrics', () => {
     expect(withMeta.distributions).toEqual({ frequency: 'Monthly', exDate: null, dividend: '0.125537' });
     expect(withMeta.metrics).toMatchObject({ dividendYield: 2.5, dividendYieldText: '2.50%', secYield: 1.2, secYieldText: '1.20%' });
     expect(withMeta).toMatchObject({ holdings: 3, history: 9 });
+  });
+
+  test('dividendYieldBasis: one code per yield source, null exactly when the yield is null, same key set on every row kind', () => {
+    // VCM dividend_yield_percentage has no stated definition -> official-other; own estimate -> indicated
+    const [catalogYield] = parseCatalog([{ entity_long_name: 'X', ticker: 'XXXX', dividend_yield_percentage: '3.1' }]);
+    expect(indexRow(catalogYield, null).metrics).toMatchObject({ dividendYield: 3.1, dividendYieldBasis: 'official-other' });
+    expect(indexRow(vflo, null).metrics).toMatchObject({ dividendYield: null, dividendYieldBasis: null });
+    const meta = (yields: object) => ({ nav: { value: 51.6 }, yields, distributions: {}, holdings: {}, history: {} });
+    const published = indexRow(vflo, meta({ dividendYield: 2.5, dividendYieldBasis: 'official-other' })).metrics as Record<string, unknown>;
+    const indicated = indexRow(vflo, meta({ dividendYield: 4.8, dividendYieldBasis: 'indicated' })).metrics as Record<string, unknown>;
+    const legacy = indexRow(vflo, meta({ dividendYield: 4.8, dividendYieldKind: 'Indicated from the latest reported distribution per share x inferred payments per year / market price' })).metrics as Record<string, unknown>;
+    const none = indexRow({ ...vflo, dividendYield: null, dividendYieldBasis: null }, meta({ dividendYield: null, dividendYieldBasis: 'indicated' })).metrics as Record<string, unknown>;
+    expect([published.dividendYieldBasis, indicated.dividendYieldBasis, legacy.dividendYieldBasis, none.dividendYieldBasis]).toEqual(['official-other', 'indicated', 'indicated', null]);
+    const placeholder = indexRow({ ...vflo, dividendYield: null, dividendYieldBasis: null }, null).metrics as Record<string, unknown>;
+    expect(placeholder.dividendYieldBasis).toBeNull();
+    const keys = Object.keys(returnsFromCatalog(vflo).metrics);
+    for (const metrics of [published, indicated, legacy, none, placeholder]) expect(Object.keys(metrics)).toEqual(keys);
+    expect([yieldBasisOf(1, 'official-trailing-12m'), yieldBasisOf(1, 'nonsense'), yieldBasisOf(null, 'indicated'), yieldBasisOf(0, undefined)]).toEqual(['official-trailing-12m', 'official-other', null, 'official-other']);
+    // a cached index row keeps the code together with the yield
+    const cached = cachedFundFromIndex({ ticker: 'VFLO', name: 'x', category: 'y', metrics: { dividendYield: 4.8, dividendYieldBasis: 'indicated' } });
+    expect(returnsFromCatalog(cached).metrics).toMatchObject({ dividendYield: 4.8, dividendYieldBasis: 'indicated' });
   });
 
   test('frequency placeholder: None for blanks, Unknown preserved, known cadences coded', () => {
@@ -448,13 +469,13 @@ describe('pipeline', () => {
   test('an honest null from the source is published as null, not replaced by the previous value', async () => {
     const world = newWorld(['AAA']); installWorld(world);
     await runUpdate(controlsFor());
-    expect(indexOf(dir).funds[0].metrics).toMatchObject({ secYield: 1.2, dividendYield: 2.5 });
+    expect(indexOf(dir).funds[0].metrics).toMatchObject({ secYield: 1.2, dividendYield: 2.5, dividendYieldBasis: 'official-other' });
     world.yields = { as_of_date: '09/30/2026', thirtyday_sec_yield: null, dividend_yield_percentage: null };
     await runUpdate(controlsFor());
     const metrics = indexOf(dir).funds[0].metrics;
     expect([metrics.secYield, metrics.secYieldText]).toEqual([null, null]);
     // the declared yield is gone (honest null); the value is re-derived from the fresh distributions, never copied from the old file
-    expect(metrics.dividendYield).toBe(4.8);
+    expect([metrics.dividendYield, metrics.dividendYieldBasis]).toEqual([4.8, 'indicated']);
   });
 
   test('a new fund is announced and a vanished one dropped, a truncated catalog drops nothing, an unprocessed new fund has dataFile null', async () => {
