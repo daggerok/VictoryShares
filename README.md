@@ -57,7 +57,7 @@ The updater uses issuer-published NAV performance values for month-end and quart
 
 ### Update controls
 
-Keys of `scripts/update-data.config.json` (all values are strings); each is also an environment variable and an `advanced` key.
+Keys of `scripts/update-data.config.json` (all values are strings); each is also an environment variable and an `advanced` key. Every control also reads `VICTORYSHARES_<NAME>` from the environment (for example `VICTORYSHARES_CONCURRENCY=7`), and `HISTORICAL_PAGE_SIZE` is an alias of `HISTORY_PAGE_SIZE`. Aliases sit in the environment layer: the plain name wins when both are set, an explicitly empty alias counts as set, and validation is the same.
 
 | Control | Default | Meaning |
 | --- | --: | --- |
