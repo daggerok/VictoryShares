@@ -290,6 +290,10 @@ export const CONTROL_NAMES = [
   'EDGAR_FALLBACK', 'SKIP_YAHOO', 'VERBOSE', 'USE_SYSTEM_CA', 'SEC_UA',
 ] as const;
 export type ControlName = (typeof CONTROL_NAMES)[number];
+// Environment aliases of every control: VICTORYSHARES_<NAME> plus the legacy HISTORICAL_PAGE_SIZE. They sit in the
+// environment layer; the plain name wins when both are set, and an explicitly empty alias counts as set.
+export const ENV_ALIASES: Record<string, string[]> = { HISTORY_PAGE_SIZE: ['HISTORICAL_PAGE_SIZE'] };
+export const envNames = (key: string): string[] => [key, `VICTORYSHARES_${key}`, ...(ENV_ALIASES[key] ?? [])];
 export const CONFIG_FILE_URL = new URL('./update-data.config.json', import.meta.url);
 
 export function resolveControls(
@@ -315,7 +319,7 @@ export function resolveControls(
   apply(advanced);
   apply(inputs, true);
   for (const key of CONTROL_NAMES) {
-    const value = env[key];
+    const value = envNames(key).map(name => env[name]).find(candidate => candidate !== undefined);
     if (value !== undefined) apply({ [key]: value });
   }
   for (const key of ['MAX_FETCHES', 'CONCURRENCY', 'MAX_RETRIES', 'HOLDINGS_PAGE_SIZE', 'HISTORY_PAGE_SIZE']) {
@@ -1020,7 +1024,7 @@ async function appendStepSummary(lines: string[]): Promise<void> {
   if (file && lines.length) await appendFile(file, `${lines.join('\n')}\n`, 'utf8').catch(() => undefined);
 }
 function printHelp(): void {
-  console.log(`VictoryShares ETF updater\n\nUsage: bun ./scripts/update-data.ts [--help]\n\nDefaults come from scripts/update-data.config.json; any explicitly set environment variable below overrides the file value (an empty value clears the control).\n\nControls:\n  MAX_FETCHES=0             Number of funds to process (0 = all eligible; resumes after the saved ticker cursor and wraps around)\n  TICKERS="VFLO USTB UEVM" Only process the named tickers\n  REQUEST_SLEEP=1           Minimum seconds between request starts per worker lane\n  CONCURRENCY=2             Parallel fund workers (default conservative)\n  MAX_RETRIES=2             Retries after initial request (integer >= 1)\n  HOLDINGS_PAGE_SIZE=250    Rows per static holdings page\n  HISTORY_PAGE_SIZE=1000    Rows per static price-history page\n  HISTORY_RANGE=max         Yahoo daily bars: max or Ny (for example 10y, 5y, 1y)\n  AUM=:                     AUM min:max (K/M/B/T suffixes) or nano/micro/small/mid/large\n  TER=: DIVIDEND_YIELD=: SEC_YIELD=:  Inclusive numeric min:max percentages (TER is the net expense ratio)\n  PERFORMANCE_{YTD,1Y,3Y,5Y,10Y}=: Annualized NAV-return filters\n  TOTAL_RETURN_{YTD,1Y,3Y,5Y,10Y}=: Cumulative-return filters\n  EDGAR_FALLBACK=1          Use SEC N-PORT-P only if official holdings are unavailable\n  SEC_UA=<ua string>        SEC User-Agent with a contact for EDGAR fallback requests (redacted in logs; blank uses the default contact)\n  SKIP_YAHOO=1              Do not call Yahoo; retain prior history if available\n  VERBOSE=1                 Show per-request retry/fallback details\n  USE_SYSTEM_CA=auto        TLS trust store: auto restarts once with Bun --use-system-ca on an untrusted-certificate error, true always uses it, false never restarts\n`);
+  console.log(`VictoryShares ETF updater\n\nUsage: bun ./scripts/update-data.ts [--help]\n\nDefaults come from scripts/update-data.config.json; any explicitly set environment variable below overrides the file value (an empty value clears the control).\n\nEvery control also reads VICTORYSHARES_<NAME> from the environment (the plain name wins when both are set); HISTORICAL_PAGE_SIZE is an alias of HISTORY_PAGE_SIZE.\n\nControls:\n  MAX_FETCHES=0             Number of funds to process (0 = all eligible; resumes after the saved ticker cursor and wraps around)\n  TICKERS="VFLO USTB UEVM" Only process the named tickers\n  REQUEST_SLEEP=1           Minimum seconds between request starts per worker lane\n  CONCURRENCY=2             Parallel fund workers (default conservative)\n  MAX_RETRIES=2             Retries after initial request (integer >= 1)\n  HOLDINGS_PAGE_SIZE=250    Rows per static holdings page\n  HISTORY_PAGE_SIZE=1000    Rows per static price-history page\n  HISTORY_RANGE=max         Yahoo daily bars: max or Ny (for example 10y, 5y, 1y)\n  AUM=:                     AUM min:max (K/M/B/T suffixes) or nano/micro/small/mid/large\n  TER=: DIVIDEND_YIELD=: SEC_YIELD=:  Inclusive numeric min:max percentages (TER is the net expense ratio)\n  PERFORMANCE_{YTD,1Y,3Y,5Y,10Y}=: Annualized NAV-return filters\n  TOTAL_RETURN_{YTD,1Y,3Y,5Y,10Y}=: Cumulative-return filters\n  EDGAR_FALLBACK=1          Use SEC N-PORT-P only if official holdings are unavailable\n  SEC_UA=<ua string>        SEC User-Agent with a contact for EDGAR fallback requests (redacted in logs; blank uses the default contact)\n  SKIP_YAHOO=1              Do not call Yahoo; retain prior history if available\n  VERBOSE=1                 Show per-request retry/fallback details\n  USE_SYSTEM_CA=auto        TLS trust store: auto restarts once with Bun --use-system-ca on an untrusted-certificate error, true always uses it, false never restarts\n`);
 }
 
 export type RunSummary = { completed: number; failures: number; updated: number; unchanged: number; skipped: number; indexChanged: boolean; newFunds: string[]; droppedFunds: string[] };
