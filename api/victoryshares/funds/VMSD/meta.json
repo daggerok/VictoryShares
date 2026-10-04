@@ -54,6 +54,7 @@
  "yields": {
   "dividendYield": null,
   "dividendYieldText": null,
+  "dividendYieldBasis": null,
   "dividendYieldKind": null,
   "distributionRate": null,
   "secYield": null,

@@ -54,6 +54,7 @@
  "yields": {
   "dividendYield": 6.14,
   "dividendYieldText": "6.14%",
+  "dividendYieldBasis": "indicated",
   "dividendYieldKind": "Indicated from the latest reported distribution per share x inferred payments per year / market price",
   "distributionRate": null,
   "secYield": 6.11,
