@@ -6,9 +6,12 @@ One of the app's features lets you select VictoryShares ETFs in the Watchlist an
 
 ```bash
 bunx degit daggerok/VictoryShares#main ./12345 && cd $_
-bunx serve . -p 1234
-open http://0:1234
+bun install
+bun run serve
+open http://localhost:1234
 ```
+
+`bun run serve` starts the Parcel dev server (it copies `api/` to `dist/api` first). `bun run build` writes the site to `dist`, and `bun run build-github-pages` builds it with the `/VictoryShares/` public URL used by the GitHub Pages workflow.
 
 The published application is available at <https://daggerok.github.io/VictoryShares/>.
 
@@ -126,7 +129,7 @@ Workflow `advanced` input example: `{"HISTORY_PAGE_SIZE": "500", "SKIP_YAHOO": "
 
 ## TypeScript and verification
 
-The browser app is intentionally build-free: `index.html` carries the markup, styles and bootstrap, and `app.tsx` is TypeScript compiled in the browser with Babel standalone - no build step, no bundler, no `tsconfig.json` needed. Bun runs TypeScript out of the box.
+The browser app is built by Parcel into `dist`: `src/index.html` carries the markup, `src/main.tsx` is the TypeScript app, and `src/index.css` holds Tailwind v4 and the component styles - no `tsconfig.json` needed. Bun runs TypeScript out of the box.
 
 Verification before every publish:
 
