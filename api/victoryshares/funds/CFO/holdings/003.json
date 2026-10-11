@@ -12,22 +12,11 @@
  ],
  "rows": [
   {
-   "Name": "ZOOM COMMUNICATIONS INC",
-   "Ticker": "ZM",
-   "Identifier": "US98980L1017",
-   "Weight": "0.138944430000",
-   "Market Value": "546854.000000000000",
-   "Shares Held": "5830.000000000000",
-   "Asset Category": "COMMON STOCK",
-   "Coupon": "0.000000000000",
-   "Maturity": "-"
-  },
-  {
    "Name": "ZIMMER BIOMET HOLDINGS",
    "Ticker": "ZMH",
    "Identifier": "US98956P1021",
-   "Weight": "0.201905210000",
-   "Market Value": "794653.440000000000",
+   "Weight": "0.200772100000",
+   "Market Value": "804399.360000000000",
    "Shares Held": "9024.000000000000",
    "Asset Category": "COMMON STOCK",
    "Coupon": "0.000000000000",
@@ -37,13 +26,13 @@
    "Name": "ZOETIS INC",
    "Ticker": "ZTS",
    "Identifier": "US98978V1035",
-   "Weight": "0.155466340000",
-   "Market Value": "611880.500000000000",
+   "Weight": "0.165340730000",
+   "Market Value": "662442.550000000000",
    "Shares Held": "8855.000000000000",
    "Asset Category": "COMMON STOCK",
    "Coupon": "0.000000000000",
    "Maturity": "-"
   }
  ],
- "asOfDate": "2026-10-02"
+ "asOfDate": "2026-10-12"
 }

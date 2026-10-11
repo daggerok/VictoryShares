@@ -31,67 +31,67 @@
   "gross": 0.47
  },
  "nav": {
-  "display": "$20.47",
-  "value": 20.47,
-  "asOfDate": "Oct 01 2026",
-  "change": 0.03
+  "display": "$20.45",
+  "value": 20.45,
+  "asOfDate": "Oct 09 2026",
+  "change": -0.01
  },
  "marketPrice": {
-  "display": "$20.48",
-  "value": 20.485,
-  "asOfDate": "Oct 01 2026"
+  "display": "$20.50",
+  "value": 20.495,
+  "asOfDate": "Oct 09 2026"
  },
  "premiumDiscount": {
-  "display": "0.12%",
-  "value": 0.1231
+  "display": "0.23%",
+  "value": 0.2313
  },
  "aum": {
-  "display": "$143.84M",
-  "value": 143835201.42,
-  "asOfDate": "Oct 01 2026",
+  "display": "$143.64M",
+  "value": 143644941.67,
+  "asOfDate": "Oct 09 2026",
   "source": "VCM ETF catalog / Overview JSON"
  },
  "yields": {
-  "dividendYield": 3.37,
-  "dividendYieldText": "3.37%",
+  "dividendYield": 4.98,
+  "dividendYieldText": "4.98%",
   "dividendYieldBasis": "indicated",
   "dividendYieldKind": "Indicated from the latest reported distribution per share x inferred payments per year / market price",
   "distributionRate": null,
-  "secYield": 5.17,
-  "secYieldText": "5.17%",
-  "secYieldKind": "VCM 30-day SEC yield as of Aug 31 2026",
-  "unsubsidizedSecYield": 5.12
+  "secYield": 5.56,
+  "secYieldText": "5.56%",
+  "secYieldKind": "VCM 30-day SEC yield as of Sep 30 2026",
+  "unsubsidizedSecYield": 5.56
  },
  "returns": {
   "derivedFrom": "VCM published NAV performance series",
   "monthEnd": {
-   "asOfDate": "Aug 31 2026",
-   "mo1": 0.48,
-   "qtd": -0.9,
-   "ytd": -0.19,
-   "yr1": 2.15,
-   "yr3": 5.33,
+   "asOfDate": "Sep 30 2026",
+   "mo1": -2.84,
+   "qtd": -3.99,
+   "ytd": -3.03,
+   "yr1": -2.21,
+   "yr3": 5.32,
    "yr5": null,
    "yr10": null,
-   "sinceInception": 0.11
+   "sinceInception": -0.47
   },
   "quarterEnd": {
-   "asOfDate": "Jun 30 2026",
-   "mo1": 0.29,
-   "qtd": 1.48,
-   "ytd": 1,
-   "yr1": 4.56,
-   "yr3": 5.68,
+   "asOfDate": "Sep 30 2026",
+   "mo1": -2.84,
+   "qtd": -3.99,
+   "ytd": -3.03,
+   "yr1": -2.21,
+   "yr3": 5.32,
    "yr5": null,
    "yr10": null,
-   "sinceInception": 0.36
+   "sinceInception": -0.47
   },
   "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
-  "performanceAsOf": "2026-08-31"
+  "performanceAsOf": "2026-09-30"
  },
  "distributions": {
   "frequency": "Monthly",
-  "latestAmount": 0.057596,
+  "latestAmount": 0.085062,
   "asOfDate": "Nov 08 2021",
   "headers": [
    "Declared Date",
@@ -683,6 +683,16 @@
     "0.000000000000",
     "0.000000000000",
     "20.96"
+   ],
+   [
+    "10/08/2026",
+    "10/07/2026",
+    "10/09/2026",
+    "0.085062000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "20.46"
    ]
   ],
   "source": "VCM Distributions API; API provides declared/record/payable dates, not an ex-date field"
@@ -695,7 +705,7 @@
   ],
   "pageSize": 250,
   "totalRows": 512,
-  "asOfDate": "2026-10-02",
+  "asOfDate": "2026-10-12",
   "source": "VCM AllHoldings JSON"
  },
  "history": {
@@ -704,14 +714,14 @@
    "history/002.json"
   ],
   "pageSize": 1000,
-  "totalRows": 1254,
-  "asOfDate": "2026-10-02",
+  "totalRows": 1259,
+  "asOfDate": "2026-10-09",
   "source": "Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
  },
  "holdingsCount": 512,
- "historyCount": 1254,
- "distributionCount": 58,
- "netAssets": 143835201.42,
- "dividendYield": 3.37,
- "secYield": 5.17
+ "historyCount": 1259,
+ "distributionCount": 59,
+ "netAssets": 143644941.67,
+ "dividendYield": 4.98,
+ "secYield": 5.56
 }

@@ -1,0 +1,26 @@
+{
+ "headers": [
+  "Date",
+  "NAV",
+  "Market Price",
+  "Premium/Discount",
+  "Adj Close"
+ ],
+ "rows": [
+  {
+   "Date": "2026-10-08",
+   "NAV": "",
+   "Market Price": "52.97",
+   "Premium/Discount": "-0.0034%",
+   "Adj Close": "52.97"
+  },
+  {
+   "Date": "2026-10-09",
+   "NAV": "",
+   "Market Price": "53.37",
+   "Premium/Discount": "0.0034%",
+   "Adj Close": "53.37"
+  }
+ ],
+ "asOfDate": "2026-10-09"
+}
