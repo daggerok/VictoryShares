@@ -338,6 +338,7 @@ describe('metrics', () => {
 type World = {
   tickers: string[]; navOf: Record<string, string>; failYahoo: Set<string>; failAll: boolean; yields: Record<string, unknown> | null;
   historyDays: number; chartUrls: string[]; inflight: number; peak: number; holdingsPages: number; sectionMissing: Set<string>; end: number;
+  adjAt?: (index: number) => number;
 };
 const DAY = 86400;
 const newWorld = (tickers: string[] = ['AAA', 'BBB', 'CCC', 'DDD']): World => ({
@@ -352,7 +353,7 @@ const catalogRow = (ticker: string, nav: string) => ({
 });
 function yahooPayload(world: World, period1: number): unknown {
   const stamps = Array.from({ length: world.historyDays }, (_, i) => world.end - (world.historyDays - 1 - i) * DAY).filter((stamp) => stamp >= period1);
-  return { chart: { result: [{ timestamp: stamps, indicators: { quote: [{ close: stamps.map((_, i) => 20 + i / 100) }], adjclose: [{ adjclose: stamps.map((_, i) => 20 + i / 100) }] }, events: {} }] } };
+  return { chart: { result: [{ timestamp: stamps, indicators: { quote: [{ close: stamps.map((_, i) => 20 + i / 100) }], adjclose: [{ adjclose: stamps.map((_, i) => world.adjAt?.(i) ?? 20 + i / 100) }] }, events: {} }] } };
 }
 function installWorld(world: World): void {
   globalThis.fetch = (async (input: unknown) => {
@@ -450,6 +451,21 @@ describe('pipeline', () => {
     for (const path of paths) expect(statSync(join(dir, path)).mtime.getTime()).toBe(old.getTime());
     expect(indexOf(dir).generatedAt).toBe(first.generatedAt);
     expect(readdirSync(join(dir, 'funds', 'AAA')).filter((name) => name.endsWith('.tmp'))).toEqual([]);
+  });
+
+  test('two runs on the same source data write zero changes even when Yahoo adjusted closes jitter across a cent boundary', async () => {
+    // Yahoo float32 noise seen live: SPDV 2024-11-12 came back as 31.544998 and 31.545001 a minute apart
+    const world = newWorld(['AAA']); world.historyDays = 3; installWorld(world);
+    world.adjAt = (i) => [23.915001, 24.984999, 25.995001][i];
+    await runUpdate(controlsFor());
+    const first = readTree(dir);
+    world.adjAt = (i) => [23.914998, 24.985002, 25.994999][i];
+    expect(await runUpdate(controlsFor())).toMatchObject({ failures: 0, updated: 0 });
+    expect(readTree(dir)).toEqual(first);
+    // a real change beyond the noise is still written
+    world.adjAt = (i) => [23.9, 24.97, 25.98][i];
+    expect(await runUpdate(controlsFor())).toMatchObject({ updated: 1 });
+    expect(readTree(dir)).not.toEqual(first);
   });
 
   test('a failed required source keeps the whole fund as published, other funds update', async () => {
