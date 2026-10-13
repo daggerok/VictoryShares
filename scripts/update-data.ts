@@ -60,7 +60,8 @@ type Config = {
   edgarFallback: boolean; skipYahoo: boolean; secUa: string;
 };
 type SheetRow = Record<string, string>;
-type ChartDay = { date: string; close: number | null; adjClose: number | null; dividend: number | null };
+// adjCloseRaw: Yahoo's unrounded value, only used to tell float noise from a real change (never persisted).
+type ChartDay = { date: string; close: number | null; adjClose: number | null; dividend: number | null; adjCloseRaw?: number | null };
 type PageManifest = { pages: string[]; pageSize: number; totalRows: number; asOfDate: string | null; source: string };
 type FundSnapshot = { digest: string; meta: JsonRecord };
 
@@ -604,17 +605,28 @@ export function parseYahooChart(payload: unknown): ChartDay[] {
       close: close !== null ? round(close, 2) : null,
       adjClose: adj !== null ? round(adj, 2) : null,
       dividend: dividendByDate.get(epoch) ?? null,
+      adjCloseRaw: adj,
     };
   }).filter(day => day.date && (day.close !== null || day.adjClose !== null));
   return days.sort((a, b) => a.date.localeCompare(b.date));
 }
 function round(value: number, digits: number): number { const scale = 10 ** digits; return Math.round((value + Number.EPSILON) * scale) / scale; }
-export function historyRows(days: ChartDay[], premiumDiscount: Map<string, number> = new Map()): SheetRow[] {
-  return days.map(day => ({
-    Date: day.date, NAV: '', 'Market Price': day.close === null ? '' : day.close.toFixed(2),
-    'Premium/Discount': premiumDiscount.has(day.date) ? `${(premiumDiscount.get(day.date) as number).toFixed(4)}%` : '',
-    'Adj Close': day.adjClose === null ? '' : day.adjClose.toFixed(2),
-  }));
+// Yahoo's adjusted close is float32 and its last digits move with the request's period2, so a value
+// sitting on a cent boundary (31.544998 vs 31.545001) flips between runs. Within that noise the
+// published cent is kept: a rerun with the same source data changes nothing.
+export const ADJ_CLOSE_NOISE = 1e-4;
+export function historyRows(days: ChartDay[], premiumDiscount: Map<string, number> = new Map(), published: SheetRow[] = []): SheetRow[] {
+  const publishedAdj = new Map(published.map(row => [row.Date, row['Adj Close']]));
+  return days.map(day => {
+    const prior = publishedAdj.get(day.date), priorAdj = prior ? toNumber(prior) : null, raw = day.adjCloseRaw ?? day.adjClose;
+    let adj = day.adjClose === null ? '' : day.adjClose.toFixed(2);
+    if (prior !== undefined && priorAdj !== null && raw !== null && adj !== prior && Math.abs(raw - priorAdj) <= 0.005 + ADJ_CLOSE_NOISE) adj = prior;
+    return {
+      Date: day.date, NAV: '', 'Market Price': day.close === null ? '' : day.close.toFixed(2),
+      'Premium/Discount': premiumDiscount.has(day.date) ? `${(premiumDiscount.get(day.date) as number).toFixed(4)}%` : '',
+      'Adj Close': adj,
+    };
+  });
 }
 export function parsePremiumDiscount(payload: unknown): Map<string, number> {
   const result = new Map<string, number>();
@@ -1036,7 +1048,7 @@ async function buildFund(fund: Fund, key: string, config: Config, prior: JsonRec
   const premium = parsePremiumDiscount(pdPayload);
   const freshHistory = days.length > 0;
   const retainedHistory = !freshHistory && config.skipYahoo ? previousHistory.rows : [];
-  const hRows = freshHistory ? historyRows(days, premium) : retainedHistory;
+  const hRows = freshHistory ? historyRows(days, premium, previousHistory.rows) : retainedHistory;
   const historyAsOf = freshHistory ? days.at(-1)?.date ?? null : retainedHistory.at(-1)?.Date ?? null;
   const historySource = freshHistory
     ? 'Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)'
