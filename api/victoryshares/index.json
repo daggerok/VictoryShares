@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-11T03:56:42Z",
+ "generatedAt": "2026-10-13T02:33:54Z",
  "source": {
   "provider": "VictoryShares ETFs (Victory Capital Management)",
   "market": "us",
@@ -14,7 +14,7 @@
  "counts": {
   "funds": 25,
   "holdings": 8066,
-  "history": 40204
+  "history": 40229
  },
  "funds": [
   {
@@ -86,7 +86,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 237,
-   "history": 325
+   "history": 326
   },
   {
    "ticker": "CDC",
@@ -157,7 +157,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 3087
+   "history": 3088
   },
   {
    "ticker": "CDL",
@@ -228,7 +228,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 2832
+   "history": 2833
   },
   {
    "ticker": "CFA",
@@ -299,7 +299,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 502,
-   "history": 3087
+   "history": 3088
   },
   {
    "ticker": "CFO",
@@ -370,7 +370,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 502,
-   "history": 3087
+   "history": 3088
   },
   {
    "ticker": "CSB",
@@ -441,7 +441,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 2817
+   "history": 2818
   },
   {
    "ticker": "GFLW",
@@ -512,7 +512,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 462
+   "history": 463
   },
   {
    "ticker": "GLOW",
@@ -583,7 +583,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 15,
-   "history": 566
+   "history": 567
   },
   {
    "ticker": "GRIN",
@@ -654,7 +654,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 105,
-   "history": 325
+   "history": 326
   },
   {
    "ticker": "IFLO",
@@ -725,7 +725,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 104,
-   "history": 325
+   "history": 326
   },
   {
    "ticker": "MODL",
@@ -796,7 +796,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 361,
-   "history": 1002
+   "history": 1003
   },
   {
    "ticker": "SFLO",
@@ -867,7 +867,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 202,
-   "history": 702
+   "history": 703
   },
   {
    "ticker": "UBND",
@@ -938,7 +938,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 1630,
-   "history": 1259
+   "history": 1260
   },
   {
    "ticker": "UCRD",
@@ -1009,7 +1009,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 512,
-   "history": 1259
+   "history": 1260
   },
   {
    "ticker": "UEVM",
@@ -1080,7 +1080,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 199,
-   "history": 2249
+   "history": 2250
   },
   {
    "ticker": "UITB",
@@ -1151,7 +1151,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 1247,
-   "history": 2249
+   "history": 2250
   },
   {
    "ticker": "UIVM",
@@ -1222,7 +1222,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 204,
-   "history": 2249
+   "history": 2250
   },
   {
    "ticker": "ULVM",
@@ -1293,7 +1293,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 127,
-   "history": 2249
+   "history": 2250
   },
   {
    "ticker": "USTB",
@@ -1364,7 +1364,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 1162,
-   "history": 2249
+   "history": 2250
   },
   {
    "ticker": "USVM",
@@ -1435,7 +1435,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 294,
-   "history": 2249
+   "history": 2250
   },
   {
    "ticker": "VFLO",
@@ -1506,7 +1506,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 52,
-   "history": 829
+   "history": 830
   },
   {
    "ticker": "VMHY",
@@ -1577,7 +1577,7 @@
     "performanceAsOf": null
    },
    "holdings": 33,
-   "history": 13
+   "history": 14
   },
   {
    "ticker": "VMSD",
@@ -1648,7 +1648,7 @@
     "performanceAsOf": null
    },
    "holdings": 30,
-   "history": 13
+   "history": 14
   },
   {
    "ticker": "VSDA",
@@ -1719,7 +1719,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 77,
-   "history": 2384
+   "history": 2385
   },
   {
    "ticker": "VSMV",
@@ -1790,7 +1790,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 63,
-   "history": 2336
+   "history": 2337
   }
  ]
 }

@@ -1386,12 +1386,12 @@
    "history/004.json"
   ],
   "pageSize": 1000,
-  "totalRows": 3087,
-  "asOfDate": "2026-10-09",
+  "totalRows": 3088,
+  "asOfDate": "2026-10-12",
   "source": "Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
  },
  "holdingsCount": 502,
- "historyCount": 3087,
+ "historyCount": 3088,
  "distributionCount": 126,
  "netAssets": 514111568.81,
  "dividendYield": 1.7,

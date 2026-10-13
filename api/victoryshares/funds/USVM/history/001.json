@@ -1062,7 +1062,7 @@
    "NAV": "",
    "Market Price": "54.71",
    "Premium/Discount": "",
-   "Adj Close": "47.80"
+   "Adj Close": "47.79"
   },
   {
    "Date": "2018-06-06",
@@ -1076,7 +1076,7 @@
    "NAV": "",
    "Market Price": "54.71",
    "Premium/Discount": "",
-   "Adj Close": "47.80"
+   "Adj Close": "47.79"
   },
   {
    "Date": "2018-06-08",
@@ -2147,7 +2147,7 @@
    "NAV": "",
    "Market Price": "48.69",
    "Premium/Discount": "",
-   "Adj Close": "42.99"
+   "Adj Close": "42.98"
   },
   {
    "Date": "2019-01-17",
@@ -7008,5 +7008,5 @@
    "Adj Close": "66.01"
   }
  ],
- "asOfDate": "2026-10-09"
+ "asOfDate": "2026-10-12"
 }

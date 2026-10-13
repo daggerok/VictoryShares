@@ -4920,7 +4920,14 @@
    "Market Price": "38.47",
    "Premium/Discount": "-0.0096%",
    "Adj Close": "38.47"
+  },
+  {
+   "Date": "2026-10-12",
+   "NAV": "",
+   "Market Price": "38.50",
+   "Premium/Discount": "",
+   "Adj Close": "38.50"
   }
  ],
- "asOfDate": "2026-10-09"
+ "asOfDate": "2026-10-12"
 }

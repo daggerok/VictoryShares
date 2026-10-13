@@ -663,7 +663,7 @@
    "NAV": "",
    "Market Price": "69.36",
    "Premium/Discount": "",
-   "Adj Close": "63.89"
+   "Adj Close": "63.90"
   },
   {
    "Date": "2022-03-04",
@@ -3106,7 +3106,7 @@
    "NAV": "",
    "Market Price": "69.05",
    "Premium/Discount": "",
-   "Adj Close": "64.96"
+   "Adj Close": "64.97"
   },
   {
    "Date": "2023-07-26",
@@ -7008,5 +7008,5 @@
    "Adj Close": "87.31"
   }
  ],
- "asOfDate": "2026-10-09"
+ "asOfDate": "2026-10-12"
 }
