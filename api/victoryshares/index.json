@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-13T02:33:54Z",
+ "generatedAt": "2026-10-18T02:59:57Z",
  "source": {
   "provider": "VictoryShares ETFs (Victory Capital Management)",
   "market": "us",
@@ -13,8 +13,8 @@
  },
  "counts": {
   "funds": 25,
-  "holdings": 8066,
-  "history": 40229
+  "holdings": 8046,
+  "history": 40329
  },
  "funds": [
   {
@@ -27,15 +27,15 @@
    "terValue": 0.65,
    "terGross": "0.87%",
    "terGrossValue": 0.87,
-   "nav": "$24.44",
-   "navValue": 24.44,
-   "aum": "$530.46M",
-   "aumValue": 530455395.69,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$24.48",
+   "navValue": 24.48,
+   "aum": "$534.24M",
+   "aumValue": 534236069.32,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Jun 25 2025",
    "exchange": "NASDAQ",
-   "closePrice": "$24.48",
-   "premiumDiscount": "0.12%",
+   "closePrice": "$24.57",
+   "premiumDiscount": "0.40%",
    "cusip": null,
    "isin": "US92647X7315",
    "distributions": {
@@ -77,16 +77,16 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 4.13,
-    "dividendYield": 3.38,
-    "dividendYieldText": "3.38%",
+    "dividendYield": 3.37,
+    "dividendYieldText": "3.37%",
     "dividendYieldBasis": "indicated",
     "secYield": 4.5,
     "secYieldText": "4.50%",
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 237,
-   "history": 326
+   "holdings": 238,
+   "history": 330
   },
   {
    "ticker": "CDC",
@@ -98,15 +98,15 @@
    "terValue": 0.35,
    "terGross": "0.38%",
    "terGrossValue": 0.38,
-   "nav": "$72.83",
-   "navValue": 72.83,
-   "aum": "$702.84M",
-   "aumValue": 702838880.68,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$75.32",
+   "navValue": 75.32,
+   "aum": "$723.06M",
+   "aumValue": 723059448.03,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Jul 01 2014",
    "exchange": "NASDAQ",
-   "closePrice": "$72.81",
-   "premiumDiscount": "-0.00%",
+   "closePrice": "$74.55",
+   "premiumDiscount": "-0.04%",
    "cusip": null,
    "isin": "US92647N8240",
    "distributions": {
@@ -157,7 +157,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 3088
+   "history": 3092
   },
   {
    "ticker": "CDL",
@@ -169,14 +169,14 @@
    "terValue": 0.35,
    "terGross": "0.39%",
    "terGrossValue": 0.39,
-   "nav": "$75.97",
-   "navValue": 75.97,
-   "aum": "$383.63M",
-   "aumValue": 383633643.56,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$78.56",
+   "navValue": 78.56,
+   "aum": "$396.73M",
+   "aumValue": 396725333.76,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Jul 08 2015",
    "exchange": "NASDAQ",
-   "closePrice": "$75.96",
+   "closePrice": "$77.75",
    "premiumDiscount": "0.01%",
    "cusip": null,
    "isin": "US92647N8653",
@@ -228,7 +228,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 2833
+   "history": 2837
   },
   {
    "ticker": "CFA",
@@ -240,15 +240,15 @@
    "terValue": 0.35,
    "terGross": "0.39%",
    "terGrossValue": 0.39,
-   "nav": "$97.93",
-   "navValue": 97.93,
-   "aum": "$514.11M",
-   "aumValue": 514111568.81,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$99.12",
+   "navValue": 99.12,
+   "aum": "$525.32M",
+   "aumValue": 525317177.41,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Jul 01 2014",
    "exchange": "NASDAQ",
-   "closePrice": "$97.88",
-   "premiumDiscount": "-0.03%",
+   "closePrice": "$99.09",
+   "premiumDiscount": "-0.04%",
    "cusip": null,
    "isin": "US92647N7663",
    "distributions": {
@@ -299,7 +299,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 502,
-   "history": 3088
+   "history": 3092
   },
   {
    "ticker": "CFO",
@@ -311,14 +311,14 @@
    "terValue": 0.35,
    "terGross": "0.39%",
    "terGrossValue": 0.39,
-   "nav": "$79.38",
-   "navValue": 79.38,
-   "aum": "$400.85M",
-   "aumValue": 400853823.43,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$80.34",
+   "navValue": 80.34,
+   "aum": "$405.73M",
+   "aumValue": 405727646.62,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Jul 01 2014",
    "exchange": "NASDAQ",
-   "closePrice": "$79.35",
+   "closePrice": "$80.32",
    "premiumDiscount": "-0.02%",
    "cusip": null,
    "isin": "US92647N7820",
@@ -370,7 +370,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 502,
-   "history": 3088
+   "history": 3092
   },
   {
    "ticker": "CSB",
@@ -382,15 +382,15 @@
    "terValue": 0.35,
    "terGross": "0.40%",
    "terGrossValue": 0.4,
-   "nav": "$61.88",
-   "navValue": 61.88,
-   "aum": "$235.16M",
-   "aumValue": 235156138.58,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$63.24",
+   "navValue": 63.24,
+   "aum": "$234.00M",
+   "aumValue": 234001015.78,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Jul 08 2015",
    "exchange": "NASDAQ",
-   "closePrice": "$61.87",
-   "premiumDiscount": "-0.08%",
+   "closePrice": "$63.00",
+   "premiumDiscount": "-0.03%",
    "cusip": null,
    "isin": "US92647N8737",
    "distributions": {
@@ -441,7 +441,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 2818
+   "history": 2822
   },
   {
    "ticker": "GFLW",
@@ -453,15 +453,15 @@
    "terValue": 0.39,
    "terGross": "0.50%",
    "terGrossValue": 0.5,
-   "nav": "$34.18",
-   "navValue": 34.18,
-   "aum": "$1.20B",
-   "aumValue": 1200608741.01,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$32.19",
+   "navValue": 32.19,
+   "aum": "$1.14B",
+   "aumValue": 1141903832.28,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Dec 03 2024",
    "exchange": "NASDAQ",
-   "closePrice": "$34.18",
-   "premiumDiscount": "0.01%",
+   "closePrice": "$32.98",
+   "premiumDiscount": "0.03%",
    "cusip": null,
    "isin": "US92647X7646",
    "distributions": {
@@ -512,7 +512,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 463
+   "history": 467
   },
   {
    "ticker": "GLOW",
@@ -524,15 +524,15 @@
    "terValue": 0.72,
    "terGross": "2.01%",
    "terGrossValue": 2.01,
-   "nav": "$34.72",
-   "navValue": 34.72,
-   "aum": "$78.11M",
-   "aumValue": 78110879.03,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$34.25",
+   "navValue": 34.25,
+   "aum": "$77.07M",
+   "aumValue": 77070111.24,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Jun 20 2024",
    "exchange": "NASDAQ",
-   "closePrice": "$34.71",
-   "premiumDiscount": "-0.03%",
+   "closePrice": "$34.60",
+   "premiumDiscount": "-0.02%",
    "cusip": null,
    "isin": "US92647X7984",
    "distributions": {
@@ -583,7 +583,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 15,
-   "history": 567
+   "history": 571
   },
   {
    "ticker": "GRIN",
@@ -595,15 +595,15 @@
    "terValue": 0.56,
    "terGross": "1.06%",
    "terGrossValue": 1.06,
-   "nav": "$32.69",
-   "navValue": 32.69,
-   "aum": "$362.85M",
-   "aumValue": 362850962.22,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$32.00",
+   "navValue": 32,
+   "aum": "$355.20M",
+   "aumValue": 355201872.94,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Jun 25 2025",
    "exchange": "NASDAQ",
-   "closePrice": "$32.80",
-   "premiumDiscount": "0.35%",
+   "closePrice": "$32.00",
+   "premiumDiscount": "1.00%",
    "cusip": null,
    "isin": "US92647X7497",
    "distributions": {
@@ -653,8 +653,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 105,
-   "history": 326
+   "holdings": 102,
+   "history": 330
   },
   {
    "ticker": "IFLO",
@@ -666,15 +666,15 @@
    "terValue": 0.56,
    "terGross": "1.05%",
    "terGrossValue": 1.05,
-   "nav": "$35.17",
-   "navValue": 35.17,
-   "aum": "$284.91M",
-   "aumValue": 284912024.98,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$35.90",
+   "navValue": 35.9,
+   "aum": "$290.81M",
+   "aumValue": 290808711.14,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Jun 25 2025",
    "exchange": "NASDAQ",
-   "closePrice": "$35.31",
-   "premiumDiscount": "0.40%",
+   "closePrice": "$35.70",
+   "premiumDiscount": "0.68%",
    "cusip": null,
    "isin": "US92647X7562",
    "distributions": {
@@ -724,8 +724,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 104,
-   "history": 326
+   "holdings": 105,
+   "history": 330
   },
   {
    "ticker": "MODL",
@@ -737,15 +737,15 @@
    "terValue": 0.46,
    "terGross": "0.49%",
    "terGrossValue": 0.49,
-   "nav": "$53.37",
-   "navValue": 53.37,
-   "aum": "$1.09B",
-   "aumValue": 1092980560.31,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$52.51",
+   "navValue": 52.51,
+   "aum": "$1.07B",
+   "aumValue": 1074927054.54,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Oct 11 2022",
    "exchange": "NASDAQ",
-   "closePrice": "$53.37",
-   "premiumDiscount": "0.00%",
+   "closePrice": "$53.15",
+   "premiumDiscount": "-0.00%",
    "cusip": null,
    "isin": "US92647P1268",
    "distributions": {
@@ -796,7 +796,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 361,
-   "history": 1003
+   "history": 1007
   },
   {
    "ticker": "SFLO",
@@ -808,15 +808,15 @@
    "terValue": 0.49,
    "terGross": "0.56%",
    "terGrossValue": 0.56,
-   "nav": "$38.44",
-   "navValue": 38.44,
-   "aum": "$821.54M",
-   "aumValue": 821542477.12,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$38.73",
+   "navValue": 38.73,
+   "aum": "$834.91M",
+   "aumValue": 834911643.58,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Dec 20 2023",
    "exchange": "NASDAQ",
-   "closePrice": "$38.47",
-   "premiumDiscount": "-0.01%",
+   "closePrice": "$39.12",
+   "premiumDiscount": "-0.02%",
    "cusip": null,
    "isin": "US92647X8222",
    "distributions": {
@@ -867,7 +867,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 202,
-   "history": 703
+   "history": 707
   },
   {
    "ticker": "UBND",
@@ -879,15 +879,15 @@
    "terValue": 0.4,
    "terGross": "0.45%",
    "terGrossValue": 0.45,
-   "nav": "$20.63",
-   "navValue": 20.63,
-   "aum": "$1.94B",
-   "aumValue": 1941375280.27,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$20.80",
+   "navValue": 20.8,
+   "aum": "$1.96B",
+   "aumValue": 1959626160.04,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Oct 04 2021",
    "exchange": "NASDAQ",
-   "closePrice": "$20.64",
-   "premiumDiscount": "0.05%",
+   "closePrice": "$20.79",
+   "premiumDiscount": "-0.08%",
    "cusip": null,
    "isin": "US92647X8636",
    "distributions": {
@@ -929,16 +929,16 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 0.26,
-    "dividendYield": 5.56,
-    "dividendYieldText": "5.56%",
+    "dividendYield": 5.52,
+    "dividendYieldText": "5.52%",
     "dividendYieldBasis": "indicated",
     "secYield": 5.27,
     "secYieldText": "5.27%",
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 1630,
-   "history": 1260
+   "holdings": 1625,
+   "history": 1264
   },
   {
    "ticker": "UCRD",
@@ -950,15 +950,15 @@
    "terValue": 0.4,
    "terGross": "0.47%",
    "terGrossValue": 0.47,
-   "nav": "$20.45",
-   "navValue": 20.45,
-   "aum": "$143.64M",
-   "aumValue": 143644941.67,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$20.63",
+   "navValue": 20.63,
+   "aum": "$144.93M",
+   "aumValue": 144929192.36,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Oct 04 2021",
    "exchange": "NASDAQ",
-   "closePrice": "$20.50",
-   "premiumDiscount": "0.23%",
+   "closePrice": "$20.68",
+   "premiumDiscount": "0.27%",
    "cusip": null,
    "isin": "US92647X8552",
    "distributions": {
@@ -1000,16 +1000,16 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": -0.47,
-    "dividendYield": 4.98,
-    "dividendYieldText": "4.98%",
+    "dividendYield": 4.93,
+    "dividendYieldText": "4.93%",
     "dividendYieldBasis": "indicated",
     "secYield": 5.56,
     "secYieldText": "5.56%",
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 512,
-   "history": 1260
+   "holdings": 513,
+   "history": 1264
   },
   {
    "ticker": "UEVM",
@@ -1021,15 +1021,15 @@
    "terValue": 0.45,
    "terGross": "0.53%",
    "terGrossValue": 0.53,
-   "nav": "$58.84",
-   "navValue": 58.84,
-   "aum": "$244.19M",
-   "aumValue": 244185106.94,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$58.51",
+   "navValue": 58.51,
+   "aum": "$242.80M",
+   "aumValue": 242799054.2,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$58.76",
-   "premiumDiscount": "-0.13%",
+   "closePrice": "$58.59",
+   "premiumDiscount": "0.30%",
    "cusip": null,
    "isin": "US92647N5436",
    "distributions": {
@@ -1079,8 +1079,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 199,
-   "history": 2250
+   "holdings": 193,
+   "history": 2254
   },
   {
    "ticker": "UITB",
@@ -1092,15 +1092,15 @@
    "terValue": 0.25,
    "terGross": "0.38%",
    "terGrossValue": 0.38,
-   "nav": "$44.64",
-   "navValue": 44.64,
-   "aum": "$2.59B",
-   "aumValue": 2589017325.91,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$45.03",
+   "navValue": 45.03,
+   "aum": "$2.61B",
+   "aumValue": 2611617686.81,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$44.66",
-   "premiumDiscount": "0.02%",
+   "closePrice": "$45.03",
+   "premiumDiscount": "0.05%",
    "cusip": null,
    "isin": "US90291F6007",
    "distributions": {
@@ -1142,16 +1142,16 @@
     "cagr5y": -0.2,
     "cagr10y": null,
     "siAnn": 1.86,
-    "dividendYield": 5,
-    "dividendYieldText": "5.00%",
+    "dividendYield": 4.96,
+    "dividendYieldText": "4.96%",
     "dividendYieldBasis": "indicated",
     "secYield": 5.18,
     "secYieldText": "5.18%",
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 1247,
-   "history": 2250
+   "holdings": 1244,
+   "history": 2254
   },
   {
    "ticker": "UIVM",
@@ -1163,15 +1163,15 @@
    "terValue": 0.35,
    "terGross": "0.39%",
    "terGrossValue": 0.39,
-   "nav": "$72.62",
-   "navValue": 72.62,
-   "aum": "$326.78M",
-   "aumValue": 326782315.84,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$73.64",
+   "navValue": 73.64,
+   "aum": "$331.38M",
+   "aumValue": 331383214.37,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$72.69",
-   "premiumDiscount": "0.14%",
+   "closePrice": "$73.10",
+   "premiumDiscount": "0.38%",
    "cusip": null,
    "isin": "US90291F6046",
    "distributions": {
@@ -1221,8 +1221,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 204,
-   "history": 2250
+   "holdings": 202,
+   "history": 2254
   },
   {
    "ticker": "ULVM",
@@ -1234,14 +1234,14 @@
    "terValue": 0.2,
    "terGross": "0.25%",
    "terGrossValue": 0.25,
-   "nav": "$103.70",
-   "navValue": 103.7,
-   "aum": "$259.25M",
-   "aumValue": 259253955.49,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$104.89",
+   "navValue": 104.89,
+   "aum": "$262.22M",
+   "aumValue": 262219661.87,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$103.66",
+   "closePrice": "$104.76",
    "premiumDiscount": "-0.03%",
    "cusip": null,
    "isin": "US90291F1057",
@@ -1293,7 +1293,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 127,
-   "history": 2250
+   "history": 2254
   },
   {
    "ticker": "USTB",
@@ -1305,15 +1305,15 @@
    "terValue": 0.34,
    "terGross": "0.34%",
    "terGrossValue": 0.34,
-   "nav": "$49.80",
-   "navValue": 49.8,
-   "aum": "$2.66B",
-   "aumValue": 2659327802.44,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$49.91",
+   "navValue": 49.91,
+   "aum": "$2.71B",
+   "aumValue": 2710318952.6,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$49.86",
-   "premiumDiscount": "0.09%",
+   "closePrice": "$49.96",
+   "premiumDiscount": "0.15%",
    "cusip": null,
    "isin": "US90291F5017",
    "distributions": {
@@ -1355,16 +1355,16 @@
     "cagr5y": 3.43,
     "cagr10y": null,
     "siAnn": 3.34,
-    "dividendYield": 4.96,
-    "dividendYieldText": "4.96%",
+    "dividendYield": 4.95,
+    "dividendYieldText": "4.95%",
     "dividendYieldBasis": "indicated",
     "secYield": 5.02,
     "secYieldText": "5.02%",
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 1162,
-   "history": 2250
+   "holdings": 1153,
+   "history": 2254
   },
   {
    "ticker": "USVM",
@@ -1376,15 +1376,15 @@
    "terValue": 0.29,
    "terGross": "0.29%",
    "terGrossValue": 0.29,
-   "nav": "$103.69",
-   "navValue": 103.69,
-   "aum": "$1.74B",
-   "aumValue": 1736785383.82,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$103.46",
+   "navValue": 103.46,
+   "aum": "$1.76B",
+   "aumValue": 1763963716.87,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$103.72",
-   "premiumDiscount": "0.03%",
+   "closePrice": "$104.05",
+   "premiumDiscount": "-0.03%",
    "cusip": null,
    "isin": "US90291F5076",
    "distributions": {
@@ -1435,7 +1435,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 294,
-   "history": 2250
+   "history": 2254
   },
   {
    "ticker": "VFLO",
@@ -1447,15 +1447,15 @@
    "terValue": 0.39,
    "terGross": "0.44%",
    "terGrossValue": 0.44,
-   "nav": "$52.84",
-   "navValue": 52.84,
-   "aum": "$11.44B",
-   "aumValue": 11444868582.69,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$53.98",
+   "navValue": 53.98,
+   "aum": "$11.87B",
+   "aumValue": 11870309644.81,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Jun 21 2023",
    "exchange": "NASDAQ",
-   "closePrice": "$52.84",
-   "premiumDiscount": "-0.01%",
+   "closePrice": "$54.10",
+   "premiumDiscount": "0.01%",
    "cusip": null,
    "isin": "US92647X8305",
    "distributions": {
@@ -1506,7 +1506,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 52,
-   "history": 830
+   "history": 834
   },
   {
    "ticker": "VMHY",
@@ -1518,15 +1518,15 @@
    "terValue": 0.34,
    "terGross": "0.77%",
    "terGrossValue": 0.77,
-   "nav": "$24.91",
-   "navValue": 24.91,
-   "aum": "$24.28M",
-   "aumValue": 24283071.29,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$25.24",
+   "navValue": 25.24,
+   "aum": "$23.98M",
+   "aumValue": 23975991.08,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Sep 22 2026",
    "exchange": "NASDAQ",
-   "closePrice": "$24.88",
-   "premiumDiscount": "-0.08%",
+   "closePrice": "$25.12",
+   "premiumDiscount": "-0.47%",
    "cusip": null,
    "isin": "US92647N3787",
    "distributions": {
@@ -1576,8 +1576,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": null
    },
-   "holdings": 33,
-   "history": 14
+   "holdings": 36,
+   "history": 18
   },
   {
    "ticker": "VMSD",
@@ -1589,15 +1589,15 @@
    "terValue": 0.18,
    "terGross": "0.62%",
    "terGrossValue": 0.62,
-   "nav": "$25.04",
-   "navValue": 25.04,
-   "aum": "$24.42M",
-   "aumValue": 24417056.79,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$25.17",
+   "navValue": 25.17,
+   "aum": "$24.54M",
+   "aumValue": 24543142.24,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Sep 22 2026",
    "exchange": "NASDAQ",
-   "closePrice": "$25.06",
-   "premiumDiscount": "0.07%",
+   "closePrice": "$25.14",
+   "premiumDiscount": "-0.09%",
    "cusip": null,
    "isin": "US92647N3605",
    "distributions": {
@@ -1647,8 +1647,8 @@
     "returnsBasis": "official VictoryShares (VCM) NAV returns from the published month-end performance table; cumulative 3-, 5- and 10-year total returns derived from the published annualized NAV returns; yields are issuer-published; Yahoo market-price history is not used for returns",
     "performanceAsOf": null
    },
-   "holdings": 30,
-   "history": 14
+   "holdings": 32,
+   "history": 18
   },
   {
    "ticker": "VSDA",
@@ -1660,14 +1660,14 @@
    "terValue": 0.35,
    "terGross": "0.40%",
    "terGrossValue": 0.4,
-   "nav": "$56.83",
-   "navValue": 56.83,
-   "aum": "$213.12M",
-   "aumValue": 213119014.63,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$58.92",
+   "navValue": 58.92,
+   "aum": "$220.96M",
+   "aumValue": 220956756.66,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Apr 18 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$56.83",
+   "closePrice": "$58.57",
    "premiumDiscount": "0.01%",
    "cusip": null,
    "isin": "US92647N6673",
@@ -1719,7 +1719,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 77,
-   "history": 2385
+   "history": 2389
   },
   {
    "ticker": "VSMV",
@@ -1731,15 +1731,15 @@
    "terValue": 0.35,
    "terGross": "0.42%",
    "terGrossValue": 0.42,
-   "nav": "$60.45",
-   "navValue": 60.45,
-   "aum": "$157.17M",
-   "aumValue": 157171017.51,
-   "asOfDate": "Oct 09 2026",
+   "nav": "$61.72",
+   "navValue": 61.72,
+   "aum": "$160.46M",
+   "aumValue": 160461523.96,
+   "asOfDate": "Oct 16 2026",
    "inceptionDate": "Jun 22 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$60.44",
-   "premiumDiscount": "-0.01%",
+   "closePrice": "$61.69",
+   "premiumDiscount": "-0.03%",
    "cusip": null,
    "isin": "US92647N6913",
    "distributions": {
@@ -1790,7 +1790,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 63,
-   "history": 2337
+   "history": 2341
   }
  ]
 }

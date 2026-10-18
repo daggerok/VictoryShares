@@ -5835,9 +5835,37 @@
    "Date": "2026-10-12",
    "NAV": "",
    "Market Price": "76.52",
-   "Premium/Discount": "",
+   "Premium/Discount": "0.0195%",
    "Adj Close": "76.52"
+  },
+  {
+   "Date": "2026-10-13",
+   "NAV": "",
+   "Market Price": "76.75",
+   "Premium/Discount": "0.0223%",
+   "Adj Close": "76.75"
+  },
+  {
+   "Date": "2026-10-14",
+   "NAV": "",
+   "Market Price": "77.05",
+   "Premium/Discount": "0.0400%",
+   "Adj Close": "77.05"
+  },
+  {
+   "Date": "2026-10-15",
+   "NAV": "",
+   "Market Price": "77.75",
+   "Premium/Discount": "0.0142%",
+   "Adj Close": "77.75"
+  },
+  {
+   "Date": "2026-10-16",
+   "NAV": "",
+   "Market Price": "78.58",
+   "Premium/Discount": "0.0142%",
+   "Adj Close": "78.58"
   }
  ],
- "asOfDate": "2026-10-12"
+ "asOfDate": "2026-10-16"
 }
