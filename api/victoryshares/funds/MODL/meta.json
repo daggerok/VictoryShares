@@ -594,7 +594,7 @@
   ],
   "pageSize": 250,
   "totalRows": 361,
-  "asOfDate": "2026-10-19",
+  "asOfDate": "2026-10-20",
   "source": "VCM AllHoldings JSON"
  },
  "history": {
@@ -603,12 +603,12 @@
    "history/002.json"
   ],
   "pageSize": 1000,
-  "totalRows": 1007,
-  "asOfDate": "2026-10-16",
+  "totalRows": 1008,
+  "asOfDate": "2026-10-19",
   "source": "Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
  },
  "holdingsCount": 361,
- "historyCount": 1007,
+ "historyCount": 1008,
  "distributionCount": 48,
  "netAssets": 1074927054.54,
  "dividendYield": 1.15,

@@ -17,7 +17,7 @@
  "identifiers": {
   "cusip": null,
   "isin": "US92647N3605",
-  "iopv": "VFLO.IV"
+  "iopv": "VMSD.IV"
  },
  "inception": {
   "fundInceptionDate": "2026-09-22",
@@ -111,8 +111,8 @@
    "holdings/001.json"
   ],
   "pageSize": 250,
-  "totalRows": 32,
-  "asOfDate": "2026-10-19",
+  "totalRows": 33,
+  "asOfDate": "2026-10-20",
   "source": "VCM AllHoldings JSON"
  },
  "history": {
@@ -120,12 +120,12 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 18,
-  "asOfDate": "2026-10-16",
+  "totalRows": 19,
+  "asOfDate": "2026-10-19",
   "source": "Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
  },
- "holdingsCount": 32,
- "historyCount": 18,
+ "holdingsCount": 33,
+ "historyCount": 19,
  "distributionCount": 0,
  "netAssets": 24543142.24,
  "dividendYield": null,
