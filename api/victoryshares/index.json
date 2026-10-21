@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-20T04:43:52Z",
+ "generatedAt": "2026-10-21T06:56:04Z",
  "source": {
   "provider": "VictoryShares ETFs (Victory Capital Management)",
   "market": "us",
@@ -14,7 +14,7 @@
  "counts": {
   "funds": 25,
   "holdings": 8032,
-  "history": 40354
+  "history": 40379
  },
  "funds": [
   {
@@ -27,15 +27,15 @@
    "terValue": 0.65,
    "terGross": "0.87%",
    "terGrossValue": 0.87,
-   "nav": "$24.48",
-   "navValue": 24.48,
-   "aum": "$534.24M",
-   "aumValue": 534236069.32,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$24.47",
+   "navValue": 24.47,
+   "aum": "$537.70M",
+   "aumValue": 537700804.14,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Jun 25 2025",
    "exchange": "NASDAQ",
-   "closePrice": "$24.57",
-   "premiumDiscount": "0.40%",
+   "closePrice": "$24.52",
+   "premiumDiscount": "0.15%",
    "cusip": null,
    "isin": "US92647X7315",
    "distributions": {
@@ -77,8 +77,8 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 4.13,
-    "dividendYield": 3.37,
-    "dividendYieldText": "3.37%",
+    "dividendYield": 3.38,
+    "dividendYieldText": "3.38%",
     "dividendYieldBasis": "indicated",
     "secYield": 4.5,
     "secYieldText": "4.50%",
@@ -86,7 +86,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 238,
-   "history": 331
+   "history": 332
   },
   {
    "ticker": "CDC",
@@ -98,15 +98,15 @@
    "terValue": 0.35,
    "terGross": "0.38%",
    "terGrossValue": 0.38,
-   "nav": "$75.32",
-   "navValue": 75.32,
-   "aum": "$723.06M",
-   "aumValue": 723059448.03,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$74.58",
+   "navValue": 74.58,
+   "aum": "$715.94M",
+   "aumValue": 715937576.9,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Jul 01 2014",
    "exchange": "NASDAQ",
-   "closePrice": "$74.55",
-   "premiumDiscount": "-0.04%",
+   "closePrice": "$74.59",
+   "premiumDiscount": "-0.02%",
    "cusip": null,
    "isin": "US92647N8240",
    "distributions": {
@@ -157,7 +157,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 3093
+   "history": 3094
   },
   {
    "ticker": "CDL",
@@ -169,14 +169,14 @@
    "terValue": 0.35,
    "terGross": "0.39%",
    "terGrossValue": 0.39,
-   "nav": "$78.56",
-   "navValue": 78.56,
-   "aum": "$396.73M",
-   "aumValue": 396725333.76,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$77.79",
+   "navValue": 77.79,
+   "aum": "$392.82M",
+   "aumValue": 392817248.48,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Jul 08 2015",
    "exchange": "NASDAQ",
-   "closePrice": "$77.75",
+   "closePrice": "$77.81",
    "premiumDiscount": "0.01%",
    "cusip": null,
    "isin": "US92647N8653",
@@ -228,7 +228,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 2838
+   "history": 2839
   },
   {
    "ticker": "CFA",
@@ -240,15 +240,15 @@
    "terValue": 0.35,
    "terGross": "0.39%",
    "terGrossValue": 0.39,
-   "nav": "$99.12",
-   "navValue": 99.12,
-   "aum": "$525.32M",
-   "aumValue": 525317177.41,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$98.71",
+   "navValue": 98.71,
+   "aum": "$523.16M",
+   "aumValue": 523159499.82,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Jul 01 2014",
    "exchange": "NASDAQ",
-   "closePrice": "$99.09",
-   "premiumDiscount": "-0.04%",
+   "closePrice": "$98.71",
+   "premiumDiscount": "-0.00%",
    "cusip": null,
    "isin": "US92647N7663",
    "distributions": {
@@ -299,7 +299,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 502,
-   "history": 3093
+   "history": 3094
   },
   {
    "ticker": "CFO",
@@ -311,15 +311,15 @@
    "terValue": 0.35,
    "terGross": "0.39%",
    "terGrossValue": 0.39,
-   "nav": "$80.34",
-   "navValue": 80.34,
-   "aum": "$405.73M",
-   "aumValue": 405727646.62,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$80.01",
+   "navValue": 80.01,
+   "aum": "$404.06M",
+   "aumValue": 404061143.01,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Jul 01 2014",
    "exchange": "NASDAQ",
-   "closePrice": "$80.32",
-   "premiumDiscount": "-0.02%",
+   "closePrice": "$80.02",
+   "premiumDiscount": "-0.03%",
    "cusip": null,
    "isin": "US92647N7820",
    "distributions": {
@@ -370,7 +370,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 502,
-   "history": 3093
+   "history": 3094
   },
   {
    "ticker": "CSB",
@@ -382,15 +382,15 @@
    "terValue": 0.35,
    "terGross": "0.40%",
    "terGrossValue": 0.4,
-   "nav": "$63.24",
-   "navValue": 63.24,
-   "aum": "$234.00M",
-   "aumValue": 234001015.78,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$62.70",
+   "navValue": 62.7,
+   "aum": "$231.98M",
+   "aumValue": 231982845.02,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Jul 08 2015",
    "exchange": "NASDAQ",
-   "closePrice": "$63.00",
-   "premiumDiscount": "-0.03%",
+   "closePrice": "$62.67",
+   "premiumDiscount": "-0.05%",
    "cusip": null,
    "isin": "US92647N8737",
    "distributions": {
@@ -441,7 +441,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 2823
+   "history": 2824
   },
   {
    "ticker": "GFLW",
@@ -453,15 +453,15 @@
    "terValue": 0.39,
    "terGross": "0.50%",
    "terGrossValue": 0.5,
-   "nav": "$32.19",
-   "navValue": 32.19,
-   "aum": "$1.14B",
-   "aumValue": 1141903832.28,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$32.47",
+   "navValue": 32.47,
+   "aum": "$1.16B",
+   "aumValue": 1155950317.52,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Dec 03 2024",
    "exchange": "NASDAQ",
-   "closePrice": "$32.98",
-   "premiumDiscount": "0.03%",
+   "closePrice": "$32.46",
+   "premiumDiscount": "0.01%",
    "cusip": null,
    "isin": "US92647X7646",
    "distributions": {
@@ -512,7 +512,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 468
+   "history": 469
   },
   {
    "ticker": "GLOW",
@@ -524,15 +524,15 @@
    "terValue": 0.72,
    "terGross": "2.01%",
    "terGrossValue": 2.01,
-   "nav": "$34.25",
-   "navValue": 34.25,
-   "aum": "$77.07M",
-   "aumValue": 77070111.24,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$34.22",
+   "navValue": 34.22,
+   "aum": "$77.00M",
+   "aumValue": 76998632.06,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Jun 20 2024",
    "exchange": "NASDAQ",
-   "closePrice": "$34.60",
-   "premiumDiscount": "-0.02%",
+   "closePrice": "$34.22",
+   "premiumDiscount": "0.01%",
    "cusip": null,
    "isin": "US92647X7984",
    "distributions": {
@@ -583,7 +583,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 15,
-   "history": 572
+   "history": 573
   },
   {
    "ticker": "GRIN",
@@ -595,15 +595,15 @@
    "terValue": 0.56,
    "terGross": "1.06%",
    "terGrossValue": 1.06,
-   "nav": "$32.00",
-   "navValue": 32,
-   "aum": "$355.20M",
-   "aumValue": 355201872.94,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$31.79",
+   "navValue": 31.79,
+   "aum": "$352.87M",
+   "aumValue": 352866096.11,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Jun 25 2025",
    "exchange": "NASDAQ",
-   "closePrice": "$32.00",
-   "premiumDiscount": "1.00%",
+   "closePrice": "$31.70",
+   "premiumDiscount": "-0.25%",
    "cusip": null,
    "isin": "US92647X7497",
    "distributions": {
@@ -654,7 +654,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 102,
-   "history": 331
+   "history": 332
   },
   {
    "ticker": "IFLO",
@@ -666,15 +666,15 @@
    "terValue": 0.56,
    "terGross": "1.05%",
    "terGrossValue": 1.05,
-   "nav": "$35.90",
-   "navValue": 35.9,
-   "aum": "$290.81M",
-   "aumValue": 290808711.14,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$35.78",
+   "navValue": 35.78,
+   "aum": "$289.80M",
+   "aumValue": 289799002.45,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Jun 25 2025",
    "exchange": "NASDAQ",
-   "closePrice": "$35.70",
-   "premiumDiscount": "0.68%",
+   "closePrice": "$35.74",
+   "premiumDiscount": "-0.09%",
    "cusip": null,
    "isin": "US92647X7562",
    "distributions": {
@@ -725,7 +725,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 104,
-   "history": 331
+   "history": 332
   },
   {
    "ticker": "MODL",
@@ -737,15 +737,15 @@
    "terValue": 0.46,
    "terGross": "0.49%",
    "terGrossValue": 0.49,
-   "nav": "$52.51",
-   "navValue": 52.51,
-   "aum": "$1.07B",
-   "aumValue": 1074927054.54,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$52.58",
+   "navValue": 52.58,
+   "aum": "$1.08B",
+   "aumValue": 1077296535.52,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Oct 11 2022",
    "exchange": "NASDAQ",
-   "closePrice": "$53.15",
-   "premiumDiscount": "-0.00%",
+   "closePrice": "$52.59",
+   "premiumDiscount": "0.03%",
    "cusip": null,
    "isin": "US92647P1268",
    "distributions": {
@@ -796,7 +796,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 361,
-   "history": 1008
+   "history": 1009
   },
   {
    "ticker": "SFLO",
@@ -808,15 +808,15 @@
    "terValue": 0.49,
    "terGross": "0.56%",
    "terGrossValue": 0.56,
-   "nav": "$38.73",
-   "navValue": 38.73,
-   "aum": "$834.91M",
-   "aumValue": 834911643.58,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$38.94",
+   "navValue": 38.94,
+   "aum": "$840.78M",
+   "aumValue": 840776651.89,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Dec 20 2023",
    "exchange": "NASDAQ",
-   "closePrice": "$39.12",
-   "premiumDiscount": "-0.02%",
+   "closePrice": "$38.97",
+   "premiumDiscount": "0.01%",
    "cusip": null,
    "isin": "US92647X8222",
    "distributions": {
@@ -867,7 +867,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 202,
-   "history": 708
+   "history": 709
   },
   {
    "ticker": "UBND",
@@ -879,15 +879,15 @@
    "terValue": 0.4,
    "terGross": "0.45%",
    "terGrossValue": 0.45,
-   "nav": "$20.80",
-   "navValue": 20.8,
-   "aum": "$1.96B",
-   "aumValue": 1959626160.04,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$20.74",
+   "navValue": 20.74,
+   "aum": "$1.95B",
+   "aumValue": 1954137461.3,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Oct 04 2021",
    "exchange": "NASDAQ",
-   "closePrice": "$20.79",
-   "premiumDiscount": "-0.08%",
+   "closePrice": "$20.75",
+   "premiumDiscount": "0.00%",
    "cusip": null,
    "isin": "US92647X8636",
    "distributions": {
@@ -929,8 +929,8 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": 0.26,
-    "dividendYield": 5.52,
-    "dividendYieldText": "5.52%",
+    "dividendYield": 5.53,
+    "dividendYieldText": "5.53%",
     "dividendYieldBasis": "indicated",
     "secYield": 5.27,
     "secYieldText": "5.27%",
@@ -938,7 +938,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 1610,
-   "history": 1265
+   "history": 1266
   },
   {
    "ticker": "UCRD",
@@ -950,15 +950,15 @@
    "terValue": 0.4,
    "terGross": "0.47%",
    "terGrossValue": 0.47,
-   "nav": "$20.63",
-   "navValue": 20.63,
-   "aum": "$144.93M",
-   "aumValue": 144929192.36,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$20.55",
+   "navValue": 20.55,
+   "aum": "$144.35M",
+   "aumValue": 144345995.13,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Oct 04 2021",
    "exchange": "NASDAQ",
-   "closePrice": "$20.68",
-   "premiumDiscount": "0.27%",
+   "closePrice": "$20.59",
+   "premiumDiscount": "0.23%",
    "cusip": null,
    "isin": "US92647X8552",
    "distributions": {
@@ -1000,8 +1000,8 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": -0.47,
-    "dividendYield": 4.93,
-    "dividendYieldText": "4.93%",
+    "dividendYield": 4.96,
+    "dividendYieldText": "4.96%",
     "dividendYieldBasis": "indicated",
     "secYield": 5.56,
     "secYieldText": "5.56%",
@@ -1009,7 +1009,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 513,
-   "history": 1265
+   "history": 1266
   },
   {
    "ticker": "UEVM",
@@ -1021,15 +1021,15 @@
    "terValue": 0.45,
    "terGross": "0.53%",
    "terGrossValue": 0.53,
-   "nav": "$58.51",
-   "navValue": 58.51,
-   "aum": "$242.80M",
-   "aumValue": 242799054.2,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$58.13",
+   "navValue": 58.13,
+   "aum": "$241.24M",
+   "aumValue": 241241174.31,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$58.59",
-   "premiumDiscount": "0.30%",
+   "closePrice": "$57.89",
+   "premiumDiscount": "-0.39%",
    "cusip": null,
    "isin": "US92647N5436",
    "distributions": {
@@ -1080,7 +1080,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 192,
-   "history": 2255
+   "history": 2256
   },
   {
    "ticker": "UITB",
@@ -1092,15 +1092,15 @@
    "terValue": 0.25,
    "terGross": "0.38%",
    "terGrossValue": 0.38,
-   "nav": "$45.03",
-   "navValue": 45.03,
-   "aum": "$2.61B",
-   "aumValue": 2611617686.81,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$44.90",
+   "navValue": 44.9,
+   "aum": "$2.62B",
+   "aumValue": 2617467254.13,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$45.03",
-   "premiumDiscount": "0.05%",
+   "closePrice": "$44.88",
+   "premiumDiscount": "-0.00%",
    "cusip": null,
    "isin": "US90291F6007",
    "distributions": {
@@ -1142,8 +1142,8 @@
     "cagr5y": -0.2,
     "cagr10y": null,
     "siAnn": 1.86,
-    "dividendYield": 4.96,
-    "dividendYieldText": "4.96%",
+    "dividendYield": 4.97,
+    "dividendYieldText": "4.97%",
     "dividendYieldBasis": "indicated",
     "secYield": 5.18,
     "secYieldText": "5.18%",
@@ -1151,7 +1151,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 1245,
-   "history": 2255
+   "history": 2256
   },
   {
    "ticker": "UIVM",
@@ -1163,15 +1163,15 @@
    "terValue": 0.35,
    "terGross": "0.39%",
    "terGrossValue": 0.39,
-   "nav": "$73.64",
-   "navValue": 73.64,
-   "aum": "$331.38M",
-   "aumValue": 331383214.37,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$73.34",
+   "navValue": 73.34,
+   "aum": "$330.04M",
+   "aumValue": 330042690.05,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$73.10",
-   "premiumDiscount": "0.38%",
+   "closePrice": "$72.91",
+   "premiumDiscount": "-0.60%",
    "cusip": null,
    "isin": "US90291F6046",
    "distributions": {
@@ -1222,7 +1222,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 202,
-   "history": 2255
+   "history": 2256
   },
   {
    "ticker": "ULVM",
@@ -1234,15 +1234,15 @@
    "terValue": 0.2,
    "terGross": "0.25%",
    "terGrossValue": 0.25,
-   "nav": "$104.89",
-   "navValue": 104.89,
-   "aum": "$262.22M",
-   "aumValue": 262219661.87,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$104.28",
+   "navValue": 104.28,
+   "aum": "$260.71M",
+   "aumValue": 260707122.26,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$104.76",
-   "premiumDiscount": "-0.03%",
+   "closePrice": "$104.26",
+   "premiumDiscount": "-0.04%",
    "cusip": null,
    "isin": "US90291F1057",
    "distributions": {
@@ -1293,7 +1293,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 127,
-   "history": 2255
+   "history": 2256
   },
   {
    "ticker": "USTB",
@@ -1305,15 +1305,15 @@
    "terValue": 0.34,
    "terGross": "0.34%",
    "terGrossValue": 0.34,
-   "nav": "$49.91",
-   "navValue": 49.91,
-   "aum": "$2.71B",
-   "aumValue": 2710318952.6,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$49.88",
+   "navValue": 49.88,
+   "aum": "$2.74B",
+   "aumValue": 2740913215.26,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$49.96",
-   "premiumDiscount": "0.15%",
+   "closePrice": "$49.92",
+   "premiumDiscount": "0.07%",
    "cusip": null,
    "isin": "US90291F5017",
    "distributions": {
@@ -1364,7 +1364,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 1154,
-   "history": 2255
+   "history": 2256
   },
   {
    "ticker": "USVM",
@@ -1376,15 +1376,15 @@
    "terValue": 0.29,
    "terGross": "0.29%",
    "terGrossValue": 0.29,
-   "nav": "$103.46",
-   "navValue": 103.46,
+   "nav": "$103.14",
+   "navValue": 103.14,
    "aum": "$1.76B",
-   "aumValue": 1763963716.87,
-   "asOfDate": "Oct 16 2026",
+   "aumValue": 1758532263.81,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Oct 24 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$104.05",
-   "premiumDiscount": "-0.03%",
+   "closePrice": "$103.16",
+   "premiumDiscount": "0.10%",
    "cusip": null,
    "isin": "US90291F5076",
    "distributions": {
@@ -1435,7 +1435,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 294,
-   "history": 2255
+   "history": 2256
   },
   {
    "ticker": "VFLO",
@@ -1447,15 +1447,15 @@
    "terValue": 0.39,
    "terGross": "0.44%",
    "terGrossValue": 0.44,
-   "nav": "$53.98",
-   "navValue": 53.98,
-   "aum": "$11.87B",
-   "aumValue": 11870309644.81,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$54.12",
+   "navValue": 54.12,
+   "aum": "$11.93B",
+   "aumValue": 11932965705.79,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Jun 21 2023",
    "exchange": "NASDAQ",
-   "closePrice": "$54.10",
-   "premiumDiscount": "0.01%",
+   "closePrice": "$54.13",
+   "premiumDiscount": "0.00%",
    "cusip": null,
    "isin": "US92647X8305",
    "distributions": {
@@ -1506,7 +1506,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 52,
-   "history": 835
+   "history": 836
   },
   {
    "ticker": "VMHY",
@@ -1518,15 +1518,15 @@
    "terValue": 0.34,
    "terGross": "0.77%",
    "terGrossValue": 0.77,
-   "nav": "$25.24",
-   "navValue": 25.24,
-   "aum": "$23.98M",
-   "aumValue": 23975991.08,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$25.22",
+   "navValue": 25.22,
+   "aum": "$23.96M",
+   "aumValue": 23961159.21,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Sep 22 2026",
    "exchange": "NASDAQ",
-   "closePrice": "$25.12",
-   "premiumDiscount": "-0.47%",
+   "closePrice": "$25.26",
+   "premiumDiscount": "0.55%",
    "cusip": null,
    "isin": "US92647N3787",
    "distributions": {
@@ -1577,7 +1577,7 @@
     "performanceAsOf": null
    },
    "holdings": 36,
-   "history": 19
+   "history": 20
   },
   {
    "ticker": "VMSD",
@@ -1589,15 +1589,15 @@
    "terValue": 0.18,
    "terGross": "0.62%",
    "terGrossValue": 0.62,
-   "nav": "$25.17",
-   "navValue": 25.17,
-   "aum": "$24.54M",
-   "aumValue": 24543142.24,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$25.18",
+   "navValue": 25.18,
+   "aum": "$24.55M",
+   "aumValue": 24547392.68,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Sep 22 2026",
    "exchange": "NASDAQ",
-   "closePrice": "$25.14",
-   "premiumDiscount": "-0.09%",
+   "closePrice": "$25.18",
+   "premiumDiscount": "0.27%",
    "cusip": null,
    "isin": "US92647N3605",
    "distributions": {
@@ -1648,7 +1648,7 @@
     "performanceAsOf": null
    },
    "holdings": 33,
-   "history": 19
+   "history": 20
   },
   {
    "ticker": "VSDA",
@@ -1660,15 +1660,15 @@
    "terValue": 0.35,
    "terGross": "0.40%",
    "terGrossValue": 0.4,
-   "nav": "$58.92",
-   "navValue": 58.92,
-   "aum": "$220.96M",
-   "aumValue": 220956756.66,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$58.50",
+   "navValue": 58.5,
+   "aum": "$219.37M",
+   "aumValue": 219366307.52,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Apr 18 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$58.57",
-   "premiumDiscount": "0.01%",
+   "closePrice": "$58.51",
+   "premiumDiscount": "0.00%",
    "cusip": null,
    "isin": "US92647N6673",
    "distributions": {
@@ -1719,7 +1719,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 77,
-   "history": 2390
+   "history": 2391
   },
   {
    "ticker": "VSMV",
@@ -1731,15 +1731,15 @@
    "terValue": 0.35,
    "terGross": "0.42%",
    "terGrossValue": 0.42,
-   "nav": "$61.72",
-   "navValue": 61.72,
-   "aum": "$160.46M",
-   "aumValue": 160461523.96,
-   "asOfDate": "Oct 16 2026",
+   "nav": "$61.60",
+   "navValue": 61.6,
+   "aum": "$160.17M",
+   "aumValue": 160170670.57,
+   "asOfDate": "Oct 19 2026",
    "inceptionDate": "Jun 22 2017",
    "exchange": "NASDAQ",
-   "closePrice": "$61.69",
-   "premiumDiscount": "-0.03%",
+   "closePrice": "$61.63",
+   "premiumDiscount": "0.01%",
    "cusip": null,
    "isin": "US92647N6913",
    "distributions": {
@@ -1790,7 +1790,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 63,
-   "history": 2342
+   "history": 2343
   }
  ]
 }
