@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
   CONTROL_NAMES, RETURNS_BASIS, buildPages, cachedFundFromIndex, configureLanes, formatFrequencyPlaceholder, fundAgeAtLeast, fundPasses,
-  getText, historyRows, httpSettings, indexRow, inferFrequency, installSystemCa, isCertError, isSectionMissing, main, nportIsUsable,
+  getText, historyRows, holdingsGuard, httpSettings, indexRow, inferFrequency, installSystemCa, isCertError, isSectionMissing, main, nportIsUsable,
   pageBasenames, paceRequest, parseAtomFilings, parseAumRange, parseCatalog, parseDistributionPayload, parseFundTickerRefs,
   parseHistoryRange, parseHoldings, parseIssuerClientConfig, parseNportHoldings, parseNportIdentity, parsePremiumDiscount, parseRange,
   parseYahooChart, performanceDateIso, readConfig, resolveControls, returnsFromCatalog, rotateSelection, runUpdate, runtimeControls,
@@ -221,6 +221,21 @@ describe('parsing', () => {
     expect(() => buildPages([1], 0)).toThrow('positive integer');
   });
 
+  test('holdings guard: header-only, renamed weight column, broken weights, a bad weight sum and a halved sheet are rejected', () => {
+    const headers = ['Name', 'Ticker', 'Weight'];
+    const rows = [{ Name: 'A', Ticker: 'A', Weight: '60%' }, { Name: 'B', Ticker: 'B', Weight: '40%' }];
+    expect(holdingsGuard(headers, rows, 2)).toBeNull();
+    expect(holdingsGuard(headers, [['A', 'A', '60'], ['B', 'B', '40']], null)).toBeNull();
+    expect(holdingsGuard([], [], 0)).toBeNull(); // nothing published before: an empty sheet is honest
+    expect(holdingsGuard(headers, [], 505)).toContain('no holdings rows');
+    expect(holdingsGuard(['Name', 'Ticker', 'Wt'], rows, 2)).toContain('no weight column');
+    expect(holdingsGuard(headers, rows.map((row) => ({ ...row, Weight: '6\u200B0' })), 2)).toContain('numeric weight');
+    const allocation = [{ Name: 'Cash&Collateral', Ticker: '-', Weight: '100' }, { Name: 'Equities', Ticker: '-', Weight: '476' }];
+    expect(holdingsGuard(headers, allocation, 2)).toContain('outside 50..150');
+    expect(holdingsGuard(headers, allocation, 2, ['sum'])).toBeNull();
+    expect(holdingsGuard(headers, rows, 5)).toContain('less than half');
+  });
+
   test('official distribution columns are kept and the cadence is inferred from dated rows', () => {
     const row = (date: string, amount: string) => ({ declared_date: date, record_date: date, payable_date: date, income_amt: amount, long_term_capital_gains: '0', short_term_capital_gains: '0', total_distribution: '0', return_of_capital: '0' });
     const parsed = parseDistributionPayload({ as_of_date: '07/10/2023', distributions: [row('01/08/2026', '0.1'), row('02/08/2026', '0.2'), row('03/09/2026', '0.3')] });
@@ -369,7 +384,7 @@ function installWorld(world: World): void {
         if (world.failAll) return new Response('down', { status: 500 });
         const [, ticker, endpoint] = product;
         if (world.sectionMissing.has(`${ticker}/${endpoint}`)) return new Response('{"errorDesc":"Section data not found"}', { status: 404 });
-        if (endpoint === 'AllHoldings') return json(Array.from({ length: 3 * world.holdingsPages }, (_, i) => ({ holding_name: `${ticker} H${i}`, stock_symbol: `H${i} US`, isin: `US000${i}`, security_type: 'COMMON STOCK', market_value: '100', portfolio_percentage: '1.5', shares: '10', as_of_date: '10/02/2026' })));
+        if (endpoint === 'AllHoldings') return json(Array.from({ length: 3 * world.holdingsPages }, (_, i) => ({ holding_name: `${ticker} H${i}`, stock_symbol: `H${i} US`, isin: `US000${i}`, security_type: 'COMMON STOCK', market_value: '100', portfolio_percentage: (100 / (3 * world.holdingsPages)).toFixed(2), shares: '10', as_of_date: '10/02/2026' })));
         if (endpoint === 'Distributions') return json({ as_of_date: '10/01/2026', distributions: ['07/10/2026', '08/10/2026', '09/10/2026'].map((date) => ({ declared_date: date, record_date: date, payable_date: date, income_amt: '0.1', long_term_capital_gains: '0', short_term_capital_gains: '0', total_distribution: '0', return_of_capital: '0' })) });
         if (endpoint === 'Yields') return json(world.yields ?? { as_of_date: '08/31/2026', thirtyday_sec_yield: '1.2', dividend_yield_percentage: '2.5' });
         if (endpoint === 'Overview') return json({ latest_nav: world.navOf[ticker] ?? '25.00', as_of: '10/01/2026', net_assets: '1000000000', nav_change: '0.1' });
@@ -480,6 +495,22 @@ describe('pipeline', () => {
     for (const path of Object.keys(before)) if (path.includes('/AAA/')) expect(after[path]).toBe(before[path]);
     expect(rowOf(dir, 'AAA')).toEqual(rowsBefore.find((row: { ticker: string }) => row.ticker === 'AAA'));
     expect(rowOf(dir, 'BBB').navValue).toBe(31);
+  });
+
+  test('holdings that fail the guard keep the fund exactly as published and report it failed', async () => {
+    const world = newWorld(['AAA', 'BBB']); installWorld(world);
+    await runUpdate(controlsFor());
+    const before = readTree(dir);
+    // VCM renames portfolio_percentage: every row arrives with an empty Weight
+    const good = globalThis.fetch;
+    globalThis.fetch = (async (input: unknown, init?: RequestInit) => {
+      const response = await good(input as RequestInfo, init);
+      return String(input).includes('/AllHoldings') ? new Response((await response.text()).split('"portfolio_percentage"').join('"portfolio_pct"'), { status: 200 }) : response;
+    }) as unknown as typeof fetch;
+    world.navOf.AAA = '30.00';
+    await main({ REQUEST_SLEEP: '0', MAX_RETRIES: '1', EDGAR_FALLBACK: 'false', USE_SYSTEM_CA: 'false', TICKERS: 'AAA' }, ['bun', 'update-data.ts']);
+    expect(readTree(dir)).toEqual(before);
+    expect(process.exitCode).toBe(1);
   });
 
   test('an honest null from the source is published as null, not replaced by the previous value', async () => {
