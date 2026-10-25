@@ -31,24 +31,24 @@
   "gross": 0.4
  },
  "nav": {
-  "display": "$58.50",
-  "value": 58.5,
-  "asOfDate": "Oct 19 2026",
-  "change": -0.42
+  "display": "$59.53",
+  "value": 59.53,
+  "asOfDate": "Oct 23 2026",
+  "change": -0.9
  },
  "marketPrice": {
-  "display": "$58.51",
-  "value": 58.5105,
-  "asOfDate": "Oct 19 2026"
+  "display": "$59.54",
+  "value": 59.5393,
+  "asOfDate": "Oct 23 2026"
  },
  "premiumDiscount": {
-  "display": "0.00%",
-  "value": 0.0039
+  "display": "0.01%",
+  "value": 0.0109
  },
  "aum": {
-  "display": "$219.37M",
-  "value": 219366307.52,
-  "asOfDate": "Oct 19 2026",
+  "display": "$223.25M",
+  "value": 223250529.38,
+  "asOfDate": "Oct 23 2026",
   "source": "VCM ETF catalog / Overview JSON"
  },
  "yields": {
@@ -1213,7 +1213,7 @@
   ],
   "pageSize": 250,
   "totalRows": 77,
-  "asOfDate": "2026-10-20",
+  "asOfDate": "2026-10-26",
   "source": "VCM AllHoldings JSON"
  },
  "history": {
@@ -1223,14 +1223,14 @@
    "history/003.json"
   ],
   "pageSize": 1000,
-  "totalRows": 2391,
-  "asOfDate": "2026-10-20",
+  "totalRows": 2394,
+  "asOfDate": "2026-10-23",
   "source": "Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
  },
  "holdingsCount": 77,
- "historyCount": 2391,
+ "historyCount": 2394,
  "distributionCount": 110,
- "netAssets": 219366307.52,
+ "netAssets": 223250529.38,
  "dividendYield": 2.85,
  "secYield": 2.43
 }
