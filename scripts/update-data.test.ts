@@ -1,13 +1,13 @@
 /// <reference types="bun" />
 import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, utimesSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  CLOSED_FUNDS, CONTROL_NAMES, RETURNS_BASIS, buildPages, cachedFundFromIndex, closedFund, configureLanes, formatFrequencyPlaceholder, fundAgeAtLeast, fundPasses,
-  getText, historyRows, holdingsGuard, httpSettings, indexRow, inferFrequency, installSystemCa, isCertError, isSectionMissing, main, nportIsUsable,
-  pageBasenames, paceRequest, parseAtomFilings, parseAumRange, parseCatalog, parseDistributionPayload, parseFundTickerRefs,
-  parseHistoryRange, parseHoldings, parseIssuerClientConfig, parseNportHoldings, parseNportIdentity, parsePremiumDiscount, parseRange,
+  CLOSED_FUNDS, CONTROL_NAMES, HOLDINGS_GUARD_RELAX, RETURNS_BASIS, buildPages, cachedFundFromIndex, closedFund, configureLanes, formatFrequencyPlaceholder, fundAgeAtLeast, fundPasses,
+  getText, historyRows, holdingsGuard, holdingsWeightCount, httpSettings, indexRow, inferFrequency, installSystemCa, isCertError, isSectionMissing, main,
+  nportHoldingsSheet, nportIsFresh, nportTickers, pageBasenames, paceRequest, parseAumRange, parseCatalog, parseDistributionPayload,
+  holdingTicker, parseHistoryRange, parseHoldings, parseIssuerClientConfig, parseNportFiling, parsePremiumDiscount, parseRange, parseSecCompanyNames, parseSecFundTickers,
   parseYahooChart, performanceDateIso, readConfig, resolveControls, returnsFromCatalog, rotateSelection, runUpdate, runtimeControls,
   useApiRoot, yahooChartUrl, yieldBasisOf,
 } from './update-data';
@@ -215,7 +215,11 @@ describe('parsing', () => {
     expect(parsed.rows.find((row) => row.Name === 'US TREASURY NOTE')).toMatchObject({ Ticker: '-', Coupon: '4.125', Maturity: '2030-05-15' });
     const missing = parseHoldings([{ holding_name: 'X', stock_symbol: 'X', security_type: 'COMMON STOCK', as_of_date: '10/02/2026' }]);
     expect([missing.rows[0].Weight, missing.rows[0]['Market Value']]).toEqual(['', '']);
-    expect(parseNportHoldings('<invstOrSec><name>A</name><cusip>1</cusip></invstOrSec>')[0]).toMatchObject({ Weight: '', 'Market Value': '' });
+    expect(nportHoldingsSheet(parseNportFiling('<invstOrSec><name>A</name><cusip>1</cusip></invstOrSec>'), [])[0]).toMatchObject({ Weight: '', 'Market Value': '' });
+    // VS-1: a bare ticker only for a U.S. listing; a foreign one keeps its exchange code, debt, cash and futures get '-'
+    const tickers = ([['BWA US', 'COMMON STOCK'], ['KGC U', 'COMMON STOCK'], ['HON', 'COMMON STOCK'], ['CHKP', 'COMMON STOCK LIKE'], ['MRK GY', 'FOREIGN STOCK'], ['GSK L', 'FOREIGN STOCK'], ['TS', 'FOREIGN STOCK'], ['ESZ6', 'FUTURE (NEW)'], ['T', 'CORPORATE BOND'], ['', 'MORTGAGE RELATED']] as Array<[string, string]>).map(([raw, type]) => holdingTicker(raw, type));
+    expect(tickers).toEqual(['BWA', 'KGC', 'HON', 'CHKP', 'MRK GY', 'GSK L', '', '', '', '']);
+    expect(parseHoldings([{ holding_name: 'MERCK KGAA', stock_symbol: 'MRK GY', security_type: 'FOREIGN STOCK' }, { holding_name: 'TESCO PLC', stock_symbol: 'TS', security_type: 'FOREIGN STOCK' }]).rows.map((row) => row.Ticker)).toEqual(['-', 'MRK GY']);
     expect(parseHoldings([{ holding_name: 'X', portfolio_percentage: '0.00', market_value: '0' }]).rows[0]).toMatchObject({ Weight: '0.00', 'Market Value': '0' });
     expect(buildPages([1, 2, 3, 4, 5], 2)).toEqual([[1, 2], [3, 4], [5]]);
     expect(buildPages([], 3)).toEqual([]);
@@ -259,18 +263,24 @@ describe('parsing 2', () => {
     expect([rows[0]['NAV'], rows[0]['Market Price'], rows[0]['Adj Close'], parsePremiumDiscount(null).size]).toEqual(['', '51.60', '51.59', 0]);
   });
 
-  test('SEC: ETF symbols map to registrant and series, Atom keeps N-PORT-P only, N-PORT positions never invent tickers', () => {
-    expect(parseFundTickerRefs({ fields: ['cik', 'seriesId', 'classId', 'symbol'], data: [['1547580', 'S000073699', 'C000230775', 'VFLO']] }).get('VFLO')).toEqual({ cik: '0001547580', seriesId: 'S000073699' });
-    expect(parseFundTickerRefs({ fields: [], data: [] }).size).toBe(0);
-    expect(parseAtomFilings('<entry><filing-type>NPORT-P</filing-type><accession-number>0001004726-26-007544</accession-number><filing-href>https://www.sec.gov/Archives/edgar/data/1547580/000100472626007544/</filing-href></entry><entry><filing-type>OTHER</filing-type><accession-number>0000000000-26-000001</accession-number></entry>')).toEqual([{ cik: '1547580', accession: '0001004726-26-007544' }]);
-    const rows = parseNportHoldings('<invstOrSec><name>US Treasury Note</name><cusip>91282CFX1</cusip><pctVal>1.20</pctVal><valUSD>1250000</valUSD><balance>1200000</balance><assetCat>DBT</assetCat></invstOrSec>');
-    expect(rows).toHaveLength(1);
-    expect(rows[0]).toMatchObject({ Name: 'US Treasury Note', Ticker: '-', Identifier: '91282CFX1', Weight: '1.20', 'Market Value': '1250000' });
+  test('SEC EDGAR fallback (shared nport-reader): ticker map, N-PORT sheet with empty missing numbers, no derivative identifiers, tickers only for U.S. equities', () => {
+    expect(parseSecFundTickers({ fields: ['cik', 'seriesId', 'classId', 'symbol'], data: [['1547580', 'S000073699', 'C000230775', 'VFLO']] }).get('VFLO')).toEqual({ cik: '0001547580', seriesId: 'S000073699', classId: 'C000230775' });
+    expect(parseSecFundTickers({ fields: [], data: [] }).size).toBe(0);
+    const filing = parseNportFiling(`<edgarSubmission><genInfo><seriesName>VictoryShares Free Cash Flow ETF</seriesName><seriesId>S000073699</seriesId><repPdDate>2026-07-31</repPdDate></genInfo>
+<invstOrSecs><invstOrSec><name>MERCK &amp; CO INC</name><cusip>58933Y105</cusip><identifiers><isin value="US58933Y1055"/></identifiers><balance>37710.00000000</balance><curCd>USD</curCd><valUSD>5541249.24</valUSD><pctVal>4.91</pctVal><assetCat>EC</assetCat></invstOrSec>
+<invstOrSec><name>US Treasury Note</name><cusip>91282CFX1</cusip><identifiers><ticker value="T"/></identifiers><balance>1200000</balance><curCd>USD</curCd><valUSD>1250000</valUSD><assetCat>DBT</assetCat><debtSec><maturityDt>2028-01-31</maturityDt><annualizedRt>3.5</annualizedRt></debtSec></invstOrSec>
+<invstOrSec><name>S&amp;P500 EMINI FUT</name><cusip>000000000</cusip><identifiers><other otherDesc="Bloomberg Identifier" value="BBG01VKPGXL9"/></identifiers><curCd>USD</curCd><valUSD>4913.74</valUSD><pctVal>0.005</pctVal><assetCat>DE</assetCat><derivativeInfo><futrDeriv derivCat="FUT"><descRefInstrmnt><otherRefInst><identifiers><cusip value="78462F103"/><ticker value="SPY"/></identifiers></otherRefInst></descRefInstrmnt></futrDeriv></derivativeInfo></invstOrSec></invstOrSecs></edgarSubmission>`);
+    expect([filing.seriesId, filing.repPdDate, filing.positions.length]).toEqual(['S000073699', '2026-07-31', 3]);
+    const rows = nportHoldingsSheet(filing, nportTickers(filing.positions, parseSecCompanyNames({ 0: { ticker: 'MRK', title: 'Merck & Co., Inc.' }, 1: { ticker: 'T', title: 'AT&T INC.' } })));
+    expect(rows[0]).toEqual({ Name: 'MERCK & CO INC', Ticker: 'MRK', Identifier: '58933Y105', Weight: '4.91', 'Market Value': '5541249.24', 'Shares Held': '37710', 'Asset Category': 'EC', Coupon: '-', Maturity: '-' });
+    // the Treasury note keeps no ticker (a bond is no "T" for AT&T) and an empty weight, never 0; the future keeps its own id, not SPY's
+    expect(rows.slice(1).map((row) => [row.Ticker, row.Identifier, row.Weight, row.Coupon, row.Maturity])).toEqual([['-', '91282CFX1', '', '3.5', '2028-01-31'], ['-', 'BBG01VKPGXL9', '0.005', '-', '-']]);
   });
 
   test('dates are UTC whatever the machine time zone', () => {
     const run = () => ({
       perf: performanceDateIso('Jun 04 2026'), display: performanceDateIso('09/05/2026'),
+      text: ['Oct 24, 2026', 'October 24 2026', '24 Oct 2026', '10/24/26', '2026-10-24T00:00:00Z'].map((raw) => performanceDateIso(raw)),
       days: parseYahooChart({ chart: { result: [{ timestamp: [Date.UTC(2026, 8, 25, 23, 30) / 1000], indicators: { quote: [{ close: [10] }] } }] } }).map((day) => day.date),
       freq: inferFrequency(['2026-01-31', '2026-02-28', '2026-03-31']),
     });
@@ -279,7 +289,7 @@ describe('parsing 2', () => {
     process.env.TZ = 'Pacific/Pago_Pago';
     const west = run();
     expect(east).toEqual(west);
-    expect(east).toEqual({ perf: '2026-06-04', display: '2026-09-05', days: ['2026-09-25'], freq: 'Monthly' });
+    expect(east).toEqual({ perf: '2026-06-04', display: '2026-09-05', text: Array(5).fill('2026-10-24'), days: ['2026-09-25'], freq: 'Monthly' });
   });
 });
 
@@ -373,8 +383,8 @@ const catalogRow = (ticker: string, nav: string) => ({
   performance: { monthly: { ytd_nav: '10', oneyear_nav: '12', threeyear_nav: '8', fiveyear_nav: '7', tenyear_nav: null, since_inception_nav: '9' }, quarterly: {} },
 });
 function yahooPayload(world: World, period1: number): unknown {
-  const stamps = Array.from({ length: world.historyDays }, (_, i) => world.end - (world.historyDays - 1 - i) * DAY).filter((stamp) => stamp >= period1);
-  return { chart: { result: [{ timestamp: stamps, indicators: { quote: [{ close: stamps.map((_, i) => 20 + i / 100) }], adjclose: [{ adjclose: stamps.map((_, i) => world.adjAt?.(i) ?? 20 + i / 100) }] }, events: {} }] } };
+  const days = Array.from({ length: world.historyDays }, (_, i) => ({ stamp: world.end - (world.historyDays - 1 - i) * DAY, i })).filter((day) => day.stamp >= period1);
+  return { chart: { result: [{ timestamp: days.map((day) => day.stamp), indicators: { quote: [{ close: days.map((day) => 20 + day.i / 100) }], adjclose: [{ adjclose: days.map((day) => world.adjAt?.(day.i) ?? 20 + day.i / 100) }] }, events: {} }] } };
 }
 function installWorld(world: World): void {
   globalThis.fetch = (async (input: unknown) => {
@@ -591,7 +601,11 @@ describe('pipeline 2', () => {
       const response = await good(input as RequestInfo, init);
       return url.includes('/EEE/AllHoldings') ? new Response((await response.text()).split('"portfolio_percentage"').join('"portfolio_pct"'), { status: 200 }) : response;
     }) as unknown as typeof fetch;
-    expect(await runUpdate(controlsFor())).toMatchObject({ completed: 3, failures: 2, updated: 0, newFunds: ['EEE', 'FFF'] });
+    const lines: string[] = [];
+    console.log = (line: unknown) => { if (/^NEW FUNDS/.test(String(line))) lines.push(String(line)); };
+    process.env.GITHUB_STEP_SUMMARY = join(dir, 'summary.md');
+    expect(await runUpdate(controlsFor())).toMatchObject({ completed: 3, failures: 2, updated: 0, newFunds: [] });
+    expect(lines.splice(0)).toEqual(['NEW FUNDS (not published yet): EEE, FFF']);
     const aaa = rowOf(dir, 'AAA');
     for (const ticker of ['EEE', 'FFF']) {
       const row = rowOf(dir, ticker);
@@ -600,7 +614,12 @@ describe('pipeline 2', () => {
       expect(row.metrics.returnsBasis).toBe(RETURNS_BASIS);
     }
     globalThis.fetch = good;
-    expect(await runUpdate(controlsFor())).toMatchObject({ failures: 0, updated: 2 });
+    // Q28: a fund whose first read failed is announced when it is first published
+    expect(await runUpdate(controlsFor())).toMatchObject({ failures: 0, updated: 2, newFunds: ['EEE', 'FFF'] });
+    expect(lines.splice(0)).toEqual(['NEW FUNDS: EEE, FFF']);
+    expect(readFileSync(join(dir, 'summary.md'), 'utf8')).toContain('### NEW FUNDS\n\nNEW FUNDS (not published yet): EEE, FFF\n');
+    await runUpdate(controlsFor());
+    expect(lines).toEqual([]);
     for (const ticker of ['EEE', 'FFF']) {
       expect(rowOf(dir, ticker)).toMatchObject({ dataFile: `./funds/${ticker}/meta.json`, asOfDate: aaa.asOfDate, holdings: aaa.holdings });
       expect(metaOf(dir, ticker).nav).toEqual(metaOf(dir, 'AAA').nav);
@@ -711,7 +730,7 @@ describe('pipeline 4', () => {
 
   test('an unknown ticker or a ticker excluded by a filter is an error before any write', async () => {
     const world = newWorld(['AAA']); installWorld(world);
-    await expect(runUpdate(controlsFor({ TICKERS: 'NOPE' }))).rejects.toThrow('not in VCM catalog');
+    await expect(runUpdate(controlsFor({ TICKERS: 'NOPE' }))).rejects.toThrow('TICKERS: NOPE not in the VCM catalog or published feed; nothing was fetched or written');
     await expect(runUpdate(controlsFor({ TICKERS: 'AAA', AUM: '2B:' }))).rejects.toThrow('excluded by configured filters');
     expect(existsSync(join(dir, 'index.json'))).toBe(false);
   });
@@ -731,15 +750,53 @@ describe('pipeline 4', () => {
     expect(readdirSync(join(dir, 'funds/AAA')).filter((name) => name.endsWith('.tmp'))).toEqual([]);
   });
 
-  test('N-PORT fallback: the series must match and the report must be newer than the published holdings', () => {
-    const xml = '<genInfo><seriesId>S000073699</seriesId><repPdDate>2026-07-31</repPdDate></genInfo>';
-    expect(parseNportIdentity(xml)).toEqual({ seriesId: 'S000073699', repPdDate: '2026-07-31' });
-    expect(parseNportIdentity('<x/>')).toEqual({ seriesId: null, repPdDate: null });
-    const id = parseNportIdentity(xml);
-    expect([
-      nportIsUsable(id, 'S000073699', null), nportIsUsable(id, 's000073699', '2026-06-30'), nportIsUsable(id, 'S000073699', '2026-07-31'),
-      nportIsUsable(id, 'S000073699', '2026-09-30'), nportIsUsable(id, 'S000099999', null), nportIsUsable({ seriesId: null, repPdDate: null }, 'S000073699', null),
-    ]).toEqual([true, true, false, false, false, false]);
+  test('N-PORT freshness: a report replaces published holdings only when strictly newer; nothing published accepts any report', () => {
+    expect(nportIsFresh('2026-07-31', '2026-10-02', 300)).toBe(false); // the daily VCM sheet is newer than any filing
+    expect(nportIsFresh('2026-07-31', '2026-07-31', 300)).toBe(false);
+    expect(nportIsFresh('2026-07-31', '2026-06-30', 300)).toBe(true);
+    expect(nportIsFresh('', '2026-06-30', 300)).toBe(false);
+    expect(nportIsFresh('2026-07-31', null, 0)).toBe(true);
+    expect(nportIsFresh('2026-07-31', null, 300)).toBe(false); // published rows without a date cannot be compared: keep them
+  });
+});
+
+describe('pipeline 5', () => {
+  beforeEach(usePipelineDir);
+
+  test('a relaxed guard still keeps numeric published weights from an all-blank sheet (Q24)', async () => {
+    const world = newWorld(['AAA', 'BBB']); installWorld(world);
+    await runUpdate(controlsFor());
+    const before = readTree(dir);
+    const good = globalThis.fetch;
+    globalThis.fetch = (async (input: unknown, init?: RequestInit) => {
+      const response = await good(input as RequestInfo, init);
+      return String(input).includes('/AllHoldings') ? new Response((await response.text()).split('"portfolio_percentage"').join('"portfolio_pct"'), { status: 200 }) : response;
+    }) as unknown as typeof fetch;
+    HOLDINGS_GUARD_RELAX.AAA = ['numeric', 'sum'];
+    try {
+      expect(await runUpdate(controlsFor({ TICKERS: 'AAA' }))).toMatchObject({ failures: 1, updated: 0 });
+    } finally {
+      delete HOLDINGS_GUARD_RELAX.AAA;
+    }
+    expect(readTree(dir)).toEqual(before);
+    expect(holdingsWeightCount(['Name', 'Weight'], [['A', '-'], ['B', '2']])).toBe(1);
+  });
+
+  test('TICKERS outside the live catalog stops the run before any fund request; a stale catalog-only row is dropped (Q27)', async () => {
+    const world = newWorld(['AAA', 'BBB']); installWorld(world);
+    await runUpdate(controlsFor());
+    const index = indexOf(dir);
+    index.funds.push({ ...rowOf(dir, 'AAA'), ticker: 'NOPE', dataFile: null });
+    writeFileSync(join(dir, 'index.json'), JSON.stringify(index));
+    const before = readTree(dir);
+    const requests: string[] = [];
+    const good = globalThis.fetch;
+    globalThis.fetch = (async (input: unknown, init?: RequestInit) => { requests.push(String(input)); return good(input as RequestInfo, init); }) as unknown as typeof fetch;
+    await expect(runUpdate(controlsFor({ TICKERS: 'NOPE' }))).rejects.toThrow('TICKERS: NOPE not in the VCM catalog or published feed; nothing was fetched or written');
+    expect(requests.filter((url) => /search\/product\/|chart\//.test(url))).toEqual([]);
+    expect(readTree(dir)).toEqual(before);
+    await runUpdate(controlsFor({ TICKERS: 'AAA' }));
+    expect(indexOf(dir).funds.map((row: { ticker: string }) => row.ticker)).toEqual(['AAA', 'BBB']);
   });
 });
 
@@ -812,10 +869,19 @@ describe('network', () => {
     await runUpdate(controlsFor());
     const maxUrl = new URL(world.chartUrls.at(-1) as string);
     expect([maxUrl.searchParams.get('period1'), maxUrl.searchParams.get('interval'), metaOf(dir, 'AAA').history.totalRows]).toEqual(['0', '1d', 800]);
+    const full = readTree(dir);
+    // Q25: a window keeps the older published history: a 1y run after a full run writes nothing
     await runUpdate(controlsFor({ HISTORY_RANGE: '1y' }));
     const oneYear = new URL(world.chartUrls.at(-1) as string);
     expect(Math.round((Date.now() / 1000 - Number(oneYear.searchParams.get('period1'))) / (365.25 * DAY))).toBe(1);
-    const rows = metaOf(dir, 'AAA').history.totalRows;
+    expect(metaOf(dir, 'AAA').history.totalRows).toBe(800);
+    expect(readTree(dir)).toEqual(full);
+    // a fund with nothing older published gets just the window
+    const fresh = mkdtempSync(join(tmpdir(), 'victoryshares-range-'));
+    tempDirs.push(fresh);
+    useApiRoot(new URL(`file://${fresh}/`));
+    await runUpdate(controlsFor({ HISTORY_RANGE: '1y' }));
+    const rows = metaOf(fresh, 'AAA').history.totalRows;
     expect(rows).toBeGreaterThan(360);
     expect(rows).toBeLessThan(370);
   });
