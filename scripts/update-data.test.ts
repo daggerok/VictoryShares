@@ -4,7 +4,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, 
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  CONTROL_NAMES, RETURNS_BASIS, buildPages, cachedFundFromIndex, configureLanes, formatFrequencyPlaceholder, fundAgeAtLeast, fundPasses,
+  CLOSED_FUNDS, CONTROL_NAMES, RETURNS_BASIS, buildPages, cachedFundFromIndex, closedFund, configureLanes, formatFrequencyPlaceholder, fundAgeAtLeast, fundPasses,
   getText, historyRows, holdingsGuard, httpSettings, indexRow, inferFrequency, installSystemCa, isCertError, isSectionMissing, main, nportIsUsable,
   pageBasenames, paceRequest, parseAtomFilings, parseAumRange, parseCatalog, parseDistributionPayload, parseFundTickerRefs,
   parseHistoryRange, parseHoldings, parseIssuerClientConfig, parseNportHoldings, parseNportIdentity, parsePremiumDiscount, parseRange,
@@ -136,7 +136,9 @@ describe('controls', () => {
     expect([readConfig(resolveControls(configFile())).secUa, readConfig({ SEC_UA: '' }).secUa, readConfig({ SEC_UA: '   ' }).secUa]).toEqual(Array(3).fill('daggerok ETF feed daggerok@gmail.com'));
     expect(readConfig({ SEC_UA: 'me me@x.test' }).secUa).toBe('me me@x.test');
   });
+});
 
+describe('controls 2', () => {
   test('inclusive ranges, K/M/B/T AUM bounds and presets', () => {
     expect(parseRange('0.2:2').min).toBe(0.2);
     expect(parseAumRange('10M:2B')).toMatchObject({ min: 10000000, max: 2000000000 });
@@ -235,7 +237,9 @@ describe('parsing', () => {
     expect(holdingsGuard(headers, allocation, 2, ['sum'])).toBeNull();
     expect(holdingsGuard(headers, rows, 5)).toContain('less than half');
   });
+});
 
+describe('parsing 2', () => {
   test('official distribution columns are kept and the cadence is inferred from dated rows', () => {
     const row = (date: string, amount: string) => ({ declared_date: date, record_date: date, payable_date: date, income_amt: amount, long_term_capital_gains: '0', short_term_capital_gains: '0', total_distribution: '0', return_of_capital: '0' });
     const parsed = parseDistributionPayload({ as_of_date: '07/10/2023', distributions: [row('01/08/2026', '0.1'), row('02/08/2026', '0.2'), row('03/09/2026', '0.3')] });
@@ -308,7 +312,9 @@ describe('metrics', () => {
     expect(metrics.performanceAsOf).toBeNull();
     expect(Object.entries(metrics).filter(([key, value]) => key !== 'returnsBasis' && value !== null)).toEqual([]);
   });
+});
 
+describe('metrics 2', () => {
   test('index rows: no meta gives dataFile null with every metrics key, with meta the published values travel along as strings', () => {
     const row = indexRow(vflo, null);
     expect([row.dataFile, row.terGrossValue]).toEqual([null, 0.44]);
@@ -409,15 +415,18 @@ const metaOf = (dir: string, ticker: string) => JSON.parse(readFileSync(join(dir
 const controlsFor = (overrides: Record<string, string> = {}) => resolveControls(configFile(), {}, {}, { REQUEST_SLEEP: '0', MAX_RETRIES: '1', EDGAR_FALLBACK: 'false', ...overrides });
 const rowOf = (dir: string, ticker: string) => indexOf(dir).funds.find((row: { ticker: string }) => row.ticker === ticker);
 
+/** Pipeline tests: a fresh temp feed directory per test, quick backoff, a silent console. */
+let dir = '';
+function usePipelineDir(): void {
+  dir = mkdtempSync(join(tmpdir(), 'victoryshares-'));
+  tempDirs.push(dir);
+  useApiRoot(new URL(`file://${dir}/`));
+  httpSettings.backoffMs = 1;
+  console.log = console.warn = console.error = () => {};
+}
+
 describe('pipeline', () => {
-  let dir = '';
-  beforeEach(() => {
-    dir = mkdtempSync(join(tmpdir(), 'victoryshares-'));
-    tempDirs.push(dir);
-    useApiRoot(new URL(`file://${dir}/`));
-    httpSettings.backoffMs = 1;
-    console.log = console.warn = console.error = () => {};
-  });
+  beforeEach(usePipelineDir);
 
   test('published rows: ytd, TER net and gross, string dividend, one metrics key set, dataFile, daily history through the last bar', async () => {
     const world = newWorld(['AAA', 'BBB']); installWorld(world);
@@ -496,6 +505,10 @@ describe('pipeline', () => {
     expect(rowOf(dir, 'AAA')).toEqual(rowsBefore.find((row: { ticker: string }) => row.ticker === 'AAA'));
     expect(rowOf(dir, 'BBB').navValue).toBe(31);
   });
+});
+
+describe('pipeline 2', () => {
+  beforeEach(usePipelineDir);
 
   test('holdings that fail the guard keep the fund exactly as published and report it failed', async () => {
     const world = newWorld(['AAA', 'BBB']); installWorld(world);
@@ -513,6 +526,74 @@ describe('pipeline', () => {
     expect(process.exitCode).toBe(1);
   });
 
+  test('a closed fund is never fetched or reported failed: its files stay as published, its index row says closed, a rerun or a catalog without it writes nothing', async () => {
+    const entry = { ticker: 'BBB', closed: '2026-10-01', source: 'https://www.sec.gov/Archives/edgar/data/1/notice.htm' };
+    expect(() => closedFund([{ ...entry, closed: 'soon' }], 'BBB')).toThrow('CLOSED_FUNDS');
+    expect(closedFund([entry], 'bbb')).toEqual(entry);
+    const world = newWorld(['AAA', 'BBB', 'CCC']); installWorld(world);
+    await runUpdate(controlsFor());
+    const first = readTree(dir);
+    const firstRow = rowOf(dir, 'BBB');
+    const good = globalThis.fetch;
+    const calls: string[] = [];
+    // the guard would reject these holdings (every weight empty)
+    const broken = (async (input: unknown, init?: RequestInit) => {
+      calls.push(String(input));
+      const response = await good(input as RequestInfo, init);
+      return String(input).includes('/AllHoldings') ? new Response((await response.text()).split('"portfolio_percentage"').join('"portfolio_pct"'), { status: 200 }) : response;
+    }) as unknown as typeof fetch;
+    globalThis.fetch = broken;
+    CLOSED_FUNDS.push(entry);
+    try {
+      world.navOf.BBB = '30.00';
+      await main({ REQUEST_SLEEP: '0', MAX_RETRIES: '1', EDGAR_FALLBACK: 'false', USE_SYSTEM_CA: 'false', TICKERS: 'BBB' }, ['bun', 'update-data.ts']);
+      expect(calls.filter((url) => url.includes('BBB'))).toEqual([]);
+      expect(process.exitCode ?? 0).not.toBe(1);
+      const closed = readTree(dir);
+      for (const path of Object.keys(first)) if (path !== '/index.json') expect([path, closed[path]]).toEqual([path, first[path]]);
+      expect(indexOf(dir).funds.map((row: { ticker: string }) => row.ticker)).toEqual(['AAA', 'BBB', 'CCC']);
+      expect(rowOf(dir, 'BBB')).toEqual({ ...firstRow, status: 'closed', closedDate: '2026-10-01', closedSource: entry.source });
+      expect(indexOf(dir).funds.filter((row: { status?: string }) => row.status === 'closed')).toHaveLength(1);
+      globalThis.fetch = good;
+      expect(await runUpdate(controlsFor())).toMatchObject({ failures: 0, updated: 0, indexChanged: false });
+      expect(readTree(dir)).toEqual(closed);
+      // the issuer stops listing the closed fund: TICKERS still accepts it, its row and files are never pruned
+      world.tickers = ['AAA', 'CCC'];
+      expect(await runUpdate(controlsFor({ TICKERS: 'BBB' }))).toMatchObject({ completed: 0, droppedFunds: [], indexChanged: false });
+      expect(await runUpdate(controlsFor())).toMatchObject({ failures: 0, droppedFunds: [], indexChanged: false });
+      expect(readTree(dir)).toEqual(closed);
+    } finally {
+      CLOSED_FUNDS.splice(CLOSED_FUNDS.indexOf(entry), 1);
+    }
+  });
+
+  test('a new fund whose holdings fail the guard or whose sources all fail is failed with a catalog-only row; the next run publishes it from the source', async () => {
+    const world = newWorld(['AAA']); installWorld(world);
+    await runUpdate(controlsFor());
+    world.tickers = ['AAA', 'EEE', 'FFF'];
+    const good = globalThis.fetch;
+    globalThis.fetch = (async (input: unknown, init?: RequestInit) => {
+      const url = String(input);
+      if (/\/FFF\/|chart\/FFF/.test(url)) return new Response('down', { status: 500 });
+      const response = await good(input as RequestInfo, init);
+      return url.includes('/EEE/AllHoldings') ? new Response((await response.text()).split('"portfolio_percentage"').join('"portfolio_pct"'), { status: 200 }) : response;
+    }) as unknown as typeof fetch;
+    expect(await runUpdate(controlsFor())).toMatchObject({ completed: 3, failures: 2, updated: 0, newFunds: ['EEE', 'FFF'] });
+    const aaa = rowOf(dir, 'AAA');
+    for (const ticker of ['EEE', 'FFF']) {
+      const row = rowOf(dir, ticker);
+      expect([row.dataFile, row.holdings, row.history, existsSync(join(dir, 'funds', ticker))]).toEqual([null, 0, 0, false]);
+      expect(Object.keys(row.metrics)).toEqual(Object.keys(aaa.metrics));
+      expect(row.metrics.returnsBasis).toBe(RETURNS_BASIS);
+    }
+    globalThis.fetch = good;
+    expect(await runUpdate(controlsFor())).toMatchObject({ failures: 0, updated: 2 });
+    for (const ticker of ['EEE', 'FFF']) {
+      expect(rowOf(dir, ticker)).toMatchObject({ dataFile: `./funds/${ticker}/meta.json`, asOfDate: aaa.asOfDate, holdings: aaa.holdings });
+      expect(metaOf(dir, ticker).nav).toEqual(metaOf(dir, 'AAA').nav);
+    }
+  });
+
   test('an honest null from the source is published as null, not replaced by the previous value', async () => {
     const world = newWorld(['AAA']); installWorld(world);
     await runUpdate(controlsFor());
@@ -524,6 +605,10 @@ describe('pipeline', () => {
     // the declared yield is gone (honest null); the value is re-derived from the fresh distributions, never copied from the old file
     expect([metrics.dividendYield, metrics.dividendYieldBasis]).toEqual([4.8, 'indicated']);
   });
+});
+
+describe('pipeline 3', () => {
+  beforeEach(usePipelineDir);
 
   test('a new fund is announced and a vanished one dropped, a truncated catalog drops nothing, an unprocessed new fund has dataFile null', async () => {
     const world = newWorld(['AAA', 'BBB', 'CCC', 'DDD']); installWorld(world);
@@ -579,6 +664,10 @@ describe('pipeline', () => {
     expect(rowOf(dir, 'BBB')).toEqual(bbb);
     expect([isSectionMissing(Object.assign(new Error('x'), { status: 404, body: '{"errorDesc":"Section data not found"}' })), isSectionMissing(Object.assign(new Error('x'), { status: 404, body: 'Not Found' })), isSectionMissing(new Error('x'))]).toEqual([true, false, false]);
   });
+});
+
+describe('pipeline 4', () => {
+  beforeEach(usePipelineDir);
 
   test('exit code is non-zero only when every selected fund failed', async () => {
     const world = newWorld(['AAA', 'BBB']); installWorld(world);

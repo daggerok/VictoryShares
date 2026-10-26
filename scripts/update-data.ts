@@ -82,6 +82,8 @@ const stateUrl = (): URL => new URL('update-state.json', apiRoot);
 const HOLDINGS_HEADERS = ['Name', 'Ticker', 'Identifier', 'Weight', 'Market Value', 'Shares Held', 'Asset Category', 'Coupon', 'Maturity'];
 /** Funds whose holdings legitimately fail a holdingsGuard check (geared, futures, look-through, top-N lists): ticker, or '*' for every fund -> relaxed checks. */
 const HOLDINGS_GUARD_RELAX: Record<string, string[]> = {};
+/** Funds the issuer closed, each confirmed from an SEC filing or the issuer notice (`source`): never fetched or guarded, last published data kept, index row marked closed. */
+export const CLOSED_FUNDS: ClosedFund[] = [];
 const HISTORY_HEADERS = ['Date', 'NAV', 'Market Price', 'Premium/Discount', 'Adj Close'];
 const RETURN_PERIODS = ['YTD', '1Y', '3Y', '5Y', '10Y'];
 const DEFAULT_SEC_UA = 'daggerok ETF feed daggerok@gmail.com';
@@ -1197,7 +1199,12 @@ export async function runUpdate(controls: Record<string, string>, options: { dea
     if (truncated && absent.length) {
       console.warn(`[ catalog  ] catalog looks truncated (${catalog.length} of ${previous.size} published funds): keeping every published fund`);
       for (const ticker of absent) catalog.push(cachedFundFromIndex(previous.get(ticker) as JsonRecord));
-    } else droppedFunds = absent;
+    } else {
+      // A closed fund the issuer no longer lists keeps its published row and files: closed funds are never pruned.
+      const closedAbsent = absent.filter(ticker => closedFund(CLOSED_FUNDS, ticker) !== null);
+      for (const ticker of closedAbsent) catalog.push(cachedFundFromIndex(previous.get(ticker) as JsonRecord));
+      droppedFunds = absent.filter(ticker => closedAbsent.indexOf(ticker) < 0);
+    }
   }
   catalog.sort((a, b) => a.ticker.localeCompare(b.ticker));
   console.log(`[ catalog  ] ${catalog.length} VictoryShares ETFs (${catalogRead ? 'VCM public ETF JSON API' : 'previously published catalog'})`);
@@ -1209,7 +1216,8 @@ export async function runUpdate(controls: Record<string, string>, options: { dea
 
   const deferredDividend = config.dividendYield.min !== undefined || config.dividendYield.max !== undefined;
   const deferredSec = config.secYield.min !== undefined || config.secYield.max !== undefined;
-  const deferredFunds = catalog.filter(fund => (deferredDividend && fund.dividendYield === null) || (deferredSec && fund.secYield === null));
+  // A closed fund is never fetched, not even for a data-dependent filter.
+  const deferredFunds = catalog.filter(fund => !closedFund(CLOSED_FUNDS, fund.ticker) && ((deferredDividend && fund.dividendYield === null) || (deferredSec && fund.secYield === null)));
   let filtersDeferred = false;
   if (api && deferredFunds.length) {
     filtersDeferred = true;
@@ -1230,7 +1238,8 @@ export async function runUpdate(controls: Record<string, string>, options: { dea
     });
   }
   const eligible = catalog.filter(fund => fundPasses(fund, config));
-  const selectedByTicker = config.tickers.size ? eligible.filter(fund => config.tickers.has(fund.ticker)) : eligible;
+  // Closed funds leave the queue here, before the MAX_FETCHES window and any per-fund request: never fetched, guarded or reported.
+  const selectedByTicker = withoutClosedFunds(config.tickers.size ? eligible.filter(fund => config.tickers.has(fund.ticker)) : eligible, fund => fund.ticker, CLOSED_FUNDS);
   outputPrintFilter(selectedByTicker.length, catalog.length, filtersDeferred);
   if (config.tickers.size) {
     const missing = [...config.tickers].filter(ticker => !catalog.some(fund => fund.ticker === ticker));
@@ -1258,17 +1267,19 @@ export async function runUpdate(controls: Record<string, string>, options: { dea
 
   // Rows: processed funds come from this run; every other fund keeps its published row verbatim
   // (a fund is either fully updated or fully kept); a fund without any published row gets a catalog-only row.
-  const indexFunds: JsonRecord[] = [];
+  const indexRows: JsonRecord[] = [];
   for (const fund of catalog) {
     const outcome = outcomes.get(fund.ticker);
     const existing = previous.get(fund.ticker);
-    if (outcome?.ok) indexFunds.push(indexRow(fund, outcome.meta));
-    else if (existing) indexFunds.push(existing);
+    if (outcome?.ok) indexRows.push(indexRow(fund, outcome.meta));
+    else if (existing) indexRows.push(existing);
     else {
       const meta = await readJson(new URL(`funds/${fund.ticker}/meta.json`, apiRoot));
-      indexFunds.push(indexRow(fund, isRecord(meta) ? meta : null));
+      indexRows.push(indexRow(fund, isRecord(meta) ? meta : null));
     }
   }
+  // A closed fund keeps its published row plus status 'closed', closedDate and closedSource.
+  const indexFunds = markClosedFunds(indexRows, CLOSED_FUNDS);
   const totalHoldings = indexFunds.reduce((sum, row) => sum + (toNumber(row.holdings) ?? 0), 0);
   const totalHistory = indexFunds.reduce((sum, row) => sum + (toNumber(row.history) ?? 0), 0);
   const indexValue = {
@@ -1331,7 +1342,7 @@ export function formatFrequencyPlaceholder(value: unknown): string {
  * Weight (%) or Market Weight) are required, >= 80% of the rows carry a numeric weight, the weights add up to
  * 50..150 and the sheet keeps >= 50% of the previously published rows. `relax` switches off the checks a fund
  * legitimately fails: 'numeric' and 'sum' (geared, inverse, futures, look-through, top-N lists) and 'count'.
- * Rows are arrays in header order or objects keyed by the header text.
+ * Rows are arrays in header order or objects keyed by the header text. A fund in the brand's CLOSED_FUNDS never reaches the guard.
  */
 export function holdingsGuard(headers: ReadonlyArray<string>, rows: ReadonlyArray<unknown>, previousRows: number | null | undefined, relax: ReadonlyArray<string> = []): string | null {
   const previous = Number(previousRows) > 0 ? Number(previousRows) : 0;
@@ -1366,5 +1377,44 @@ function holdingsGuardNumber(value: unknown): number | null {
   if (negative) text = text.slice(1, -1);
   if (!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(text)) return null;
   return negative ? -Number(text) : Number(text);
+}
+
+/** A fund its issuer closed (liquidated, delisted or merged away), confirmed from an official source: an SEC filing or the issuer's notice. */
+export type ClosedFund = { ticker: string; closed: string; source: string };
+
+/**
+ * The brand's CLOSED_FUNDS entry for a ticker, or null. A closed fund is never fetched, never guarded and never reported failed: it keeps
+ * its last published data and its index row carries `status: 'closed'`, `closedDate` and `closedSource`. A malformed entry throws, so a
+ * typo (no ISO date, no https source) never ships.
+ */
+export function closedFund(list: ReadonlyArray<ClosedFund>, ticker: unknown): ClosedFund | null {
+  const wanted = String(ticker === null || ticker === undefined ? '' : ticker).trim().toUpperCase();
+  let found: ClosedFund | null = null;
+  for (let i = 0; i < list.length; i++) {
+    const fund = list[i];
+    if (!/^[A-Z0-9][A-Z0-9.-]{0,9}$/.test(fund.ticker) || !/^\d{4}-\d{2}-\d{2}$/.test(fund.closed) || !/^https:\/\/\S+$/.test(fund.source)) throw new Error(`CLOSED_FUNDS: ${fund.ticker} needs an upper-case ticker, an ISO closing date and an https source`);
+    if (fund.ticker === wanted) found = fund;
+  }
+  return found;
+}
+
+/** The index rows with every closed fund marked (`status: 'closed'`, `closedDate`, `closedSource`); other rows are returned as they are. */
+export function markClosedFunds<T extends object>(rows: ReadonlyArray<T>, list: ReadonlyArray<ClosedFund>): T[] {
+  return rows.map((row) => {
+    const fund = closedFund(list, (row as { ticker?: unknown }).ticker);
+    return fund ? ({ ...row, status: 'closed', closedDate: fund.closed, closedSource: fund.source } as T) : row;
+  });
+}
+
+/** A run's queue without the closed funds, which are named once in the log: they are neither fetched nor counted as failed. */
+export function withoutClosedFunds<T>(queue: ReadonlyArray<T>, tickerOf: (item: T) => string, list: ReadonlyArray<ClosedFund>): T[] {
+  const closed: string[] = [];
+  const open: T[] = [];
+  for (let i = 0; i < queue.length; i++) {
+    if (closedFund(list, tickerOf(queue[i]))) closed.push(tickerOf(queue[i]));
+    else open.push(queue[i]);
+  }
+  if (closed.length) console.log(`[ closed   ] ${closed.join(', ')}: closed by the issuer, published data kept`);
+  return open;
 }
 // </holdings-guard>
