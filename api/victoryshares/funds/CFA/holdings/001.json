@@ -34,6 +34,17 @@
    "Maturity": "-"
   },
   {
+   "Name": "S&P 500 EMINI FUT DEC26",
+   "Ticker": "-",
+   "Identifier": "BBG012FFK314",
+   "Weight": "-0.002679630000",
+   "Market Value": "-14208.020000000000",
+   "Shares Held": "4.000000000000",
+   "Asset Category": "FUTURE (NEW)",
+   "Coupon": "0.000000000000",
+   "Maturity": "12/21/2026"
+  },
+  {
    "Name": "APOLLO GLOBAL MANAGEMENT",
    "Ticker": "1874329D",
    "Identifier": "US03769M1062",
@@ -1759,17 +1770,6 @@
    "Asset Category": "COMMON STOCK",
    "Coupon": "0.000000000000",
    "Maturity": "-"
-  },
-  {
-   "Name": "S&P 500 EMINI FUT DEC26",
-   "Ticker": "ESZ6",
-   "Identifier": "BBG012FFK314",
-   "Weight": "-0.002679630000",
-   "Market Value": "-14208.020000000000",
-   "Shares Held": "4.000000000000",
-   "Asset Category": "FUTURE (NEW)",
-   "Coupon": "0.000000000000",
-   "Maturity": "12/21/2026"
   },
   {
    "Name": "EATON CORP PLC",
