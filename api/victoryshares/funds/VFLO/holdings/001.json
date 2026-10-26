@@ -23,6 +23,17 @@
    "Maturity": "-"
   },
   {
+   "Name": "S&P 500 EMINI FUT DEC26",
+   "Ticker": "-",
+   "Identifier": "BBG012FFK314",
+   "Weight": "-0.000908680000",
+   "Market Value": "-111881.750000000000",
+   "Shares Held": "31.000000000000",
+   "Asset Category": "FUTURE (NEW)",
+   "Coupon": "0.000000000000",
+   "Maturity": "12/21/2026"
+  },
+  {
    "Name": "ACCENTURE PLC",
    "Ticker": "ACN",
    "Identifier": "IE00B4BNMY34",
@@ -208,17 +219,6 @@
    "Asset Category": "COMMON STOCK",
    "Coupon": "0.000000000000",
    "Maturity": "-"
-  },
-  {
-   "Name": "S&P 500 EMINI FUT DEC26",
-   "Ticker": "ESZ6",
-   "Identifier": "BBG012FFK314",
-   "Weight": "-0.000908680000",
-   "Market Value": "-111881.750000000000",
-   "Shares Held": "31.000000000000",
-   "Asset Category": "FUTURE (NEW)",
-   "Coupon": "0.000000000000",
-   "Maturity": "12/21/2026"
   },
   {
    "Name": "EXPAND ENERGY CORP",
