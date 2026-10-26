@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-25T03:10:10Z",
+ "generatedAt": "2026-10-26T19:42:28Z",
  "source": {
   "provider": "VictoryShares ETFs (Victory Capital Management)",
   "market": "us",
@@ -14,7 +14,7 @@
  "counts": {
   "funds": 25,
   "holdings": 8026,
-  "history": 40454
+  "history": 40455
  },
  "funds": [
   {
@@ -86,7 +86,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 238,
-   "history": 335
+   "history": 336
   },
   {
    "ticker": "CDC",
