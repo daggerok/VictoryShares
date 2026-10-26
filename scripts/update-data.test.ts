@@ -359,7 +359,7 @@ describe('metrics 2', () => {
 type World = {
   tickers: string[]; navOf: Record<string, string>; failYahoo: Set<string>; failAll: boolean; yields: Record<string, unknown> | null;
   historyDays: number; chartUrls: string[]; inflight: number; peak: number; holdingsPages: number; sectionMissing: Set<string>; end: number;
-  adjAt?: (index: number) => number;
+  adjAt?: (index: number) => number; failCatalog?: boolean;
 };
 const DAY = 86400;
 const newWorld = (tickers: string[] = ['AAA', 'BBB', 'CCC', 'DDD']): World => ({
@@ -384,7 +384,7 @@ function installWorld(world: World): void {
       await new Promise((resolve) => realSetTimeout(resolve, 3));
       const json = (value: unknown) => new Response(JSON.stringify(value), { status: 200 });
       if (url.includes('victoryshares-etfs-list')) return new Response('<input id="etfListEndpoint" value="https://investorapi.vcm.com/search/products/ETF"/><input id="etfListApiKey" value="k"/>');
-      if (url.endsWith('/search/products/ETF')) return json(world.tickers.map((ticker) => catalogRow(ticker, world.navOf[ticker] ?? '25.00')));
+      if (url.endsWith('/search/products/ETF')) return world.failCatalog ? new Response('down', { status: 500 }) : json(world.tickers.map((ticker) => catalogRow(ticker, world.navOf[ticker] ?? '25.00')));
       const product = /search\/product\/(\w+)\/(\w+)/.exec(url);
       if (product) {
         if (world.failAll) return new Response('down', { status: 500 });
@@ -509,6 +509,19 @@ describe('pipeline', () => {
 
 describe('pipeline 2', () => {
   beforeEach(usePipelineDir);
+
+  test('a new fund whose holdings failed is failed with a catalog-only row even when Yahoo answered, then published once they come', async () => {
+    const world = newWorld(['AAA', 'BBB']); installWorld(world);
+    world.sectionMissing.add('BBB/AllHoldings');
+    expect(await runUpdate(controlsFor())).toMatchObject({ completed: 2, failures: 1, updated: 1 });
+    // was: meta.json with 0 holdings and fresh history, reported updated
+    expect(existsSync(join(dir, 'funds/BBB'))).toBe(false);
+    expect(rowOf(dir, 'BBB')).toMatchObject({ dataFile: null, holdings: 0, history: 0 });
+    expect(Object.keys(rowOf(dir, 'BBB').metrics)).toEqual(Object.keys(rowOf(dir, 'AAA').metrics));
+    world.sectionMissing.clear();
+    expect(await runUpdate(controlsFor({ TICKERS: 'BBB' }))).toMatchObject({ failures: 0, updated: 1 });
+    expect(rowOf(dir, 'BBB')).toMatchObject({ dataFile: './funds/BBB/meta.json', holdings: 3 });
+  });
 
   test('holdings that fail the guard keep the fund exactly as published and report it failed', async () => {
     const world = newWorld(['AAA', 'BBB']); installWorld(world);
@@ -668,6 +681,20 @@ describe('pipeline 3', () => {
 
 describe('pipeline 4', () => {
   beforeEach(usePipelineDir);
+
+  test('a run on the cached catalog keeps the published market price, premium/discount and their date', async () => {
+    const world = newWorld(['AAA']); installWorld(world);
+    await runUpdate(controlsFor());
+    const meta = metaOf(dir, 'AAA');
+    const row = rowOf(dir, 'AAA');
+    expect([meta.marketPrice.value, meta.marketPrice.asOfDate, meta.premiumDiscount.value, row.closePrice, row.premiumDiscount]).toEqual([25, 'Oct 01 2026', 0.01, '$25.00', '0.01%']);
+    // the VCM catalog API fails, the product API answers: the fund is rebuilt from its index row
+    world.failCatalog = true;
+    await runUpdate(controlsFor());
+    // was: marketPrice and premiumDiscount null, closePrice and premiumDiscount '—'
+    expect(metaOf(dir, 'AAA')).toEqual(meta);
+    expect(rowOf(dir, 'AAA')).toEqual(row);
+  });
 
   test('exit code is non-zero only when every selected fund failed', async () => {
     const world = newWorld(['AAA', 'BBB']); installWorld(world);

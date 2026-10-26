@@ -530,6 +530,12 @@ export function cachedFundFromIndex(item: JsonRecord): Fund {
     terGrossValue: toNumber(item.terGrossValue),
     gross_exp_ratio: item.terGrossValue ?? item.terValue, net_expense_ratio: item.terValue,
     inception_date: isoFromDisplay(item.inceptionDate),
+    // The catalog-only quote fields: without them a run on the cached catalog rewrote every processed fund with a null
+    // market price and premium/discount (USTB $49.92 and 0.07% -> null). The published values are kept with their date.
+    latest_nav: toNumber(item.navValue), net_assets: toNumber(item.aumValue),
+    market_close: toNumber(item.closePrice), premium_discount_percentage: toNumber(item.premiumDiscount),
+    nav_as_of: typeof item.asOfDate === 'string' && item.asOfDate !== '—' ? item.asOfDate : null,
+    exchange: item.exchange === '—' ? '' : item.exchange,
     performance: { monthly: toSourceReturns(monthEnd), quarterly: toSourceReturns(quarterEnd) },
     monthly_performance_as_of_date: monthEnd.asOfDate,
     quarterly_performance_as_of_date: quarterEnd.asOfDate,
@@ -1046,8 +1052,10 @@ async function buildFund(fund: Fund, key: string, config: Config, prior: JsonRec
     catch (error) { failures.push(errorText(error)); }
     if (!days.length && previousHistory.rows.length && !failures.some(text => text.startsWith('[chart'))) failures.push(`[chart    ] ${fund.ticker}: no price rows`);
   }
-  // A fund with published data is kept untouched when any required source failed; a brand-new fund is published only when it has something to show.
-  if (failures.length && (prior || (!holdRows.length && !days.length))) throw new Error(failures.join('; '));
+  // A fund with published data is kept untouched when any required source failed. A brand-new fund whose holdings failed
+  // (VCM and N-PORT gave no rows) is not published either, even when Yahoo answered: it fails and keeps a catalog-only
+  // index row (dataFile null), never an `updated` meta with 0 holdings.
+  if (failures.length && (prior || !holdRows.length)) throw new Error(failures.join('; '));
   // Fresh holdings (VCM or the N-PORT fallback; never retained) that look broken - no weight column, non-numeric weights,
   // a bad weight sum, half the rows gone - never replace the published ones; a new fund is then not written at all.
   const publishedHoldingsRows = prior && isRecord(prior.holdings) ? toNumber(prior.holdings.totalRows) : null;
