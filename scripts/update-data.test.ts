@@ -446,6 +446,9 @@ describe('pipeline', () => {
     expect(row).toMatchObject({ terValue: 0.39, terGrossValue: 0.44, dataFile: './funds/AAA/meta.json' });
     expect(row.distributions).toEqual({ frequency: 'Monthly', exDate: null, dividend: '0.1' });
     expect(Object.keys(other.metrics)).toEqual(Object.keys(row.metrics));
+    // every row carries the 52-week keys from its history pages (range-52w block)
+    const RANGE_KEYS = ['week52Low', 'week52High', 'range52w', 'range52wClose', 'range52wAsOf', 'range52wSince', 'range52wBasis'];
+    for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics)).toEqual(expect.arrayContaining(RANGE_KEYS));
     const meta = metaOf(dir, 'AAA');
     expect(meta.expenseRatio).toMatchObject({ value: 0.39, net: 0.39, gross: 0.44 });
     expect(meta.history.totalRows).toBe(800);
