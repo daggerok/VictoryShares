@@ -215,7 +215,7 @@ function outputFundLine(index: number, total: number, ticker: string, status: st
     field('sec', outputPercent(data.secYield ?? data.yields?.secYield ?? metrics.secYield)),
     field('wp', data.workplaceRaw),
   ].filter(part => part !== '').join(' ');
-  return `[ ${String(index).padStart(width)}/${String(total).padEnd(width)}  ] ${outputClean(ticker).padEnd(5)} ${status.padEnd(9)}${detail ? ` ${detail}` : ''}${reason ? ` reason=${outputClean(reason)}` : ''}`;
+  return `[ ${`${String(index).padStart(width)}/${total}`.padEnd(8)} ] ${outputClean(ticker).padEnd(5)} ${status.padEnd(9)}${detail ? ` ${detail}` : ''}${reason ? ` reason=${outputClean(reason)}` : ''}`;
 }
 function outputCreateReporter(root: URL | string, total: number) {
   let completed = 0;
@@ -258,7 +258,7 @@ function createRunReporter(total: number) {
     summaryLine: (startedAt: number): string => reporter.summary(startedAt),
   };
 }
-/** The `[ config ]` block: the parsed config under the canonical environment names (SEC_UA is redacted). */
+/** The `[ config   ]` block: the parsed config under the canonical environment names (SEC_UA is redacted). */
 function printUpdaterConfig(config: Config): void {
   outputPrintConfig('VictoryShares', {
     maxFetches: config.maxFetches, requestSleep: config.requestSleep, concurrency: config.concurrency,
@@ -807,12 +807,12 @@ function issuerApiHeaders(apiKey: string): Record<string, string> { return { ...
 function yahooHeaders(): Record<string, string> { return { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/128.0 Safari/537.36', Accept: 'application/json' }; }
 function secHeaders(config: Config): Record<string, string> { return { 'User-Agent': config.secUa, Accept: 'application/json, application/atom+xml, application/xml;q=0.9' }; }
 async function loadApiKey(config: Config): Promise<{ endpoint: string; apiKey: string }> {
-  const html = await getText(ISSUER_LIST_PAGE, '[issuer   ] list page', { ...VCM_HEADERS, Accept: 'text/html' }, config);
+  const html = await getText(ISSUER_LIST_PAGE, '[ issuer   ] list page', { ...VCM_HEADERS, Accept: 'text/html' }, config);
   return parseIssuerClientConfig(html);
 }
 
 async function fetchProduct(ticker: string, endpoint: string, key: string, config: Config): Promise<unknown> {
-  return getJson(`${VCM_API}/${encodeURIComponent(ticker)}/${endpoint}`, `[product  ] ${ticker} ${endpoint}`, issuerApiHeaders(key), config);
+  return getJson(`${VCM_API}/${encodeURIComponent(ticker)}/${endpoint}`, `[ product  ] ${ticker} ${endpoint}`, issuerApiHeaders(key), config);
 }
 /**
  * Yahoo ignores `range=max` granularity guarantees (it returns weekly, monthly or hourly bars depending on the
@@ -831,7 +831,7 @@ export function yahooChartUrl(ticker: string, range: string, nowSeconds: number 
   return `${YAHOO_CHART}/${encodeURIComponent(ticker)}?${query}`;
 }
 async function fetchYahoo(ticker: string, range: string, config: Config): Promise<ChartDay[]> {
-  return parseYahooChart(await getJson(yahooChartUrl(ticker, range), `[chart    ] ${ticker}`, yahooHeaders(), config));
+  return parseYahooChart(await getJson(yahooChartUrl(ticker, range), `[ chart    ] ${ticker}`, yahooHeaders(), config));
 }
 
 /** One run's SEC state: the two SEC ticker tables (each loaded once) and the N-PORT reader cache (submissions and documents). */
@@ -841,7 +841,7 @@ export function resetSecState(): void { secState = { funds: null, names: null, r
 /** SEC's ticker -> registrant CIK + series id table, loaded once per run (a failed load is asked again by the next fund). */
 function loadFundTickerTable(config: Config): Promise<Map<string, NportSeriesRef>> {
   if (!secState.funds) {
-    const loading = getJson(SEC_MF_TICKERS, '[edgar   ] fund ticker table', secHeaders(config), config).then(payload => parseSecFundTickers(payload));
+    const loading = getJson(SEC_MF_TICKERS, '[ edgar    ] fund ticker table', secHeaders(config), config).then(payload => parseSecFundTickers(payload));
     secState.funds = loading;
     loading.catch(() => { if (secState.funds === loading) secState.funds = null; });
   }
@@ -850,7 +850,7 @@ function loadFundTickerTable(config: Config): Promise<Map<string, NportSeriesRef
 /** SEC's company name -> ticker table for the N-PORT rows, loaded once per run. */
 function loadCompanyNames(config: Config): Promise<Map<string, string>> {
   if (!secState.names) {
-    const loading = getJson(SEC_COMPANY_TICKERS, '[edgar   ] company ticker table', secHeaders(config), config).then(payload => parseSecCompanyNames(payload));
+    const loading = getJson(SEC_COMPANY_TICKERS, '[ edgar    ] company ticker table', secHeaders(config), config).then(payload => parseSecCompanyNames(payload));
     secState.names = loading;
     loading.catch(() => { if (secState.names === loading) secState.names = null; });
   }
@@ -882,13 +882,13 @@ async function fetchEdgarHoldings(ticker: string, config: Config, published: { a
   try {
     const ref = (await loadFundTickerTable(config)).get(ticker);
     const read = ref
-      ? await readNportHoldings({ ticker, cik: ref.cik, seriesId: ref.seriesId }, published, (url, label) => getText(url, `[edgar   ] ${label}`, { ...secHeaders(config), Accept: 'application/json, application/xml, text/xml' }, config), { cache: secState.reader })
+      ? await readNportHoldings({ ticker, cik: ref.cik, seriesId: ref.seriesId }, published, (url, label) => getText(url, `[ edgar    ] ${label}`, { ...secHeaders(config), Accept: 'application/json, application/xml, text/xml' }, config), { cache: secState.reader })
       : { problem: `${ticker}: not in the SEC fund ticker table` };
     if ('problem' in read) {
       outputNote(`[ edgar    ] ${read.problem}`);
       return none;
     }
-    return { rows: nportHoldingsSheet(read.filing, nportTickers(read.filing.positions, await loadCompanyNames(config).catch(() => null), await loadUsListings((url, label) => getText(url, `[edgar   ] ${label}`, { ...secHeaders(config), Accept: 'text/plain' }, config)))), asOfDate: read.filing.repPdDate || null };
+    return { rows: nportHoldingsSheet(read.filing, nportTickers(read.filing.positions, await loadCompanyNames(config).catch(() => null), await loadUsListings((url, label) => getText(url, `[ edgar    ] ${label}`, { ...secHeaders(config), Accept: 'text/plain' }, config)))), asOfDate: read.filing.repPdDate || null };
   } catch (error) {
     outputNote(`[ edgar    ] ${ticker}: ${errorText(error)}`);
     return none;
@@ -1050,7 +1050,7 @@ async function buildFund(fund: Fund, key: string, config: Config, prior: JsonRec
     const sec = await fetchEdgarHoldings(fund.ticker, config, { asOf: publishedHoldingsAsOf, rows: previousHoldings.rows.length });
     if (sec.rows.length) { holdRows = sec.rows; holdingsAsOf = sec.asOfDate; holdingSource = `SEC EDGAR N-PORT-P (Victory Portfolios II, CIK 0001547580; ${sec.asOfDate ?? 'report date unavailable'})`; }
   }
-  if (!holdRows.length && previousHoldings.rows.length) failures.push(`[holdings ] ${fund.ticker}: no current rows from VCM or SEC`);
+  if (!holdRows.length && previousHoldings.rows.length) failures.push(`[ holdings ] ${fund.ticker}: no current rows from VCM or SEC`);
 
   const previousHistory = await previousRows(fund.ticker, 'history');
   let days: ChartDay[] = [];
@@ -1059,10 +1059,10 @@ async function buildFund(fund: Fund, key: string, config: Config, prior: JsonRec
       days = await fetchYahoo(fund.ticker, config.historyRange, config);
       // A HISTORY_RANGE window never shrinks the published history
       const windowed = config.historyRange !== 'max' && days.length ? windowedDays(days, previousHistory.rows) : days;
-      if (!windowed) { days = []; failures.push(`[chart    ] ${fund.ticker}: chart window does not join the published history (${config.historyRange})`); }
+      if (!windowed) { days = []; failures.push(`[ chart    ] ${fund.ticker}: chart window does not join the published history (${config.historyRange})`); }
       else days = windowed;
     } catch (error) { failures.push(errorText(error)); }
-    if (!days.length && previousHistory.rows.length && !failures.some(text => text.startsWith('[chart'))) failures.push(`[chart    ] ${fund.ticker}: no price rows`);
+    if (!days.length && previousHistory.rows.length && !failures.some(text => text.startsWith('[chart'))) failures.push(`[ chart    ] ${fund.ticker}: no price rows`);
   }
   // A fund with published data is kept untouched when any required source failed. A brand-new fund whose holdings failed
   // (VCM and N-PORT gave no rows) is not published either, even when Yahoo answered: it fails and keeps a catalog-only
@@ -1203,7 +1203,7 @@ export async function runUpdate(controls: Record<string, string>, options: { dea
   let api: { endpoint: string; apiKey: string } | null = null;
   try {
     api = await loadApiKey(config);
-    catalog = parseCatalog(await getJson(api.endpoint, '[catalog  ] VictoryShares ETF list', issuerApiHeaders(api.apiKey), config));
+    catalog = parseCatalog(await getJson(api.endpoint, '[ catalog  ] VictoryShares ETF list', issuerApiHeaders(api.apiKey), config));
   } catch (error) {
     console.warn(`[ catalog  ] ${errorText(error).replace(/^\[[^\]]*\]\s*/, '')} - retaining the published catalog`);
   }
