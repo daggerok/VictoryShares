@@ -15,8 +15,8 @@
    "Name": "ZIMMER BIOMET HOLDINGS",
    "Ticker": "ZMH",
    "Identifier": "US98956P1021",
-   "Weight": "0.217184710000",
-   "Market Value": "889405.440000000000",
+   "Weight": "0.211980980000",
+   "Market Value": "869823.360000000000",
    "Shares Held": "9024.000000000000",
    "Asset Category": "COMMON STOCK",
    "Coupon": "0.000000000000",
@@ -26,13 +26,13 @@
    "Name": "ZOETIS INC",
    "Ticker": "ZTS",
    "Identifier": "US98978V1035",
-   "Weight": "0.175212010000",
-   "Market Value": "717520.650000000000",
+   "Weight": "0.167893540000",
+   "Market Value": "688919.000000000000",
    "Shares Held": "8855.000000000000",
    "Asset Category": "COMMON STOCK",
    "Coupon": "0.000000000000",
    "Maturity": "-"
   }
  ],
- "asOfDate": "2026-10-26"
+ "asOfDate": "2026-10-29"
 }
