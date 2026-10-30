@@ -896,9 +896,9 @@ async function fetchEdgarHoldings(ticker: string, config: Config, published: { a
 }
 
 /**
- * A HISTORY_RANGE window never shrinks the published history (and with it the published series): the published days older
+ * A fresh chart (a HISTORY_RANGE window or a truncated max answer) never shrinks the published history (and with it the published series): the published days older
  * than the first fresh day are put in front (shared windowed-chart block, Adj Close rescaled by the overlapping days). Null
- * when the window cannot be joined: the fund is then kept as published.
+ * when the chart cannot be joined: the fund is then kept as published.
  */
 export function windowedDays(days: ChartDay[], published: ReadonlyArray<SheetRow>): ChartDay[] | null {
   const fresh = days.filter(day => day.close !== null && day.adjClose !== null)
@@ -1057,9 +1057,10 @@ async function buildFund(fund: Fund, key: string, config: Config, prior: JsonRec
   if (!config.skipYahoo) {
     try {
       days = await fetchYahoo(fund.ticker, config.historyRange, config);
-      // A HISTORY_RANGE window never shrinks the published history
-      const windowed = config.historyRange !== 'max' && days.length ? windowedDays(days, previousHistory.rows) : days;
-      if (!windowed) { days = []; failures.push(`[ chart    ] ${fund.ticker}: chart window does not join the published history (${config.historyRange})`); }
+      // A fresh chart never shrinks the published history: a HISTORY_RANGE window, and also a truncated `max` answer (2026-10-29:
+      // Yahoo returned 2 bars for Franklin DVAL and USFI). A full `max` answer starts at inception: nothing older, unchanged
+      const windowed = days.length ? windowedDays(days, previousHistory.rows) : days;
+      if (!windowed) { days = []; failures.push(`[ chart    ] ${fund.ticker}: chart does not join the published history (${config.historyRange}, ${days.length} days)`); }
       else days = windowed;
     } catch (error) { failures.push(errorText(error)); }
     if (!days.length && previousHistory.rows.length && !failures.some(text => text.startsWith('[chart'))) failures.push(`[ chart    ] ${fund.ticker}: no price rows`);
