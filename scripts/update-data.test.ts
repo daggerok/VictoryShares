@@ -369,7 +369,7 @@ describe('metrics 2', () => {
 type World = {
   tickers: string[]; navOf: Record<string, string>; failYahoo: Set<string>; failAll: boolean; yields: Record<string, unknown> | null;
   historyDays: number; chartUrls: string[]; inflight: number; peak: number; holdingsPages: number; sectionMissing: Set<string>; end: number;
-  adjAt?: (index: number) => number; failCatalog?: boolean;
+  adjAt?: (index: number) => number; failCatalog?: boolean; keepLast?: number;
 };
 const DAY = 86400;
 const newWorld = (tickers: string[] = ['AAA', 'BBB', 'CCC', 'DDD']): World => ({
@@ -383,7 +383,7 @@ const catalogRow = (ticker: string, nav: string) => ({
   performance: { monthly: { ytd_nav: '10', oneyear_nav: '12', threeyear_nav: '8', fiveyear_nav: '7', tenyear_nav: null, since_inception_nav: '9' }, quarterly: {} },
 });
 function yahooPayload(world: World, period1: number): unknown {
-  const days = Array.from({ length: world.historyDays }, (_, i) => ({ stamp: world.end - (world.historyDays - 1 - i) * DAY, i })).filter((day) => day.stamp >= period1);
+  const days = Array.from({ length: world.historyDays }, (_, i) => ({ stamp: world.end - (world.historyDays - 1 - i) * DAY, i })).filter((day) => day.stamp >= period1).slice(-(world.keepLast ?? world.historyDays));
   return { chart: { result: [{ timestamp: days.map((day) => day.stamp), indicators: { quote: [{ close: days.map((day) => 20 + day.i / 100) }], adjclose: [{ adjclose: days.map((day) => world.adjAt?.(day.i) ?? 20 + day.i / 100) }] }, events: {} }] } };
 }
 function installWorld(world: World): void {
@@ -879,6 +879,15 @@ describe('network', () => {
     expect(Math.round((Date.now() / 1000 - Number(oneYear.searchParams.get('period1'))) / (365.25 * DAY))).toBe(1);
     expect(metaOf(dir, 'AAA').history.totalRows).toBe(800);
     expect(readTree(dir)).toEqual(full);
+    // a truncated max answer (Yahoo served 2 bars for DVAL and USFI on 2026-10-29) never shrinks the history either: one that
+    // joins the published days keeps them all, one of a new day that does not join keeps the fund as published
+    world.keepLast = 2;
+    await runUpdate(controlsFor());
+    expect(readTree(dir)).toEqual(full);
+    world.keepLast = 1; world.end += 30 * DAY;
+    await runUpdate(controlsFor());
+    expect(metaOf(dir, 'AAA').history.totalRows).toBe(800);
+    world.keepLast = undefined; world.end -= 30 * DAY;
     // a fund with nothing older published gets just the window
     const fresh = mkdtempSync(join(tmpdir(), 'victoryshares-range-'));
     tempDirs.push(fresh);
