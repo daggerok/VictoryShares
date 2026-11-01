@@ -1,0 +1,27 @@
+{
+ "headers": [
+  "Name",
+  "Ticker",
+  "Identifier",
+  "Weight",
+  "Market Value",
+  "Shares Held",
+  "Asset Category",
+  "Coupon",
+  "Maturity"
+ ],
+ "rows": [
+  {
+   "Name": "ZCCP 2021- VRN 07/15/33",
+   "Ticker": "-",
+   "Identifier": "US98878FAW95",
+   "Weight": "0.251127020000",
+   "Market Value": "1380268.460000000000",
+   "Shares Held": "1380000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "5.842490400000",
+   "Maturity": "07/15/2033"
+  }
+ ],
+ "asOfDate": "2026-11-02"
+}
