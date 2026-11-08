@@ -1,0 +1,82 @@
+{
+ "headers": [
+  "Name",
+  "Ticker",
+  "Identifier",
+  "Weight",
+  "Market Value",
+  "Shares Held",
+  "Asset Category",
+  "Coupon",
+  "Maturity"
+ ],
+ "rows": [
+  {
+   "Name": "XROAD 2024 5.94% 08/20/30",
+   "Ticker": "-",
+   "Identifier": "US227927AC47",
+   "Weight": "0.062105900000",
+   "Market Value": "1643642.050000000000",
+   "Shares Held": "1637000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "5.940000000000",
+   "Maturity": "08/20/2030"
+  },
+  {
+   "Name": "XROAD 2025 5.2% 02/20/32",
+   "Ticker": "-",
+   "Identifier": "US22767VAC28",
+   "Weight": "0.008571300000",
+   "Market Value": "226840.770000000000",
+   "Shares Held": "228000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "5.200000000000",
+   "Maturity": "02/20/2032"
+  },
+  {
+   "Name": "YMMT 2026- 4.43% 04/15/31",
+   "Ticker": "-",
+   "Identifier": "US98463GAG38",
+   "Weight": "0.055805520000",
+   "Market Value": "1476901.760000000000",
+   "Shares Held": "1500000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "4.430000000000",
+   "Maturity": "04/15/2031"
+  },
+  {
+   "Name": "ZAYO 25- 5.648% 03/20/55",
+   "Ticker": "-",
+   "Identifier": "US98919WAA18",
+   "Weight": "0.093298740000",
+   "Market Value": "2469165.580000000000",
+   "Shares Held": "2500000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "5.648000000000",
+   "Maturity": "03/20/2055"
+  },
+  {
+   "Name": "ZIMMER BI 5.2% 09/15/34",
+   "Ticker": "-",
+   "Identifier": "US98956PAZ53",
+   "Weight": "0.060746700000",
+   "Market Value": "1607670.660000000000",
+   "Shares Held": "1660000.000000000000",
+   "Asset Category": "CORPORATE BOND",
+   "Coupon": "5.200000000000",
+   "Maturity": "09/15/2034"
+  },
+  {
+   "Name": "ZOETIS 5% 08/17/35",
+   "Ticker": "-",
+   "Identifier": "US98978VAX10",
+   "Weight": "0.066947130000",
+   "Market Value": "1771765.940000000000",
+   "Shares Held": "1851000.000000000000",
+   "Asset Category": "CORPORATE BOND",
+   "Coupon": "5.000000000000",
+   "Maturity": "08/17/2035"
+  }
+ ],
+ "asOfDate": "2026-11-09"
+}

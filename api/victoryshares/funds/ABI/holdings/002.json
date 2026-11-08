@@ -12,16 +12,126 @@
  ],
  "rows": [
   {
+   "Name": "VSTA 2024- VRN 05/25/2054",
+   "Ticker": "-",
+   "Identifier": "US92839HAD89",
+   "Weight": "0.638381220000",
+   "Market Value": "3509099.000000000000",
+   "Shares Held": "3500000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "7.481998800000",
+   "Maturity": "05/25/2054"
+  },
+  {
+   "Name": "VSTA 2025- VRN 11/25/2055",
+   "Ticker": "-",
+   "Identifier": "US92842MAA80",
+   "Weight": "0.051809460000",
+   "Market Value": "284789.920000000000",
+   "Shares Held": "290804.989100000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "5.297000400000",
+   "Maturity": "11/25/2055"
+  },
+  {
+   "Name": "VSTA 2026- VRN 05/25/2056",
+   "Ticker": "-",
+   "Identifier": "US92842NAD03",
+   "Weight": "0.035681850000",
+   "Market Value": "196138.500000000000",
+   "Shares Held": "200000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "6.275998800000",
+   "Maturity": "05/25/2056"
+  },
+  {
+   "Name": "VSTRG 2023 9.99% 12/16/30",
+   "Ticker": "-",
+   "Identifier": "US92920CAN74",
+   "Weight": "0.231913880000",
+   "Market Value": "1274800.610000000000",
+   "Shares Held": "1205000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "9.990000000000",
+   "Maturity": "12/16/2030"
+  },
+  {
+   "Name": "WEF 2026-1 6.33% 01/20/34",
+   "Ticker": "-",
+   "Identifier": "US97415EAE41",
+   "Weight": "0.421801800000",
+   "Market Value": "2318589.970000000000",
+   "Shares Held": "2310000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "6.330000000000",
+   "Maturity": "01/20/2034"
+  },
+  {
+   "Name": "WEF 2026-1 8.18% 01/20/34",
+   "Ticker": "-",
+   "Identifier": "US97415EAF16",
+   "Weight": "0.144016720000",
+   "Market Value": "791641.270000000000",
+   "Shares Held": "790000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "8.180000000000",
+   "Maturity": "01/20/2034"
+  },
+  {
+   "Name": "WESTR 10.14% 12/20/37",
+   "Ticker": "-",
+   "Identifier": "US96033EAD04",
+   "Weight": "0.030500090000",
+   "Market Value": "167655.060000000000",
+   "Shares Held": "166843.820000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "10.140000000000",
+   "Maturity": "12/20/2037"
+  },
+  {
+   "Name": "WFCM 2026- VRN 03/10/2041",
+   "Ticker": "-",
+   "Identifier": "US949939AE24",
+   "Weight": "0.017765850000",
+   "Market Value": "97656.570000000000",
+   "Shares Held": "100000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "5.407920000000",
+   "Maturity": "03/10/2041"
+  },
+  {
+   "Name": "WFCM 2026- VRN 03/10/2041",
+   "Ticker": "-",
+   "Identifier": "US949939AG71",
+   "Weight": "0.017958440000",
+   "Market Value": "98715.230000000000",
+   "Shares Held": "100000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "6.378710400000",
+   "Maturity": "03/10/2041"
+  },
+  {
+   "Name": "XROAD 2026 6.97% 07/20/33",
+   "Ticker": "-",
+   "Identifier": "US22767HAE99",
+   "Weight": "0.481173760000",
+   "Market Value": "2644949.930000000000",
+   "Shares Held": "2590000.000000000000",
+   "Asset Category": "MORTGAGE RELATED",
+   "Coupon": "6.970000000000",
+   "Maturity": "07/20/2033"
+  },
+  {
    "Name": "ZCCP 2021- VRN 07/15/33",
    "Ticker": "-",
    "Identifier": "US98878FAW95",
-   "Weight": "0.251127020000",
-   "Market Value": "1380268.460000000000",
+   "Weight": "0.251098630000",
+   "Market Value": "1380256.670000000000",
    "Shares Held": "1380000.000000000000",
    "Asset Category": "MORTGAGE RELATED",
    "Coupon": "5.842490400000",
    "Maturity": "07/15/2033"
   }
  ],
- "asOfDate": "2026-11-02"
+ "asOfDate": "2026-11-09"
 }

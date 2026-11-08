@@ -31,24 +31,24 @@
   "gross": 0.53
  },
  "nav": {
-  "display": "$40.00",
-  "value": 40,
-  "asOfDate": "Oct 30 2026",
-  "change": -0.2
+  "display": "$38.18",
+  "value": 38.18,
+  "asOfDate": "Nov 06 2026",
+  "change": -0.51
  },
  "marketPrice": {
-  "display": "$40.04",
-  "value": 40.04,
-  "asOfDate": "Oct 30 2026"
+  "display": "$38.19",
+  "value": 38.1853,
+  "asOfDate": "Nov 06 2026"
  },
  "premiumDiscount": {
-  "display": "0.05%",
-  "value": 0.048
+  "display": "-0.00%",
+  "value": -0.0016
  },
  "aum": {
-  "display": "$895.62M",
-  "value": 895617771.93,
-  "asOfDate": "Oct 30 2026",
+  "display": "$873.95M",
+  "value": 873953946.61,
+  "asOfDate": "Nov 06 2026",
   "source": "VCM ETF catalog / Overview JSON"
  },
  "yields": {
@@ -91,7 +91,7 @@
  },
  "distributions": {
   "frequency": "Monthly",
-  "latestAmount": 0.03423,
+  "latestAmount": 0.056965,
   "asOfDate": "Feb 09 2024",
   "headers": [
    "Declared Date",
@@ -423,6 +423,16 @@
     "0.000000000000",
     "0.000000000000",
     "38.42"
+   ],
+   [
+    "11/06/2026",
+    "11/05/2026",
+    "11/09/2026",
+    "0.056965000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "38.18"
    ]
   ],
   "source": "VCM Distributions API; API provides declared/record/payable dates, not an ex-date field"
@@ -432,8 +442,8 @@
    "holdings/001.json"
   ],
   "pageSize": 250,
-  "totalRows": 202,
-  "asOfDate": "2026-11-02",
+  "totalRows": 201,
+  "asOfDate": "2026-11-09",
   "source": "VCM AllHoldings JSON"
  },
  "history": {
@@ -441,14 +451,14 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 717,
-  "asOfDate": "2026-10-30",
+  "totalRows": 722,
+  "asOfDate": "2026-11-06",
   "source": "Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
  },
- "holdingsCount": 202,
- "historyCount": 717,
- "distributionCount": 32,
- "netAssets": 895617771.93,
+ "holdingsCount": 201,
+ "historyCount": 722,
+ "distributionCount": 33,
+ "netAssets": 873953946.61,
  "dividendYield": 1.26,
  "secYield": 0.63
 }

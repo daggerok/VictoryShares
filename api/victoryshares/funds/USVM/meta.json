@@ -31,24 +31,24 @@
   "gross": 0.22
  },
  "nav": {
-  "display": "$106.31",
-  "value": 106.31,
-  "asOfDate": "Oct 30 2026",
-  "change": -0.83
+  "display": "$103.82",
+  "value": 103.82,
+  "asOfDate": "Nov 06 2026",
+  "change": 0.03
  },
  "marketPrice": {
-  "display": "$106.37",
-  "value": 106.37,
-  "asOfDate": "Oct 30 2026"
+  "display": "$103.75",
+  "value": 103.7543,
+  "asOfDate": "Nov 06 2026"
  },
  "premiumDiscount": {
-  "display": "0.02%",
-  "value": 0.02
+  "display": "-0.06%",
+  "value": -0.0568
  },
  "aum": {
-  "display": "$1.85B",
-  "value": 1849771861.17,
-  "asOfDate": "Oct 30 2026",
+  "display": "$1.81B",
+  "value": 1811729198.93,
+  "asOfDate": "Nov 06 2026",
   "source": "VCM ETF catalog / Overview JSON"
  },
  "yields": {
@@ -91,7 +91,7 @@
  },
  "distributions": {
   "frequency": "Monthly",
-  "latestAmount": 0.245911,
+  "latestAmount": 0.064818,
   "asOfDate": "Dec 02 2017",
   "headers": [
    "Declared Date",
@@ -993,6 +993,16 @@
     "0.000000000000",
     "0.000000000000",
     "103.75"
+   ],
+   [
+    "11/06/2026",
+    "11/05/2026",
+    "11/09/2026",
+    "0.064818000000",
+    "0.000000000000",
+    "0.000000000000",
+    "0.000000000000",
+    "103.82"
    ]
   ],
   "source": "VCM Distributions API; API provides declared/record/payable dates, not an ex-date field"
@@ -1004,7 +1014,7 @@
   ],
   "pageSize": 250,
   "totalRows": 294,
-  "asOfDate": "2026-11-02",
+  "asOfDate": "2026-11-09",
   "source": "VCM AllHoldings JSON"
  },
  "history": {
@@ -1014,14 +1024,14 @@
    "history/003.json"
   ],
   "pageSize": 1000,
-  "totalRows": 2264,
-  "asOfDate": "2026-10-30",
+  "totalRows": 2269,
+  "asOfDate": "2026-11-06",
   "source": "Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
  },
  "holdingsCount": 294,
- "historyCount": 2264,
- "distributionCount": 89,
- "netAssets": 1849771861.17,
+ "historyCount": 2269,
+ "distributionCount": 90,
+ "netAssets": 1811729198.93,
  "dividendYield": 2.05,
  "secYield": 1.92
 }
