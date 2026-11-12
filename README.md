@@ -74,6 +74,13 @@ The updater uses issuer-published NAV performance values for month-end and quart
   | `indicated` | updater estimate: latest distribution x payments per year (from the frequency) / market price, used when VCM publishes no yield |
   | `official-trailing-12m`, `official-distribution-rate`, `computed-trailing-12m` | part of the standard code set, not used by this brand |
 
+- Swing metrics (shared `swing` block, the formulas of the Stocks feed) from the Yahoo Finance daily closes since listing (chart API, split-adjusted, not dividend-adjusted; the published NAV and market price history is not split-adjusted), with the last close as the price. Read for every fund the run updates; a failed chart, or one that starts more than 31 days after the published history, keeps the published values; `null` (never `0`) when the history is too short:
+  - `pctFrom52wHigh` - last close against the highest close of the last 52 weeks, in percent
+  - `athPrice`, `athDate`, `athBasis` - highest close of the whole history, its date and the history it covers (`daily closes since <first date>`)
+  - `pctFromAth` - last close against `athPrice`, in percent
+  - `volatility1y` - annualized volatility of the last 252 daily log returns, in percent (needs 253 closes)
+  - `sigmaFromMean60d` - distance of the last close from the mean of the last 60 closes, in sample standard deviations
+  - `high60d`, `low60d` - highest and lowest of the last 60 closes
 - Missing values stay unavailable (shown as a dash) and are never treated as zero; a filter with a bound excludes funds without that value. A provider-published real `0.00%` (for example the GFLW 30-day SEC yield) stays `0`
 - Missing holdings `Weight` or `Market Value` stay empty instead of becoming `"0"`
 - Holdings tickers: a bare symbol only for a U.S. listing (VCM's U.S. exchange code is dropped: `BWA US` -> `BWA`); a foreign listing keeps its exchange code (`MRK GY`, `GSK L`) so Merck KGaA is never merged with Merck & Co., a foreign stock without a code gets `-`, and debt, mortgage, cash and futures rows get `-`

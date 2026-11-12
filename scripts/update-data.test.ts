@@ -449,6 +449,11 @@ describe('pipeline', () => {
     // every row carries the 52-week keys from its history pages (range-52w block)
     const RANGE_KEYS = ['week52Low', 'week52High', 'range52w', 'range52wClose', 'range52wAsOf', 'range52wSince', 'range52wBasis'];
     for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics)).toEqual(expect.arrayContaining(RANGE_KEYS));
+    // the swing keys from the Yahoo daily closes (period1=0) of the funds the run updated (swing block)
+    const SWING_KEYS = ['pctFrom52wHigh', 'athPrice', 'athDate', 'athBasis', 'pctFromAth', 'volatility1y', 'sigmaFromMean60d', 'high60d', 'low60d'];
+    for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics).slice(-11, -2)).toEqual(SWING_KEYS);
+    expect(world.chartUrls.some((url) => /chart\/AAA\?period1=0&period2=\d+&interval=1d&includePrePost=false/.test(url))).toBe(true);
+    expect([row.metrics.athPrice, row.metrics.high60d, row.metrics.athBasis, row.metrics.volatility1y]).toEqual([27.99, 27.99, expect.stringMatching(/^daily closes since \d{4}-\d{2}-\d{2}$/), expect.any(Number)]);
     const meta = metaOf(dir, 'AAA');
     expect(meta.expenseRatio).toMatchObject({ value: 0.39, net: 0.39, gross: 0.44 });
     expect(meta.history.totalRows).toBe(800);
@@ -870,12 +875,14 @@ describe('network', () => {
     const world = newWorld(['AAA']); installWorld(world);
     console.log = console.warn = console.error = () => {};
     await runUpdate(controlsFor());
-    const maxUrl = new URL(world.chartUrls.at(-1) as string);
+    // the brand's own chart request, not the swing block's period1=0 one that follows it
+    const ownChart = (): string => world.chartUrls.filter((url) => !url.includes('includePrePost=false')).at(-1) as string;
+    const maxUrl = new URL(ownChart());
     expect([maxUrl.searchParams.get('period1'), maxUrl.searchParams.get('interval'), metaOf(dir, 'AAA').history.totalRows]).toEqual(['0', '1d', 800]);
     const full = readTree(dir);
     // Q25: a window keeps the older published history: a 1y run after a full run writes nothing
     await runUpdate(controlsFor({ HISTORY_RANGE: '1y' }));
-    const oneYear = new URL(world.chartUrls.at(-1) as string);
+    const oneYear = new URL(ownChart());
     expect(Math.round((Date.now() / 1000 - Number(oneYear.searchParams.get('period1'))) / (365.25 * DAY))).toBe(1);
     expect(metaOf(dir, 'AAA').history.totalRows).toBe(800);
     expect(readTree(dir)).toEqual(full);
