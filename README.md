@@ -81,6 +81,11 @@ The updater uses issuer-published NAV performance values for month-end and quart
   - `volatility1y` - annualized volatility of the last 252 daily log returns, in percent (needs 253 closes)
   - `sigmaFromMean60d` - distance of the last close from the mean of the last 60 closes, in sample standard deviations
   - `high60d`, `low60d` - highest and lowest of the last 60 closes
+- Dividend metrics (shared `dividends` block, the formulas of the Stocks feed) from the Yahoo Finance dividend events of the daily chart since listing (split adjusted; the published distribution table is not), read from the same Yahoo request as the swing metrics (no extra request); a failed or truncated chart keeps the published values; `null` (never `0`) when unknown:
+  - `dividendRate` - sum of the distributions with ex-dates in the last 12 months
+  - `dividendGrowth`, `dividendGrowth3y`, `dividendGrowth5y` - last complete calendar year against 1, 3, 5 years earlier (3 and 5 as a yearly rate), the listing year is never a base
+  - `dividendStreak` - complete calendar years in a row with a higher sum
+  - `dividendCut10y` - `true` when a year of the last 10 paid more than 20% less than its base year and the next year did not come back
 - Missing values stay unavailable (shown as a dash) and are never treated as zero; a filter with a bound excludes funds without that value. A provider-published real `0.00%` (for example the GFLW 30-day SEC yield) stays `0`
 - Missing holdings `Weight` or `Market Value` stay empty instead of becoming `"0"`
 - Holdings tickers: a bare symbol only for a U.S. listing (VCM's U.S. exchange code is dropped: `BWA US` -> `BWA`); a foreign listing keeps its exchange code (`MRK GY`, `GSK L`) so Merck KGaA is never merged with Merck & Co., a foreign stock without a code gets `-`, and debt, mortgage, cash and futures rows get `-`

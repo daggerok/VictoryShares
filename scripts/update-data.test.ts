@@ -384,7 +384,7 @@ const catalogRow = (ticker: string, nav: string) => ({
 });
 function yahooPayload(world: World, period1: number): unknown {
   const days = Array.from({ length: world.historyDays }, (_, i) => ({ stamp: world.end - (world.historyDays - 1 - i) * DAY, i })).filter((day) => day.stamp >= period1).slice(-(world.keepLast ?? world.historyDays));
-  return { chart: { result: [{ timestamp: days.map((day) => day.stamp), indicators: { quote: [{ close: days.map((day) => 20 + day.i / 100) }], adjclose: [{ adjclose: days.map((day) => world.adjAt?.(day.i) ?? 20 + day.i / 100) }] }, events: {} }] } };
+  return { chart: { result: [{ meta: { dataGranularity: '1d', firstTradeDate: world.end - (world.historyDays - 1) * DAY }, timestamp: days.map((day) => day.stamp), indicators: { quote: [{ close: days.map((day) => 20 + day.i / 100) }], adjclose: [{ adjclose: days.map((day) => world.adjAt?.(day.i) ?? 20 + day.i / 100) }] }, events: { dividends: { [String(world.end)]: { amount: 0.25, date: world.end } } } }] } };
 }
 function installWorld(world: World): void {
   globalThis.fetch = (async (input: unknown) => {
@@ -451,8 +451,13 @@ describe('pipeline', () => {
     for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics)).toEqual(expect.arrayContaining(RANGE_KEYS));
     // the swing keys from the Yahoo daily closes (period1=0) of the funds the run updated (swing block)
     const SWING_KEYS = ['pctFrom52wHigh', 'athPrice', 'athDate', 'athBasis', 'pctFromAth', 'volatility1y', 'sigmaFromMean60d', 'high60d', 'low60d'];
-    for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics).slice(-11, -2)).toEqual(SWING_KEYS);
-    expect(world.chartUrls.some((url) => /chart\/AAA\?period1=0&period2=\d+&interval=1d&includePrePost=false/.test(url))).toBe(true);
+    for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics).slice(-17, -8)).toEqual(SWING_KEYS);
+    // the six dividend keys of the dividends block follow them, read from the same Yahoo request (no extra one): exactly one such request per updated fund
+    const DIVIDEND_KEYS = ['dividendRate', 'dividendGrowth', 'dividendGrowth3y', 'dividendGrowth5y', 'dividendStreak', 'dividendCut10y'];
+    for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics).slice(-8, -2)).toEqual(DIVIDEND_KEYS);
+    for (const ticker of world.tickers) expect(world.chartUrls.filter((url) => new RegExp(`chart/${ticker}\\?period1=0&.*includePrePost=false`).test(url))).toHaveLength(1);
+    // dividendRate 0.25, the five growth keys null (never 0)
+    for (const fund of indexOf(dir).funds) expect(DIVIDEND_KEYS.map((key) => fund.metrics[key])).toEqual([0.25, null, null, null, null, null]);
     expect([row.metrics.athPrice, row.metrics.high60d, row.metrics.athBasis, row.metrics.volatility1y]).toEqual([27.99, 27.99, expect.stringMatching(/^daily closes since \d{4}-\d{2}-\d{2}$/), expect.any(Number)]);
     const meta = metaOf(dir, 'AAA');
     expect(meta.expenseRatio).toMatchObject({ value: 0.39, net: 0.39, gross: 0.44 });
