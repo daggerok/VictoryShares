@@ -31,24 +31,24 @@
   "gross": 0.77
  },
  "nav": {
-  "display": "$25.66",
-  "value": 25.66,
-  "asOfDate": "Nov 06 2026",
-  "change": -0.11
+  "display": "$25.45",
+  "value": 25.45,
+  "asOfDate": "Nov 13 2026",
+  "change": -0.07
  },
  "marketPrice": {
-  "display": "$25.71",
-  "value": 25.71,
-  "asOfDate": "Nov 06 2026"
+  "display": "$25.40",
+  "value": 25.3987,
+  "asOfDate": "Nov 13 2026"
  },
  "premiumDiscount": {
-  "display": "0.20%",
-  "value": 0.2019
+  "display": "-0.19%",
+  "value": -0.1894
  },
  "aum": {
-  "display": "$24.38M",
-  "value": 24375251.73,
-  "asOfDate": "Nov 06 2026",
+  "display": "$24.18M",
+  "value": 24175800.44,
+  "asOfDate": "Nov 13 2026",
   "source": "VCM ETF catalog / Overview JSON"
  },
  "yields": {
@@ -57,16 +57,16 @@
   "dividendYieldBasis": null,
   "dividendYieldKind": null,
   "distributionRate": null,
-  "secYield": 0,
-  "secYieldText": "0.00%",
-  "secYieldKind": "VCM 30-day SEC yield as of Sep 30 2026",
-  "unsubsidizedSecYield": 0
+  "secYield": null,
+  "secYieldText": null,
+  "secYieldKind": null,
+  "unsubsidizedSecYield": null
  },
  "returns": {
   "derivedFrom": "VCM published NAV performance series",
   "monthEnd": {
-   "asOfDate": "Sep 30 2026",
-   "mo1": null,
+   "asOfDate": "Oct 31 2026",
+   "mo1": 3.08,
    "qtd": null,
    "ytd": null,
    "yr1": null,
@@ -122,8 +122,8 @@
    "holdings/001.json"
   ],
   "pageSize": 250,
-  "totalRows": 31,
-  "asOfDate": "2026-11-09",
+  "totalRows": 32,
+  "asOfDate": "2026-11-16",
   "source": "VCM AllHoldings JSON"
  },
  "history": {
@@ -131,14 +131,14 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 33,
-  "asOfDate": "2026-11-06",
+  "totalRows": 38,
+  "asOfDate": "2026-11-13",
   "source": "Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
  },
- "holdingsCount": 31,
- "historyCount": 33,
+ "holdingsCount": 32,
+ "historyCount": 38,
  "distributionCount": 1,
- "netAssets": 24375251.73,
+ "netAssets": 24175800.44,
  "dividendYield": null,
- "secYield": 0
+ "secYield": null
 }

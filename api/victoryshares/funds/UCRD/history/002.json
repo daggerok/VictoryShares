@@ -1959,7 +1959,42 @@
    "Market Price": "20.85",
    "Premium/Discount": "0.1330%",
    "Adj Close": "20.85"
+  },
+  {
+   "Date": "2026-11-09",
+   "NAV": "",
+   "Market Price": "20.88",
+   "Premium/Discount": "0.1055%",
+   "Adj Close": "20.88"
+  },
+  {
+   "Date": "2026-11-10",
+   "NAV": "",
+   "Market Price": "20.74",
+   "Premium/Discount": "0.1777%",
+   "Adj Close": "20.74"
+  },
+  {
+   "Date": "2026-11-11",
+   "NAV": "",
+   "Market Price": "20.75",
+   "Premium/Discount": "0.2977%",
+   "Adj Close": "20.75"
+  },
+  {
+   "Date": "2026-11-12",
+   "NAV": "",
+   "Market Price": "20.60",
+   "Premium/Discount": "0.1361%",
+   "Adj Close": "20.60"
+  },
+  {
+   "Date": "2026-11-13",
+   "NAV": "",
+   "Market Price": "20.57",
+   "Premium/Discount": "0.1778%",
+   "Adj Close": "20.57"
   }
  ],
- "asOfDate": "2026-11-06"
+ "asOfDate": "2026-11-13"
 }
