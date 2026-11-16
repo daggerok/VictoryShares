@@ -451,13 +451,22 @@ describe('pipeline', () => {
     for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics)).toEqual(expect.arrayContaining(RANGE_KEYS));
     // the swing keys from the Yahoo daily closes (period1=0) of the funds the run updated (swing block)
     const SWING_KEYS = ['pctFrom52wHigh', 'athPrice', 'athDate', 'athBasis', 'pctFromAth', 'volatility1y', 'sigmaFromMean60d', 'high60d', 'low60d'];
-    for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics).slice(-17, -8)).toEqual(SWING_KEYS);
-    // the six dividend keys of the dividends block follow them, read from the same Yahoo request (no extra one): exactly one such request per updated fund
-    const DIVIDEND_KEYS = ['dividendRate', 'dividendGrowth', 'dividendGrowth3y', 'dividendGrowth5y', 'dividendStreak', 'dividendCut10y'];
-    for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics).slice(-8, -2)).toEqual(DIVIDEND_KEYS);
+    for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics).slice(-51, -42)).toEqual(SWING_KEYS);
+    // the eight dividend keys of the dividends block follow them, read from the same Yahoo request (no extra one): exactly one such request per updated fund
+    const DIVIDEND_KEYS = ['dividendRate', 'dividendGrowth', 'dividendGrowth3y', 'dividendGrowth5y', 'dividendStreak', 'dividendCut10y', 'paymentsPerYear', 'payFrequency'];
+    for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics).slice(-42, -34)).toEqual(DIVIDEND_KEYS);
+    // the 32 benchmark keys against SPY and QQQ sit before the two tail keys (benchmark block, tap mode)
+    const BENCHMARK_KEYS = ['perf1y', 'perf3y', 'perf5y', 'perf10y', 'perfSi', 'maxDrawdown1y', 'maxDrawdown3y', 'maxDrawdown5y', 'maxDrawdown10y',
+      'vsSpy1y', 'vsSpy3y', 'vsSpy5y', 'vsSpy10y', 'beta1ySpy', 'corr1ySpy', 'upCapture3ySpy', 'downCapture3ySpy', 'relStrength3mSpy', 'stressReturnSpy', 'stressBasisSpy',
+      'vsQqq1y', 'vsQqq3y', 'vsQqq5y', 'vsQqq10y', 'beta1yQqq', 'corr1yQqq', 'upCapture3yQqq', 'downCapture3yQqq', 'relStrength3mQqq', 'stressReturnQqq', 'stressBasisQqq', 'benchmarkAsOf'];
+    for (const fund of indexOf(dir).funds) expect(Object.keys(fund.metrics).slice(-34, -2)).toEqual(BENCHMARK_KEYS);
+    // the mock gives SPY and QQQ the same bars as every fund: the fund equals both benchmarks (no difference, beta and correlation 1)
+    expect([row.metrics.vsSpy1y, row.metrics.vsQqq1y, row.metrics.beta1ySpy, row.metrics.corr1yQqq, row.metrics.relStrength3mSpy, typeof row.metrics.benchmarkAsOf]).toEqual([0, 0, 1, 1, 0, 'string']);
+    // exactly two more chart requests per run (SPY and QQQ), none per fund: the sorted ticker list of the swing-chart requests
+    expect(world.chartUrls.filter((url) => /period1=0&.*includePrePost=false/.test(url)).map((url) => /chart\/(\w+)\?/.exec(url)![1]).sort()).toEqual(['AAA', 'BBB', 'QQQ', 'SPY']);
     for (const ticker of world.tickers) expect(world.chartUrls.filter((url) => new RegExp(`chart/${ticker}\\?period1=0&.*includePrePost=false`).test(url))).toHaveLength(1);
-    // dividendRate 0.25, the five growth keys null (never 0)
-    for (const fund of indexOf(dir).funds) expect(DIVIDEND_KEYS.map((key) => fund.metrics[key])).toEqual([0.25, null, null, null, null, null]);
+    // dividendRate 0.25, the five growth keys null (never 0), one payment in the last year: payFrequency annual over 800 days of history
+    for (const fund of indexOf(dir).funds) expect(DIVIDEND_KEYS.map((key) => fund.metrics[key])).toEqual([0.25, null, null, null, null, null, 1, 'annual']);
     expect([row.metrics.athPrice, row.metrics.high60d, row.metrics.athBasis, row.metrics.volatility1y]).toEqual([27.99, 27.99, expect.stringMatching(/^daily closes since \d{4}-\d{2}-\d{2}$/), expect.any(Number)]);
     const meta = metaOf(dir, 'AAA');
     expect(meta.expenseRatio).toMatchObject({ value: 0.39, net: 0.39, gross: 0.44 });
