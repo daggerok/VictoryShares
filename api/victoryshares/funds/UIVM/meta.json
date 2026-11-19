@@ -31,24 +31,24 @@
   "gross": 0.38
  },
  "nav": {
-  "display": "$73.62",
-  "value": 73.62,
-  "asOfDate": "Nov 13 2026",
-  "change": -0.14
+  "display": "$72.49",
+  "value": 72.49,
+  "asOfDate": "Nov 17 2026",
+  "change": -0.86
  },
  "marketPrice": {
-  "display": "$73.83",
-  "value": 73.8256,
-  "asOfDate": "Nov 13 2026"
+  "display": "$72.52",
+  "value": 72.5239,
+  "asOfDate": "Nov 17 2026"
  },
  "premiumDiscount": {
-  "display": "0.31%",
-  "value": 0.3147
+  "display": "0.13%",
+  "value": 0.1251
  },
  "aum": {
-  "display": "$331.31M",
-  "value": 331305058.92,
-  "asOfDate": "Nov 13 2026",
+  "display": "$329.83M",
+  "value": 329826458.8,
+  "asOfDate": "Nov 17 2026",
   "source": "VCM ETF catalog / Overview JSON"
  },
  "yields": {
@@ -57,10 +57,10 @@
   "dividendYieldBasis": "official-other",
   "dividendYieldKind": "VCM published dividend yield as of Oct 31 2026",
   "distributionRate": null,
-  "secYield": null,
-  "secYieldText": null,
-  "secYieldKind": null,
-  "unsubsidizedSecYield": null
+  "secYield": 2.75,
+  "secYieldText": "2.75%",
+  "secYieldKind": "VCM 30-day SEC yield as of Oct 31 2026",
+  "unsubsidizedSecYield": 2.75
  },
  "returns": {
   "derivedFrom": "VCM published NAV performance series",
@@ -962,8 +962,8 @@
    "holdings/001.json"
   ],
   "pageSize": 250,
-  "totalRows": 220,
-  "asOfDate": "2026-11-16",
+  "totalRows": 199,
+  "asOfDate": "2026-11-18",
   "source": "VCM AllHoldings JSON"
  },
  "history": {
@@ -973,14 +973,14 @@
    "history/003.json"
   ],
   "pageSize": 1000,
-  "totalRows": 2274,
-  "asOfDate": "2026-11-13",
+  "totalRows": 2277,
+  "asOfDate": "2026-11-18",
   "source": "Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
  },
- "holdingsCount": 220,
- "historyCount": 2274,
+ "holdingsCount": 199,
+ "historyCount": 2277,
  "distributionCount": 85,
- "netAssets": 331305058.92,
+ "netAssets": 329826458.8,
  "dividendYield": 3.29,
- "secYield": null
+ "secYield": 2.75
 }

@@ -31,24 +31,24 @@
   "gross": 0.33
  },
  "nav": {
-  "display": "$49.81",
-  "value": 49.81,
-  "asOfDate": "Nov 13 2026",
-  "change": 0
+  "display": "$49.88",
+  "value": 49.88,
+  "asOfDate": "Nov 17 2026",
+  "change": 0.03
  },
  "marketPrice": {
-  "display": "$49.89",
-  "value": 49.89,
-  "asOfDate": "Nov 13 2026"
+  "display": "$49.93",
+  "value": 49.93,
+  "asOfDate": "Nov 17 2026"
  },
  "premiumDiscount": {
-  "display": "0.16%",
-  "value": 0.1594
+  "display": "0.12%",
+  "value": 0.1179
  },
  "aum": {
-  "display": "$2.82B",
-  "value": 2823976415.32,
-  "asOfDate": "Nov 13 2026",
+  "display": "$2.85B",
+  "value": 2845439838.51,
+  "asOfDate": "Nov 17 2026",
   "source": "VCM ETF catalog / Overview JSON"
  },
  "yields": {
@@ -57,10 +57,10 @@
   "dividendYieldBasis": "indicated",
   "dividendYieldKind": "Indicated from the latest reported distribution per share x inferred payments per year / market price",
   "distributionRate": null,
-  "secYield": null,
-  "secYieldText": null,
-  "secYieldKind": null,
-  "unsubsidizedSecYield": null
+  "secYield": 5.13,
+  "secYieldText": "5.13%",
+  "secYieldKind": "VCM 30-day SEC yield as of Oct 31 2026",
+  "unsubsidizedSecYield": 5.13
  },
  "returns": {
   "derivedFrom": "VCM published NAV performance series",
@@ -1196,8 +1196,8 @@
    "holdings/005.json"
   ],
   "pageSize": 250,
-  "totalRows": 1185,
-  "asOfDate": "2026-11-16",
+  "totalRows": 1189,
+  "asOfDate": "2026-11-18",
   "source": "VCM AllHoldings JSON"
  },
  "history": {
@@ -1207,14 +1207,14 @@
    "history/003.json"
   ],
   "pageSize": 1000,
-  "totalRows": 2274,
-  "asOfDate": "2026-11-13",
+  "totalRows": 2277,
+  "asOfDate": "2026-11-18",
   "source": "Yahoo Finance daily adjusted market-price chart (explicit period1/period2, interval 1d) + VCM PremiumDiscount API (NAV is not provided in the Yahoo price series)"
  },
- "holdingsCount": 1185,
- "historyCount": 2274,
+ "holdingsCount": 1189,
+ "historyCount": 2277,
  "distributionCount": 108,
- "netAssets": 2823976415.32,
+ "netAssets": 2845439838.51,
  "dividendYield": 4.37,
- "secYield": null
+ "secYield": 5.13
 }
