@@ -5128,9 +5128,23 @@
    "Date": "2026-11-20",
    "NAV": "",
    "Market Price": "36.27",
-   "Premium/Discount": "",
+   "Premium/Discount": "0.0188%",
    "Adj Close": "36.27"
+  },
+  {
+   "Date": "2026-11-23",
+   "NAV": "",
+   "Market Price": "37.21",
+   "Premium/Discount": "-0.0255%",
+   "Adj Close": "37.21"
+  },
+  {
+   "Date": "2026-11-24",
+   "NAV": "",
+   "Market Price": "37.59",
+   "Premium/Discount": "",
+   "Adj Close": "37.59"
   }
  ],
- "asOfDate": "2026-11-20"
+ "asOfDate": "2026-11-24"
 }
