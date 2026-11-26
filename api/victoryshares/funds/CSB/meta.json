@@ -31,24 +31,24 @@
   "gross": 0.39
  },
  "nav": {
-  "display": "$65.16",
-  "value": 65.16,
-  "asOfDate": "Nov 24 2026",
-  "change": 0.52
+  "display": "$65.79",
+  "value": 65.79,
+  "asOfDate": "Nov 25 2026",
+  "change": 0.63
  },
  "marketPrice": {
-  "display": "$65.22",
-  "value": 65.2165,
-  "asOfDate": "Nov 24 2026"
+  "display": "$65.82",
+  "value": 65.8194,
+  "asOfDate": "Nov 25 2026"
  },
  "premiumDiscount": {
-  "display": "0.04%",
-  "value": 0.0376
+  "display": "-0.02%",
+  "value": -0.023
  },
  "aum": {
-  "display": "$241.08M",
-  "value": 241075170.27,
-  "asOfDate": "Nov 24 2026",
+  "display": "$243.40M",
+  "value": 243404803.29,
+  "asOfDate": "Nov 25 2026",
   "source": "VCM ETF catalog / Overview JSON"
  },
  "yields": {
@@ -1433,7 +1433,7 @@
   ],
   "pageSize": 250,
   "totalRows": 102,
-  "asOfDate": "2026-11-25",
+  "asOfDate": "2026-11-27",
   "source": "VCM AllHoldings JSON"
  },
  "history": {
@@ -1450,7 +1450,7 @@
  "holdingsCount": 102,
  "historyCount": 2850,
  "distributionCount": 132,
- "netAssets": 241075170.27,
+ "netAssets": 243404803.29,
  "dividendYield": 3.54,
  "secYield": 3.25
 }
