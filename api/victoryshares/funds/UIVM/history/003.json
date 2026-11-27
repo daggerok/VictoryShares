@@ -1980,7 +1980,14 @@
    "Market Price": "70.50",
    "Premium/Discount": "1.1339%",
    "Adj Close": "70.50"
+  },
+  {
+   "Date": "2026-11-27",
+   "NAV": "",
+   "Market Price": "71.18",
+   "Premium/Discount": "",
+   "Adj Close": "71.18"
   }
  ],
- "asOfDate": "2026-11-25"
+ "asOfDate": "2026-11-27"
 }
