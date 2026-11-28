@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-28T03:35:28Z",
+ "generatedAt": "2026-11-28T08:56:49Z",
  "source": {
   "provider": "VictoryShares ETFs (Victory Capital Management)",
   "market": "us",
@@ -1862,8 +1862,8 @@
     "secYieldText": "5.23%",
     "week52Low": 52.67,
     "week52High": 61.77,
-    "range52w": 17.36,
-    "range52wClose": 54.25,
+    "range52w": 17.25,
+    "range52wClose": 54.24,
     "range52wAsOf": "2026-11-27",
     "range52wSince": null,
     "range52wBasis": "Market Price",
