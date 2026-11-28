@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-27T22:55:35Z",
+ "generatedAt": "2026-11-28T00:28:35Z",
  "source": {
   "provider": "VictoryShares ETFs (Victory Capital Management)",
   "market": "us",
@@ -2038,7 +2038,7 @@
     "beta1yQqq": 0.03,
     "corr1yQqq": 0.16,
     "upCapture3yQqq": 13.06,
-    "downCapture3yQqq": -4.07,
+    "downCapture3yQqq": -4.08,
     "relStrength3mQqq": 7.6,
     "stressReturnQqq": 2.25,
     "stressBasisQqq": "QQQ -20% 2026-10-06 to 2026-11-20",
